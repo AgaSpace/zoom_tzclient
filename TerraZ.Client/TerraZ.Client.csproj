@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6FCA3AEC-42FD-46A8-A755-A4E96A64D349}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TerraZ</RootNamespace>
+    <AssemblyName>TerraZ.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Game" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="ReLogic">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Terraria\Terraria.Libraries.ReLogic.ReLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="Terraria">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Terraria\Terraria.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\ChatMonitor.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\ClientUtils.cs" />
+    <Compile Include="Client\DataType.cs" />
+    <Compile Include="Client\ITool.cs" />
+    <Compile Include="Client\PacketWriter.cs" />
+    <Compile Include="Client\Permissions.cs" />
+    <Compile Include="Client\Settings.cs" />
+    <Compile Include="Hooks\DrawEventArgs.cs" />
+    <Compile Include="Hooks\Hook.cs" />
+    <Compile Include="Hooks\HookID.cs" />
+    <Compile Include="Hooks\HookRegistrator.cs" />
+    <Compile Include="Hooks\NotReferenceHook.cs" />
+    <Compile Include="Hooks\ReferenceHook.cs" />
+    <Compile Include="Hooks\UpdateEventArgs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerRequest\ClearSlotRequest.cs" />
+    <Compile Include="ServerRequest\PermissionsRequest.cs" />
+    <Compile Include="ServerResponse\ActionResponse.cs" />
+    <Compile Include="ServerResponse\Authorization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TerraZClient.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
