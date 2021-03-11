@@ -1,0 +1,7 @@
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.exe.config
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.pdb
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.csprojAssemblyReference.cache
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.csproj.CoreCompileInputs.cache
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.pdb
