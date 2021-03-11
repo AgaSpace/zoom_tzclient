@@ -33,11 +33,6 @@ namespace TZLauncher
                 else Console.Title = "TerraZ: Not running";
                 TerraZ.Client.Client.InvokeUpdate(null);
                 TerraZ.Client.Client.InvokeDraw(null);
-                if (Terraria.GetType("Terraria.Main").GetValue<string>("getIP") != "s.terraz.ru")
-                {
-                    Terraria.GetType("Terraria.Netplay").SetValue("Disconnect", true);
-                    Terraria.GetType("Terraria.Main").SetValue("statusText", "Неподтвержденный сервер.");
-                }
                 Terraria.GetType("Terraria.Main").SetValue("getIP", "s.terraz.ru");
             }
         }
