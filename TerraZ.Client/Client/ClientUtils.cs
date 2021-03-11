@@ -7,10 +7,8 @@ using Terraria;
 
 namespace TerraZ.Client
 {
-	// Token: 0x02000009 RID: 9
 	public static class ClientUtils
 	{
-		// Token: 0x0600001A RID: 26 RVA: 0x00002580 File Offset: 0x00000780
 		public static Player GetPlayerOverMouse()
 		{
 			Rectangle rectangle = new Rectangle((int)((float)Main.mouseX + Main.screenPosition.X), (int)((float)Main.mouseY + Main.screenPosition.Y), 1, 1);
@@ -27,8 +25,6 @@ namespace TerraZ.Client
 			}
 			return null;
 		}
-
-		// Token: 0x0600001B RID: 27 RVA: 0x00002182 File Offset: 0x00000382
 		public static IEnumerable<string> GetPlayersNames()
 		{
 			foreach (Player player in from w in Main.player
@@ -37,23 +33,13 @@ namespace TerraZ.Client
 			{
 				yield return player.name;
 			}
-			IEnumerator<Player> enumerator = null;
-			yield break;
-			yield break;
 		}
-
-		// Token: 0x0600001C RID: 28 RVA: 0x0000218B File Offset: 0x0000038B
 		public static IEnumerable<Player> GetActivePlayers()
 		{
-			foreach (Player player in from w in Main.player
-			where w.active
-			select w)
+			foreach (Player player in from w in Main.player where w.active select w)
 			{
 				yield return player;
 			}
-			IEnumerator<Player> enumerator = null;
-			yield break;
-			yield break;
 		}
 
 		// Token: 0x0600001D RID: 29 RVA: 0x00002194 File Offset: 0x00000394
