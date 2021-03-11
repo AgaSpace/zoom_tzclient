@@ -18,7 +18,6 @@ namespace TerraZ.Client
         private void Update(EventArgs args)
         {
             Old = New; New = Keyboard.GetState();
-            Console.WriteLine("SASSSUKEEE");
         }
 
         KeyboardState Old;

@@ -16,19 +16,17 @@ namespace TerraZ.Client
 		}
 		public static void InvokeUpdate(GameTime gt)
 		{
-			try 
+			try
 			{
 				HookRegistrator.InvokeWithoutResult(HookID.Update, new UpdateEventArgs(gt));
-				Console.WriteLine("InvokedUpdate");
-			} catch (Exception ex) { Console.WriteLine(ex.ToString());  
+			} catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 		}
-}
+
 		public static void InvokeDraw(GameTime gt)
 		{
 			try
 			{
 				HookRegistrator.InvokeWithoutResult(HookID.Draw, new DrawEventArgs(gt));
-				Console.WriteLine("InvokedDraw");
 			} catch (Exception ex) { Console.WriteLine(ex.ToString());  }
 		}
 
