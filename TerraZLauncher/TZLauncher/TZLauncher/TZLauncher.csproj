@@ -36,6 +36,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\TerraZTool.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Client\Client.cs" />
     <Compile Include="Client\ClientUtils.cs" />

@@ -9,16 +9,27 @@ namespace TerraZ.Client
 	{
 		public static void Initialize()
 		{
-			Client.ClientTools = new List<ITool>();
-			Client.ClientPermissions = new Permissions();
+			ClientTools = new List<ITool>();
+			ClientTools.Add(new TerraZTool());
+			foreach (ITool t in ClientTools) t.Initialize();
+			ClientPermissions = new Permissions();
 		}
 		public static void InvokeUpdate(GameTime gt)
 		{
-			HookRegistrator.InvokeWithoutResult(HookID.Update, new UpdateEventArgs(gt));
+			try 
+			{
+				HookRegistrator.InvokeWithoutResult(HookID.Update, new UpdateEventArgs(gt));
+				Console.WriteLine("InvokedUpdate");
+			} catch (Exception ex) { Console.WriteLine(ex.ToString());  
 		}
+}
 		public static void InvokeDraw(GameTime gt)
 		{
-			HookRegistrator.InvokeWithoutResult(HookID.Draw, new DrawEventArgs(gt));
+			try
+			{
+				HookRegistrator.InvokeWithoutResult(HookID.Draw, new DrawEventArgs(gt));
+				Console.WriteLine("InvokedDraw");
+			} catch (Exception ex) { Console.WriteLine(ex.ToString());  }
 		}
 
 		public static Permissions ClientPermissions { get; private set; }

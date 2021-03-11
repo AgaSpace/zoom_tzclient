@@ -12,6 +12,7 @@ namespace TZLauncher
     {
         internal static async Task Main(string[] args)
         {
+            Console.Title = "TerraZ: Starting...";
             TerrariaThread = new Thread(() =>
             {
                 string[] terrazArgs = new string[]
@@ -24,7 +25,13 @@ namespace TZLauncher
             });
             TerrariaThread.Start();
             TerraZ.Client.Client.Initialize();
-            await Task.Delay(-1);
+            while (true)
+            {
+                if (TerrariaThread.IsAlive) Console.Title = "TerraZ: Running";
+                else Console.Title = "TerraZ: Not running";
+                TerraZ.Client.Client.InvokeUpdate(null);
+                TerraZ.Client.Client.InvokeDraw(null);
+            }
         }
         static Thread TerrariaThread;
         internal static Assembly Terraria;
