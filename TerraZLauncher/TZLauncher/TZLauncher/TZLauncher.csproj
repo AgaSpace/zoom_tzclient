@@ -37,8 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Launcher.cs" />
-    <Compile Include="TerraZClient.cs" />
-    <Compile Include="Client\ChatMonitor.cs" />
     <Compile Include="Client\Client.cs" />
     <Compile Include="Client\ClientUtils.cs" />
     <Compile Include="Client\DataType.cs" />
@@ -58,6 +56,16 @@
     <Compile Include="ServerRequest\PermissionsRequest.cs" />
     <Compile Include="ServerResponse\ActionResponse.cs" />
     <Compile Include="ServerResponse\Authorization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Desktop\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

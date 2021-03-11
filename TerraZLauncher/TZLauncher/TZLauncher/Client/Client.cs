@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Terraria;
+using System.Collections.Generic;
 using TerraZ.Hooks;
 
 namespace TerraZ.Client
 {
-	// Token: 0x02000003 RID: 
 	public static class Client
 	{
 		public static void Initialize()
 		{
 			Client.ClientTools = new List<ITool>();
 			Client.ClientPermissions = new Permissions();
-			typeof(Main).SetValue("chatMonitor", new ChatMonitor());
+			TZLauncher.Launcher.Terraria.GetType("Main")
+				.GetValue<Type>("chatMonitor")
+				.SetValue("_showCount", 25);
 		}
 		public static void InvokeUpdate(GameTime gt)
 		{

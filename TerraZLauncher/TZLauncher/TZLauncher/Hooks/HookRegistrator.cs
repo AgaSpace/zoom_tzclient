@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
+using TerraZ.Client;
 
 namespace TerraZ.Hooks
 {
@@ -14,16 +14,16 @@ namespace TerraZ.Hooks
 			bool result = false;
 			try
 			{
-				foreach (Hook hook in registeredHooks.Where((Hook r) => r.HookID == HookID))
+				foreach (Hook hook in RegisteredHooks.Where((Hook r) => r.HookID == HookID))
 				{
 					(hook.Method as ReferenceHook)(ref result, Args);
 				}
 			}
 			catch (Exception ex)
 			{
-				if (Main.gameMenu)
+				if (TZLauncher.Launcher.Terraria.GetType("Main").GetValue<bool>("gameMenu"))
 				{
-					Main.NewText("Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
+					TZLauncher.Launcher.Terraria.GetType("Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
 				}
 			}
 			return result;
@@ -32,16 +32,16 @@ namespace TerraZ.Hooks
 		{
 			try
 			{
-				foreach (Hook hook in registeredHooks.Where((Hook r) => r.HookID == HookID))
+				foreach (Hook hook in RegisteredHooks.Where((Hook r) => r.HookID == HookID))
 				{
 					(hook.Method as NotReferenceHook)(Args);
 				}
 			}
 			catch (Exception ex)
 			{
-				if (Main.gameMenu)
+				if (TZLauncher.Launcher.Terraria.GetType("Main").GetValue<bool>("gameMenu"))
 				{
-					Main.NewText("Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
+					TZLauncher.Launcher.Terraria.GetType("Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
 				}
 			}
 		}

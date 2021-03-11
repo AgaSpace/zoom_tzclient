@@ -19,13 +19,15 @@ namespace TZLauncher
                     // -join = авто-подключение к серверу.
                     "-join s.terraz.ru",
                 };
-                Assembly asm = Assembly.LoadFrom("Terraria.exe");
-                asm.Launch(terrazArgs);
+                Terraria = Assembly.LoadFrom("Terraria.exe");
+                Terraria.Launch(terrazArgs);
             });
             TerrariaThread.Start();
+            TerraZ.Client.Client.Initialize();
             await Task.Delay(-1);
         }
         static Thread TerrariaThread;
+        internal static Assembly Terraria;
     }
 
     public static class LauncherCore

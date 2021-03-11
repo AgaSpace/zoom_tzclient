@@ -20,7 +20,6 @@ namespace TerraZ.Hooks
 			this.Method = Method;
 		}
 		public HookID HookID { get; private set; }
-		[Dynamic]
-		public dynamic Method { [return: Dynamic] get; [param: Dynamic] private set; }
+		public dynamic Method { get; private set; }
 	}
 }
