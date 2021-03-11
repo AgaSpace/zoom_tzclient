@@ -11,9 +11,6 @@ namespace TerraZ.Client
 		{
 			Client.ClientTools = new List<ITool>();
 			Client.ClientPermissions = new Permissions();
-			TZLauncher.Launcher.Terraria.GetType("Main")
-				.GetValue<Type>("chatMonitor")
-				.SetValue("_showCount", 25);
 		}
 		public static void InvokeUpdate(GameTime gt)
 		{
