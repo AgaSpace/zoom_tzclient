@@ -8,6 +8,7 @@ using System.Reflection;
 using TerraZ.Client;
 using Terraria;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace TZLauncher
 {
@@ -17,7 +18,15 @@ namespace TZLauncher
         {
             try
             {
-                Console.Title = "TerraZ Injection";
+                bool Debug = false;
+                foreach (string str in args)
+                    switch (str)
+                    {
+                        case "-debug": Debug = true; break;
+                    }
+                if (!Debug)
+                    LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
+
                 TerrariaThread = new Thread(() =>
                 {
                     string[] terrazArgs = new string[]
@@ -30,25 +39,94 @@ namespace TZLauncher
                     TerrariaAssembly.Launch(terrazArgs);
                 });
                 TerrariaThread.Start();
+
+                CommandsThread = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        try
+                        {
+                            string[] splt = Console.ReadLine().Split(' ');
+                            Command cmd = Commands.Find((e) => e.Name == splt[0]);
+                            if (cmd == null) { LauncherCore.WriteError(">>> Command not exists."); return; }
+                            cmd.Delegate(splt);
+                        } catch (Exception ex) { LauncherCore.WriteError("=====  Exception  ====="); LauncherCore.WriteErrorBG(ex.ToString()); }
+                    }
+                });
+                CommandsThread.Start();
+
                 Client.Initialize();
                 while (true)
                 {
+                    if (!TerrariaThread.IsAlive)
+                        Environment.Exit(0);
+
                     if (Netplay.ServerIPText != "s.terraz.ru")
-                    {
                         Netplay.Disconnect = true;
-                        Terraria.Main.statusText = "Неподтвержденный сервер.";
-                    }
                     Terraria.Main.getIP = "s.terraz.ru";
-                    Console.WriteLine(Terraria.Main.getIP);
                 }
             } catch (Exception ex) { Console.WriteLine(ex.ToString());  }
         }
         static Thread TerrariaThread;
+        static Thread CommandsThread;
         internal static Assembly TerrariaAssembly;
+        internal static List<Command> Commands = new List<Command>();
     }
-
+    public class Command
+    {
+        public Command(string Name, Action<string[]> Delegate)
+        {
+            this.Name = Name;
+            this.Delegate = Delegate;
+        }
+        public string Name { get; private set; }
+        public Action<string[]> Delegate { get; private set; }
+    }
     public static class LauncherCore
     {
+        public static void WriteError(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        public static void WriteErrorBG(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        public static void WriteSuccess(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        public static void WriteSuccessBG(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        public static void WriteInfo(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        public static void WriteInfoBG(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(msg);
+            Console.ResetColor();
+        }
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetConsoleWindow();
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         public static void Launch(this Assembly asm, string[] args) => asm.EntryPoint.Invoke(null, new object[1] { args });
     }
 }

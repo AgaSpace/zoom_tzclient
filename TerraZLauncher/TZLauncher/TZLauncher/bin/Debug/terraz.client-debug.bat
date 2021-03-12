@@ -1,0 +1,1 @@
+TZLauncher.exe -debug
