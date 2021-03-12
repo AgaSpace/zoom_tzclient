@@ -6,40 +6,44 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Reflection;
 using TerraZ.Client;
+using Terraria;
+using System.IO;
 
 namespace TZLauncher
 {
     internal class Launcher
     {
-        internal static async Task Main(string[] args)
+        internal static void Main(string[] args)
         {
-            Console.Title = "TerraZ: Starting...";
-            TerrariaThread = new Thread(() =>
+            try
             {
-                string[] terrazArgs = new string[]
+                Console.Title = "TerraZ: Starting...";
+                TerrariaThread = new Thread(() =>
                 {
+                    string[] terrazArgs = new string[]
+                    {
                     // -join = авто-подключение к серверу.
                     "-join",
                     "s.terraz.ru"
-                };
-                Terraria = Assembly.LoadFrom("Terraria.exe");
-                Terraria.Launch(terrazArgs);
-            });
-            TerrariaThread.Start();
-            TerraZ.Client.Client.Initialize();
-            while (true)
-            {
-                if (TerrariaThread.IsAlive) Console.Title = "TerraZ: Running";
-                else Console.Title = "TerraZ: Not running";
-                TerraZ.Client.Client.InvokeUpdate(null);
-                TerraZ.Client.Client.InvokeDraw(null);
-                Terraria.GetType("Terraria.Main").SetValue("getIP", "s.terraz.ru");
-            }
+                    };
+                    TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
+                    TerrariaAssembly.Launch(terrazArgs);
+                });
+                TerrariaThread.Start();
+                TerraZ.Client.Client.Initialize();
+                while (true)
+                {
+                    if (TerrariaThread.IsAlive) Console.Title = "TerraZ: Running";
+                    else Console.Title = "TerraZ: Not running";
+                    TerraZ.Client.Client.InvokeUpdate(null);
+                    TerraZ.Client.Client.InvokeDraw(null);
+                    TerrariaAssembly.GetType("Terraria.Main").SetValue("getIP", "s.terraz.ru");
+                    Console.WriteLine(Terraria.Main.getIP);
+                }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString());  }
         }
         static Thread TerrariaThread;
-        internal static Assembly Terraria;
-        static string[] RecentWorlds = new string[0];
-        internal static Timer ChooseServerTimer;
+        internal static Assembly TerrariaAssembly;
     }
 
     public static class LauncherCore

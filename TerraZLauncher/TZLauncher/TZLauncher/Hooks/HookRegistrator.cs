@@ -21,9 +21,9 @@ namespace TerraZ.Hooks
 			}
 			catch (Exception ex)
 			{
-				if (TZLauncher.Launcher.Terraria.GetType("Main").GetValue<bool>("gameMenu"))
+				if (TZLauncher.Launcher.TerrariaAssembly.GetType("Terraria.Main").GetValue<bool>("gameMenu"))
 				{
-					TZLauncher.Launcher.Terraria.GetType("Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
+					TZLauncher.Launcher.TerrariaAssembly.GetType("Terraria.Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
 				}
 			}
 			return result;
@@ -39,9 +39,9 @@ namespace TerraZ.Hooks
 			}
 			catch (Exception ex)
 			{
-				if (TZLauncher.Launcher.Terraria.GetType("Main").GetValue<bool>("gameMenu"))
+				if (TZLauncher.Launcher.TerrariaAssembly.GetType("Terraria.Main").GetValue<bool>("gameMenu"))
 				{
-					TZLauncher.Launcher.Terraria.GetType("Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
+					TZLauncher.Launcher.TerrariaAssembly.GetType("Terraria.Main").StaticInvoke("NewText", "Exception: " + ex.ToString(), byte.MaxValue, 0, 0);
 				}
 			}
 		}

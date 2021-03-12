@@ -1,10 +1,12 @@
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.exe.config
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.exe
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\TZLauncher.pdb
-C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.csprojAssemblyReference.cache
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.csproj.CoreCompileInputs.cache
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.exe
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.pdb
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\Microsoft.Xna.Framework.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\Microsoft.Xna.Framework.Game.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.csproj.CopyComplete
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\Terraria.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\Newtonsoft.Json.dll
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\SteelSeriesEngineWrapper.dll
