@@ -45,13 +45,6 @@
     <Compile Include="Client\PacketWriter.cs" />
     <Compile Include="Client\Permissions.cs" />
     <Compile Include="Client\Settings.cs" />
-    <Compile Include="Hooks\DrawEventArgs.cs" />
-    <Compile Include="Hooks\Hook.cs" />
-    <Compile Include="Hooks\HookID.cs" />
-    <Compile Include="Hooks\HookRegistrator.cs" />
-    <Compile Include="Hooks\NotReferenceHook.cs" />
-    <Compile Include="Hooks\ReferenceHook.cs" />
-    <Compile Include="Hooks\UpdateEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerRequest\ClearSlotRequest.cs" />
     <Compile Include="ServerRequest\PermissionsRequest.cs" />

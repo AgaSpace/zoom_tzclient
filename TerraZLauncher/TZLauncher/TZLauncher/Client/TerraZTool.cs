@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TerraZ.Hooks;
-using TerraZ.Client;
 using Microsoft.Xna.Framework.Input;
 using TZLauncher;
 using Terraria.Chat;
@@ -16,23 +11,35 @@ namespace TerraZ.Client
     {
         public void Initialize()
         {
-            HookRegistrator.Register(HookID.Update, Update);
+            Main.OnTickForThirdPartySoftwareOnly += Update;
 
             LauncherCore.WriteSuccess("<=- ===-  TerraZ  -=== -=>");
             LauncherCore.WriteInfo("Initialized TerraZ.Client.TerraZTool");
-            LauncherCore.WriteInfoBG("> Enter 'bds' to get list of all commands & binds.");
+            LauncherCore.WriteInfoBG("> Enter 'bds' to get list of all binds.");
+
+            Launcher.Commands.Add(new Command("bds", (w) =>
+            {
+                LauncherCore.WriteSuccess("===== TerraZTool =====");
+                foreach (Bind b in Binds)
+                {
+                    LauncherCore.WriteInfoBG("====== [" + b.Key.ToString() + "] ======");
+                    LauncherCore.WriteInfo(b.Description + "\n");
+                }
+            }));
 
             Binds.Add(Bind.CreateBind(Keys.B, () =>
             {
-                ChatHelper.SendChatMessageFromClient(new ChatMessage("//p" + (int)RegionDefPoints));
+                ChatHelper.SendChatMessageFromClient(new ChatMessage("//p" + (int)WorldEditPoints));
+                Main.LocalPlayer.PickTile(Player.tileTargetX, Player.tileTargetY, 1);
 
-                if (RegionDefPoints == Point.First) RegionDefPoints = Point.Second;
-                else RegionDefPoints = Point.Second;
+                if (WorldEditPoints == Point.First) WorldEditPoints = Point.Second;
+                else WorldEditPoints = Point.Second;
             }, "set WorldEdit points."));
 
             Binds.Add(Bind.CreateBind(Keys.V, () =>
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/region set " + (int)RegionDefPoints));
+                Main.LocalPlayer.PickTile(Player.tileTargetX, Player.tileTargetY, 1);
 
                 if (RegionDefPoints == Point.First) RegionDefPoints = Point.Second;
                 else RegionDefPoints = Point.Second;
@@ -41,10 +48,13 @@ namespace TerraZ.Client
             {
                 Main.drawingPlayerChat = true;
                 Main.chatText = "/region create ~";
-            }, "open chat & put '/region create ~' to chat input."));
+            }, "open chat & put '/region create ~' to chat."));
         }
-        private void Update(EventArgs args)
+
+        private void Update()
         {
+            if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus) return;
+
             foreach (Bind b in Binds)
             {
                 if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
