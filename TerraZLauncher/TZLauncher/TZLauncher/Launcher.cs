@@ -17,27 +17,28 @@ namespace TZLauncher
         {
             try
             {
-                Console.Title = "TerraZ: Starting...";
+                Console.Title = "TerraZ Injection";
                 TerrariaThread = new Thread(() =>
                 {
                     string[] terrazArgs = new string[]
                     {
-                    // -join = авто-подключение к серверу.
-                    "-join",
-                    "s.terraz.ru"
+                        // -join = авто-подключение к серверу.
+                        "-join",
+                        "s.terraz.ru"
                     };
                     TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
                     TerrariaAssembly.Launch(terrazArgs);
                 });
                 TerrariaThread.Start();
-                TerraZ.Client.Client.Initialize();
+                Client.Initialize();
                 while (true)
                 {
-                    if (TerrariaThread.IsAlive) Console.Title = "TerraZ: Running";
-                    else Console.Title = "TerraZ: Not running";
-                    TerraZ.Client.Client.InvokeUpdate(null);
-                    TerraZ.Client.Client.InvokeDraw(null);
-                    TerrariaAssembly.GetType("Terraria.Main").SetValue("getIP", "s.terraz.ru");
+                    if (Netplay.ServerIPText != "s.terraz.ru")
+                    {
+                        Netplay.Disconnect = true;
+                        Terraria.Main.statusText = "Неподтвержденный сервер.";
+                    }
+                    Terraria.Main.getIP = "s.terraz.ru";
                     Console.WriteLine(Terraria.Main.getIP);
                 }
             } catch (Exception ex) { Console.WriteLine(ex.ToString());  }
