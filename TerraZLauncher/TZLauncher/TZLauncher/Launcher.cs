@@ -16,16 +16,16 @@ namespace TZLauncher
     {
         internal static void Main(string[] args)
         {
+            LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
             try
             {
-                bool Debug = false;
                 foreach (string str in args)
                     switch (str)
                     {
-                        case "-debug": Debug = true; break;
+                        case "-debug": DebugMode = true; break;
                     }
-                if (!Debug)
-                    LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
+                if (DebugMode)
+                    LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 4);
 
                 TerrariaThread = new Thread(() =>
                 {
@@ -36,6 +36,11 @@ namespace TZLauncher
                         "s.terraz.ru"
                     };
                     TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
+
+                    LauncherCore.WriteSuccess("====== " + TerrariaAssembly.FullName + " ======");
+                    LauncherCore.WriteSuccessBG("ImageRuntimeVersion::" + TerrariaAssembly.ImageRuntimeVersion);
+                    LauncherCore.WriteSuccessBG("Location::" + TerrariaAssembly.Location);
+
                     TerrariaAssembly.Launch(terrazArgs);
                 });
                 TerrariaThread.Start();
@@ -44,18 +49,19 @@ namespace TZLauncher
                 {
                     while (true)
                     {
+                        string sc = Console.ReadLine();
                         try
                         {
-                            string[] splt = Console.ReadLine().Split(' ');
+                            string[] splt = sc.Split(' ');
                             Command cmd = Commands.Find((e) => e.Name == splt[0]);
-                            if (cmd == null) { LauncherCore.WriteError(">>> Command not exists."); return; }
-                            cmd.Delegate(splt);
+                            if (cmd != null) cmd.Delegate(splt);
+                            else LauncherCore.WriteError(">>> Command not exists.");
                         } catch (Exception ex) { LauncherCore.WriteError("=====  Exception  ====="); LauncherCore.WriteErrorBG(ex.ToString()); }
                     }
                 });
                 CommandsThread.Start();
 
-                Client.Initialize();
+                Terraria.Main.OnEngineLoad += () => Client.Initialize();
                 while (true)
                 {
                     if (!TerrariaThread.IsAlive)
@@ -71,6 +77,7 @@ namespace TZLauncher
         static Thread CommandsThread;
         internal static Assembly TerrariaAssembly;
         internal static List<Command> Commands = new List<Command>();
+        internal static bool DebugMode;
     }
     public class Command
     {
@@ -125,6 +132,7 @@ namespace TZLauncher
         }
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
+
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         public static void Launch(this Assembly asm, string[] args) => asm.EntryPoint.Invoke(null, new object[1] { args });

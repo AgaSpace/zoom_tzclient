@@ -1,12 +1,15 @@
 ﻿using System;
+using TZLauncher;
 
 namespace TerraZ.Client
 {
-	// Token: 0x0200000F RID: 15
 	public class Permissions
 	{
 		public bool HasPermission(string Permission)
 		{
+			if (Launcher.DebugMode)
+				return true;
+
 			string[] array = this._permissions.Split(new char[]
 			{
 				','

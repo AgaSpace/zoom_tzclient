@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AgileDotNet Version="6.6.0.12" Time="14.03.2021 23:10:48">
+  <Module N="TZLauncher, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Type N="&lt;Module&gt;" />
+    <Type N="TZLauncher.Launcher" ON="ohM=.oRM=">
+      <Method N="Void Main(String[] args)" ON="qBM=" />
+      <Method N="Void .ctor()" />
+      <Method N="Void .cctor()" />
+      <Field N="TerrariaThread" ON="oxM=" />
+      <Field N="CommandsThread" ON="pBM=" />
+      <Field N="TerrariaAssembly" ON="pRM=" />
+      <Field N="Commands" ON="phM=" />
+      <Field N="DebugMode" ON="pxM=" />
+    </Type>
+    <Type N="TZLauncher.Command">
+      <Method N="Void .ctor(String Name, System.Action&lt;String[]&gt; Delegate)" />
+      <Field N="&lt;Name&gt;k__BackingField" ON="qRM=" />
+      <Field N="&lt;Delegate&gt;k__BackingField" ON="qhM=" />
+    </Type>
+    <Type N="TZLauncher.LauncherCore">
+      <Method N="Void WriteError(String msg)" />
+      <Method N="Void WriteErrorBG(String msg)" />
+      <Method N="Void WriteSuccess(String msg)" />
+      <Method N="Void WriteSuccessBG(String msg)" />
+      <Method N="Void WriteInfo(String msg)" />
+      <Method N="Void WriteInfoBG(String msg)" />
+      <Method N="IntPtr GetConsoleWindow()" />
+      <Method N="Boolean ShowWindow(IntPtr hWnd, Int32 nCmdShow)" />
+      <Method N="Void Launch(System.Reflection.Assembly asm, String[] args)" />
+    </Type>
+    <Type N="TerraZ.Client.ChatMonitor">
+      <Method N="Void .ctor()" />
+      <Method N="Void NewText(String newText, Byte R, Byte G, Byte B)" />
+      <Method N="Void NewTextMultiline(String text, Boolean force, Microsoft.Xna.Framework.Color c, Int32 WidthLimit)" />
+      <Method N="Void AddNewMessage(String text, Microsoft.Xna.Framework.Color color, Int32 widthLimitInPixels)" />
+      <Method N="Void DrawChat(Boolean drawingPlayerChat)" />
+      <Method N="Void Clear()" />
+      <Method N="Void Update()" />
+      <Method N="Void Offset(Int32 linesOffset)" />
+      <Method N="Void ClampMessageIndex()" ON="rxM=" />
+      <Method N="Void ResetOffset()" />
+      <Method N="Void OnResolutionChange()" />
+      <Field N="_showCount" ON="qxM=" />
+      <Field N="_startChatLine" ON="rBM=" />
+      <Field N="_messages" ON="rRM=" />
+      <Field N="_recalculateOnNextUpdate" ON="rhM=" />
+    </Type>
+    <Type N="TerraZ.Client.TerraZTool" ON="sRM=.sBM=">
+      <Method N="Void Initialize()" />
+      <Method N="Void OnDraw(Microsoft.Xna.Framework.GameTime obj)" ON="uhM=" />
+      <Method N="Void Update()" ON="uxM=" />
+      <Method N="Void .ctor()" />
+      <Method N="Void &lt;Initialize&gt;b__0_0(String[] w)" />
+      <Method N="Void &lt;Initialize&gt;b__0_1()" />
+      <Method N="Void &lt;Initialize&gt;b__0_2()" />
+      <Method N="Void &lt;Initialize&gt;b__0_4()" />
+      <Method N="Void &lt;Initialize&gt;b__0_6()" />
+      <Method N="Void &lt;Initialize&gt;b__0_7()" />
+      <Method N="Void &lt;Initialize&gt;b__0_8()" />
+      <Method N="Void &lt;Initialize&gt;b__0_9()" />
+      <Method N="Void &lt;Initialize&gt;b__0_10()" />
+      <Method N="Void &lt;Initialize&gt;b__0_11()" />
+      <Field N="Binds" ON="shM=" />
+      <Field N="Functions" ON="sxM=" />
+      <Field N="WorldEditPoints" ON="tBM=" />
+      <Field N="RegionDefPoints" ON="tRM=" />
+      <Field N="OldMouse" ON="thM=" />
+      <Field N="NewMouse" ON="txM=" />
+      <Field N="SelectedPlayer" ON="uBM=" />
+      <Field N="UserInterface" ON="uRM=" />
+    </Type>
+    <Type N="TerraZ.Client.Client">
+      <Property N="ClientPermissions" ON="wBM=">
+        <Getter N="TerraZ.Client.Permissions get_ClientPermissions()" ON="vhM=" />
+        <Setter N="Void set_ClientPermissions(TerraZ.Client.Permissions value)" ON="vxM=" />
+      </Property>
+      <Method N="Void Initialize()" />
+      <Method N="Boolean HasPermission(String Permission)" />
+      <Field N="&lt;ClientPermissions&gt;k__BackingField" ON="vBM=" />
+      <Field N="&lt;ClientTools&gt;k__BackingField" ON="vRM=" />
+    </Type>
+    <Type N="TerraZ.Client.ClientUtils">
+      <Method N="Int32 GetPlayerOverMouse()" />
+      <Method N="Void SendData(Byte[] data)" />
+      <Method N="!0 GetStaticValue(System.Type type, String Field)" />
+      <Method N="!0 GetValue(System.Type type, String Field)" />
+      <Method N="Void SetStaticValue(System.Type type, String Field, Object Value)" />
+      <Method N="Void SetValue(System.Type type, String Field, Object Value)" />
+      <Method N="Void StaticInvoke(System.Type type, String Method, Object[] Value)" />
+      <Method N="Void Invoke(System.Type type, String Method, Object[] Value)" />
+    </Type>
+    <Type N="TerraZ.Client.DataType" />
+    <Type N="TerraZ.Client.ITool">
+      <Method N="Void Initialize()" />
+    </Type>
+    <Type N="TerraZ.Client.PacketWriter">
+      <Method N="Void .ctor()" />
+      <Method N="TerraZ.Client.PacketWriter SetType(Int16 type)" />
+      <Method N="TerraZ.Client.PacketWriter PackByte(Byte num)" />
+      <Method N="TerraZ.Client.PacketWriter PackInt16(Int16 num)" />
+      <Method N="TerraZ.Client.PacketWriter PackUInt16(UInt16 num)" />
+      <Method N="TerraZ.Client.PacketWriter PackInt32(Int32 num)" />
+      <Method N="TerraZ.Client.PacketWriter PackUInt32(UInt32 num)" />
+      <Method N="TerraZ.Client.PacketWriter PackUInt64(UInt64 num)" />
+      <Method N="TerraZ.Client.PacketWriter PackSingle(Single num)" />
+      <Method N="TerraZ.Client.PacketWriter PackString(String str)" />
+      <Method N="Void UpdateLength()" ON="wxM=" />
+      <Method N="String ByteArrayToString(Byte[] ba)" />
+      <Method N="Byte[] GetByteData()" />
+      <Field N="Stream" ON="wRM=" />
+      <Field N="Writer" ON="whM=" />
+    </Type>
+    <Type N="TerraZ.Client.Permissions">
+      <Method N="Boolean HasPermission(String Permission)" />
+      <Method N="Void SetPermissions(String Permissions)" ON="xRM=" />
+      <Method N="Void .ctor()" />
+      <Field N="_permissions" ON="xBM=" />
+    </Type>
+    <Type N="TerraZ.Client.Settings">
+      <Method N="Void .cctor()" />
+    </Type>
+    <Type N="TerraZ.Client.MainUI">
+      <Method N="Void Initialize()" />
+      <Method N="Void Draw()" />
+      <Method N="Void DrawInventory()" />
+      <Method N="Void DrawPlayers()" />
+      <Method N="Boolean DrawItem(Int32 netID, Int32 count, Microsoft.Xna.Framework.Color none, Microsoft.Xna.Framework.Color hovered, Int32 X, Int32 Y)" />
+      <Method N="Void DrawMenu(Microsoft.Xna.Framework.Color gradient1, Microsoft.Xna.Framework.Color gradient2, Microsoft.Xna.Framework.Rectangle rect, String text)" />
+      <Method N="Boolean TextLightPlayerButton(String name, Single x, Single y, Single size)" />
+      <Method N="Void TextLight(String text, Single x, Single y, Microsoft.Xna.Framework.Color color, Microsoft.Xna.Framework.Color maincolor, Single size)" />
+      <Method N="Void TextLightDeathFont(String text, Single x, Single y, Microsoft.Xna.Framework.Color color, Microsoft.Xna.Framework.Color maincolor, Single size)" />
+      <Method N="Void TextDefault(String text, Single x, Single y, Microsoft.Xna.Framework.Color maincolor, Single size)" />
+      <Method N="Void .ctor()" />
+      <Field N="OldMouse" ON="thM=" />
+      <Field N="NewMouse" ON="txM=" />
+      <Field N="OldKeyboard" ON="xhM=" />
+      <Field N="NewKeyboard" ON="xxM=" />
+      <Field N="Page" ON="yBM=" />
+      <Field N="SelectedPlayer" ON="uBM=" />
+      <Field N="SelectedItem" ON="yRM=" />
+      <Field N="Gradient" ON="yhM=" />
+      <Field N="Gradient2" ON="yxM=" />
+      <Field N="&lt;ShowGUI&gt;k__BackingField" ON="zBM=" />
+    </Type>
+    <Type N="TZLauncher.Launcher+&lt;&gt;c__DisplayClass0_0" ON="ohM=.oRM=+&lt;&gt;c__DisplayClass0_0">
+      <Method N="Void .ctor()" />
+      <Method N="Boolean &lt;Main&gt;b__3(TZLauncher.Command e)" />
+    </Type>
+    <Type N="TZLauncher.Launcher+&lt;&gt;c" ON="ohM=.oRM=+&lt;&gt;c">
+      <Method N="Void .cctor()" />
+      <Method N="Void .ctor()" />
+      <Method N="Void &lt;Main&gt;b__0_0()" />
+      <Method N="Void &lt;Main&gt;b__0_1()" />
+      <Method N="Void &lt;Main&gt;b__0_2()" />
+    </Type>
+    <Type N="TerraZ.Client.TerraZTool+Bind" ON="sRM=.sBM=+zRM=">
+      <Method N="TerraZ.Client.TerraZTool+Bind CreateBind(Microsoft.Xna.Framework.Input.Keys Key, System.Action ToDo, String Description)" ON="0RM=" />
+      <Method N="Void .ctor()" />
+      <Field N="Key" ON="zhM=" />
+      <Field N="Description" ON="zxM=" />
+      <Field N="Action" ON="0BM=" />
+    </Type>
+    <Type N="TerraZ.Client.TerraZTool+Function" ON="sRM=.sBM=+0hM=">
+      <Method N="TerraZ.Client.TerraZTool+Function CreateFunction(Boolean Value, System.Action Action)" ON="1BM=" />
+      <Method N="Void .ctor()" />
+      <Field N="Value" ON="0xM=" />
+      <Field N="Action" ON="0BM=" />
+    </Type>
+    <Type N="TerraZ.Client.TerraZTool+Point" ON="sRM=.sBM=+1RM=">
+      <Field N="First" ON="1hM=" />
+      <Field N="Second" ON="1xM=" />
+    </Type>
+    <Type N="TerraZ.Client.TerraZTool+&lt;&gt;c" ON="sRM=.sBM=+&lt;&gt;c">
+      <Method N="Void .cctor()" />
+      <Method N="Void .ctor()" />
+      <Method N="Void &lt;Initialize&gt;b__0_3()" />
+      <Method N="Void &lt;Initialize&gt;b__0_5()" />
+      <Method N="Void &lt;Initialize&gt;b__0_12()" />
+    </Type>
+  </Module>
+</AgileDotNet>
