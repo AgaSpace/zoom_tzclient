@@ -60,6 +60,8 @@ namespace TerraZ.Client
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 
+                TextLight("Client by Terrar14n", 5f, 5f, Color.White * 0.25f, Color.White, 1f);
+
                 DrawPlayers();
 
                 DrawMenu(Color.SkyBlue, Color.Aqua, new Rectangle(375, 75, 650, 450), "Manage");
