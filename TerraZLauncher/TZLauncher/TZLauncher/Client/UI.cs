@@ -147,9 +147,9 @@ namespace TerraZ.Client
             }
             if (TextLightPlayerButton("Freeze", 380, pix + 78f, 1f))
             {
-                ChatHelper.SendChatMessageFromClient(new ChatMessage("/gbuff \"" + p.name + "\" 156 10"));
-                ChatHelper.SendChatMessageFromClient(new ChatMessage("/gbuff \"" + p.name + "\" 47 10"));
-                ChatHelper.SendChatMessageFromClient(new ChatMessage("/gbuff \"" + p.name + "\" 149 10"));
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 156 10"));
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 47 10"));
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 149 10"));
             }
 
             if (!Main.ServerSideCharacter) return;
