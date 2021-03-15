@@ -137,15 +137,11 @@ namespace TerraZ.Client
                 TextLight("Slot ID: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
                 if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f))
-                    ClientUtils.SendData(new PacketWriter()
-                        .SetType(15)
-                        .PackInt16(1)
-                        .PackInt16((short)p.whoAmI)
-                        .PackInt16((short)SelectedItem)
-                        .GetByteData());
+                    new TZLauncher.ServerData.InventoryData((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
-            if (TextLightPlayerButton("Freeze", 380, pix + 78f, 1f))
+
+            if (TextLightPlayerButton("Disable Player", 380, pix + 78f, 1f))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 156 10"));
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 47 10"));

@@ -40,7 +40,7 @@ namespace TerraZ.Client
             WorldEditPoints = Point.First;
             RegionDefPoints = Point.First;
 
-            Binds.Add(Bind.CreateBind(Keys.B, () =>
+            /*Binds.Add(Bind.CreateBind(Keys.B, () =>
             {
                 if (!Client.HasPermission("terraz.worldedit"))
                     return;
@@ -114,7 +114,7 @@ namespace TerraZ.Client
                 {
                     ChatHelper.SendChatMessageFromClient(new ChatMessage("/kill " + SelectedPlayer));
                 }
-            }, "kill selected player."));*/
+            }, "kill selected player."));
             Binds.Add(Bind.CreateBind(Keys.F4, () =>
             {
                 if (Main.player != null && Main.player[SelectedPlayer] != null && Main.player[SelectedPlayer].active && Main.ServerSideCharacter && Client.HasPermission("terraz.inventories"))
