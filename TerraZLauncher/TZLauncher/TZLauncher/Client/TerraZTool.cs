@@ -99,7 +99,7 @@ namespace TerraZ.Client
                 }
             }, "list commands."));
 
-            Binds.Add(Bind.CreateBind(Keys.F2, () =>
+            /*Binds.Add(Bind.CreateBind(Keys.F2, () =>
             {
                 if (Main.player != null && Main.player[SelectedPlayer] != null && Main.player[SelectedPlayer].active && Client.HasPermission("terraz.playermanage"))
                 {
@@ -114,7 +114,7 @@ namespace TerraZ.Client
                 {
                     ChatHelper.SendChatMessageFromClient(new ChatMessage("/kill " + SelectedPlayer));
                 }
-            }, "kill selected player."));
+            }, "kill selected player."));*/
             Binds.Add(Bind.CreateBind(Keys.F4, () =>
             {
                 if (Main.player != null && Main.player[SelectedPlayer] != null && Main.player[SelectedPlayer].active && Main.ServerSideCharacter && Client.HasPermission("terraz.inventories"))

@@ -44,7 +44,7 @@ namespace TerraZ.Client
                 OldKeyboard = NewKeyboard;
                 NewKeyboard = Keyboard.GetState();
 
-                if (OldKeyboard.IsKeyUp(Keys.RightShift) && NewKeyboard.IsKeyDown(Keys.RightShift))
+                if (OldKeyboard.IsKeyUp(Keys.F2) && NewKeyboard.IsKeyDown(Keys.F2))
                     ShowGUI = !ShowGUI;
 
                 if (!ShowGUI || Main.gameMenu || Main.player == null)
@@ -174,12 +174,17 @@ namespace TerraZ.Client
         {
             TextLightDeathFont("Select Player", 45f, 25f, Color.White * 0.45f, Color.White, 1f);
 
+            int j = 1;
+
             foreach (Player p in from i in Main.player where i.active select i)
-                if (TextLightPlayerButton(Main.player[r].name, 45f, 75f + (i * 24), 1f))
+            {
+                if (TextLightPlayerButton(p.name, 45f, 75f + (j * 24), 1f))
                 {
-                    SelectedPlayer = r;
+                    SelectedPlayer = p.whoAmI;
                     SelectedItem = -1;
                 }
+                j += 1;
+            }
         }
         
         public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y)
