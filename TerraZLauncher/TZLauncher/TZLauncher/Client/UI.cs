@@ -60,8 +60,6 @@ namespace TerraZ.Client
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 
-                TextLight("Client by Terrar14n", 5f, 5f, Color.White * 0.25f, Color.White, 1f);
-
                 DrawPlayers();
 
                 DrawMenu(Color.SkyBlue, Color.Aqua, new Rectangle(375, 75, 650, 450), "Manage");
@@ -138,7 +136,7 @@ namespace TerraZ.Client
                 TextLight(p.inventory[SelectedItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
                 TextLight("Slot ID: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
-                if (TextLightPlayerButton("Delete Item", 425, pix + 55f, 1f))
+                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f))
                     ClientUtils.SendData(new PacketWriter()
                         .SetType(15)
                         .PackInt16(1)
@@ -175,20 +173,13 @@ namespace TerraZ.Client
         public void DrawPlayers()
         {
             TextLightDeathFont("Select Player", 45f, 25f, Color.White * 0.45f, Color.White, 1f);
-            for (int i = 0; i < 255; i++)
-            {
-                int r = i + Page;
-                if (r <= 255 && r >= 0 && Main.player[r] != null)
+
+            foreach (Player p in from i in Main.player where i.active select i)
+                if (TextLightPlayerButton(Main.player[r].name, 45f, 75f + (i * 24), 1f))
                 {
-                    if (Main.player[r].active)
-                        if (TextLightPlayerButton(Main.player[r].name, 45f, 75f + (i * 24), 1f))
-                        {
-                            SelectedPlayer = r;
-                            SelectedItem = -1;
-                        }
-                    else if (!Main.player[r].active) TextDefault(Main.player[r].name, 45f, 75f + (i * 24), Color.DarkGray, 1f);
+                    SelectedPlayer = r;
+                    SelectedItem = -1;
                 }
-            }
         }
         
         public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y)
