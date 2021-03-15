@@ -7,9 +7,6 @@ namespace TerraZ.Client
 	{
 		public bool HasPermission(string Permission)
 		{
-			if (Launcher.DebugMode)
-				return true;
-
 			string[] array = this._permissions.Split(new char[]
 			{
 				','

@@ -16,7 +16,7 @@ namespace TZLauncher
     {
         internal static void Main(string[] args)
         {
-            LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
+            //LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
             try
             {
                 foreach (string str in args)
@@ -24,8 +24,6 @@ namespace TZLauncher
                     {
                         case "-debug": DebugMode = true; break;
                     }
-                if (DebugMode)
-                    LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 4);
 
                 TerrariaThread = new Thread(() =>
                 {
@@ -33,7 +31,9 @@ namespace TZLauncher
                     {
                         // -join = авто-подключение к серверу.
                         "-join",
-                        "s.terraz.ru"
+                        "s.terraz.ru",
+                        "-port",
+                        "8888"
                     };
                     TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
 
@@ -67,9 +67,9 @@ namespace TZLauncher
                     if (!TerrariaThread.IsAlive)
                         Environment.Exit(0);
 
-                    if (Netplay.ServerIPText != "s.terraz.ru")
-                        Netplay.Disconnect = true;
-                    Terraria.Main.getIP = "s.terraz.ru";
+                    //if (Netplay.ServerIPText != "s.terraz.ru")
+                    //    Netplay.Disconnect = true;
+                    //Terraria.Main.getIP = "s.terraz.ru";
                 }
             } catch (Exception ex) { Console.WriteLine(ex.ToString());  }
         }
