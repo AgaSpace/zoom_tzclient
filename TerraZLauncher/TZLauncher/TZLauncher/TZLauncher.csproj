@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB160F8D-B589-4EBA-8FAB-6DE2D9132900}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TZLauncher</RootNamespace>
+    <RootNamespace>TerraZ</RootNamespace>
     <AssemblyName>TZLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
