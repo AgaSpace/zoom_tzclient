@@ -70,6 +70,7 @@
     <Compile Include="DataHandlers.cs" />
     <Compile Include="PacketFactory.cs" />
     <Compile Include="Permissions.cs" />
+    <Compile Include="Player Permissions.cs" />
     <Compile Include="PlayerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

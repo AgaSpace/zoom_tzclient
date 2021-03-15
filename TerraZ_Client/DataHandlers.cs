@@ -5,6 +5,7 @@ using System.IO.Streams;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using TShockAPI;
 
 namespace TerraZ_Client
@@ -67,11 +68,11 @@ namespace TerraZ_Client
             var jsonFormat = args.Data.ReadString();
             var handled = false;
 
-            Dictionary<string, string> data = null;
+            Dictionary<string, object> data = null;
 
             try
             {
-                data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFormat);
+                data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonFormat);
             }
             catch { }
 
@@ -83,6 +84,33 @@ namespace TerraZ_Client
 
                         Console.WriteLine("Player {0} connected on server with TerraZ client.", args.Player.Name);
 
+                        handled = true;
+                    }
+                    break;
+                case IndexTypes.PlayerInventoryModify:
+                    {
+                        if (args.Player.GetPlayerInfo().HavePermission(Permissions.InventoryModify))
+                        {
+                            if (Terraria.Main.ServerSideCharacter)
+                            {
+                                byte playerId = data["PlayerIndex"].ToInt8();
+                                short slot = data["Slot"].ToInt16();
+                                short stack = data["Stack"].ToInt16();
+                                byte prefix = data["Prefix"].ToInt8();
+                                short netId = data["Id"].ToInt16();
+
+                                byte[] dt = new PacketFactory()
+                                    .SetType(5)
+                                    .PackByte(playerId)
+                                    .PackInt16(slot)
+                                    .PackInt16(stack)
+                                    .PackByte(prefix)
+                                    .PackInt16(netId)
+                                    .GetByteData();
+
+                                TSPlayer.All.SendRawData(dt);
+                            }
+                        }
                         handled = true;
                     }
                     break;

@@ -78,7 +78,7 @@ namespace TerraZ_Client
         public void PostInit(EventArgs eventArgs)
         {
             GetDataHandlers = new GetDataHandlers();
-            ServerApi.Hooks.NetGetData.Register(this, GetData);
+            ServerApi.Hooks.NetGetData.Register(this, GetData, 1);
             ServerApi.Hooks.ServerLeave.Register(this, (args) =>
             {
                 players[args.Who] = Levels.None;
@@ -88,7 +88,7 @@ namespace TerraZ_Client
             {
                 if (players[args.Player.Index] != Levels.None)
                 {
-                    string permissions = db.GetPerms(args.Player.Group.Name);
+                    string permissions = db.GetPerms(args.Player.Group.Name.ToLower());
 
                     args.Player.GetPlayerInfo().Permissions = permissions;
 

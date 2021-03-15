@@ -17,24 +17,24 @@ namespace TerraZ_Client
             return tsplayer.GetData<PlayerInfo>(PlayerInfo.Key);
         }
 
-        public static int ToInt32(this string line)
+        public static int ToInt32(this object line)
         {
-            return int.Parse(line);
+            return (int)line;
         }
 
-        public static long ToInt64(this string line)
+        public static long ToInt64(this object line)
         {
-            return long.Parse(line);
+            return (long)line;
         }
 
-        public static short ToInt16(this string line)
+        public static short ToInt16(this object line)
         {
-            return short.Parse(line);
+            return (short)line;
         }
 
-        public static byte ToInt8(this string line)
+        public static byte ToInt8(this object line)
         {
-            return byte.Parse(line);
+            return (byte)line;
         }
     }
 }

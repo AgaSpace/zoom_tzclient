@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using TShockAPI.DB;
 
@@ -37,7 +38,9 @@ namespace TerraZ_Client
             using (QueryResult result = database.QueryReader("SELECT * FROM TZClientPerms WHERE GroupName=@0", gn))
             {
                 if (result.Read())
+                {
                     return result.Get<string>("Permission");
+                }    
             }
             return "";
         }
