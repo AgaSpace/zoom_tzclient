@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TerraZ.Client;
 
-namespace TZLauncher.ServerData
+namespace TerraZ.ServerData
 {
 	public class InventoryData
     {

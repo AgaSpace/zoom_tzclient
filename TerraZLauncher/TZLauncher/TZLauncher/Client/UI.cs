@@ -137,7 +137,7 @@ namespace TerraZ.Client
                 TextLight("Slot ID: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
                 if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f))
-                    new TZLauncher.ServerData.InventoryData((byte)p.whoAmI, (short)SelectedItem).Send();
+                    new ServerData.InventoryData((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
 
