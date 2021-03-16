@@ -91,7 +91,7 @@ namespace TerraZ.Client
 		public void Clear()
 		{
 			this._messages.Clear();
-			AddNewMessage("Нажмите на кнопку [c/afff47:Y], для получения списка биндов.", Color.YellowGreen, -1);
+			//AddNewMessage("Нажмите на кнопку [c/afff47:Y], для получения списка биндов.", Color.YellowGreen, -1);
 		}
 		public void Update()
 		{

@@ -19,9 +19,6 @@ namespace TZLauncher
 
         internal static void Main(string[] args)
         {
-            // HUY 1231
-
-            LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
             try
             {
                 foreach (string str in args)
@@ -29,18 +26,16 @@ namespace TZLauncher
                     {
                         case "-debug": DebugMode = true; break;
                     }
-                if (DebugMode) 
-                    LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
 
                 TerrariaThread = new Thread(() =>
                 {
                     string[] terrazArgs = new string[]
                     {
                         // -join = авто-подключение к серверу.
-                        "-join",
-                        "s.terraz.ru",
-                        "-port",
-                        "8888"
+                        //"-join",
+                        //"s.terraz.ru",
+                        //"-port",
+                        //"8888"
                     };
                     TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
 
@@ -71,10 +66,10 @@ namespace TZLauncher
                 Terraria.Main.OnEngineLoad += () => Client.Initialize();
                 while (true)
                 {
-                    if (TerrariaThread.ThreadState != ThreadState.Running)
+                    if (!TerrariaThread.IsAlive)
                         Environment.Exit(0);
                 }
-            } catch (Exception ex) { Console.WriteLine(ex.ToString());  }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); Console.ReadLine();  }
         }
         static Thread TerrariaThread;
         static Thread CommandsThread;

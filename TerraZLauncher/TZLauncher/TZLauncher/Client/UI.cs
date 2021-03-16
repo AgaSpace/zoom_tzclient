@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Input;
 using Terraria.UI;
 using Terraria.Chat;
 using System.Diagnostics;
+using Terraria.Graphics.Capture;
 
 namespace TerraZ.Client
 {
@@ -45,10 +46,31 @@ namespace TerraZ.Client
                 NewKeyboard = Keyboard.GetState();
 
                 if (OldKeyboard.IsKeyUp(Keys.F2) && NewKeyboard.IsKeyDown(Keys.F2))
+                {
                     ShowGUI = !ShowGUI;
 
-                if (!ShowGUI || Main.gameMenu || Main.player == null)
+                    if (CaptureManager.Instance.Active)
+                        CaptureManager.Instance.Active = false;
+
+                    if (Main.playerInventory)
+                        Main.playerInventory = false;
+                }
+
+                if (!ShowGUI)
                     return;
+
+                if (Main.playerInventory)
+                    ShowGUI = false;
+
+                if (CaptureManager.Instance.Active)
+                    CaptureManager.Instance.Active = false;
+
+                if (Main.gameMenu || Main.player == null)
+                {
+                    ShowGUI = false;
+                    SelectedPlayer = -1;
+                    SelectedItem = -1;
+                }
 
                 Main.LocalPlayer.mouseInterface = true;
 
@@ -62,8 +84,11 @@ namespace TerraZ.Client
 
                 DrawPlayers();
 
-                DrawMenu(Color.SkyBlue, Color.Aqua, new Rectangle(375, 75, 650, 450), "Manage");
-                DrawInventory();
+                if (SelectedPlayer != -1)
+                {
+                    DrawMenu(Color.SkyBlue, Color.Aqua, new Rectangle(375, 75, 650, 450), "Manage");
+                    DrawInventory();
+                }
 
                 Main.DrawCursor(Vector2.Zero, Main.SmartCursorEnabled);
 
@@ -79,8 +104,7 @@ namespace TerraZ.Client
         {
             if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
                 return;
-            
-            Main.playerInventory = false;
+
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
             int f = 0;
@@ -174,10 +198,22 @@ namespace TerraZ.Client
 
             foreach (Player p in from i in Main.player where i.active select i)
             {
+                if (SelectedPlayer == p.whoAmI)
+                {
+                    TextLight(p.name, 45f, 75f + (j * 24), (Color.Yellow * 0.25f), Color.Yellow, 1f);
+                }
+
                 if (TextLightPlayerButton(p.name, 45f, 75f + (j * 24), 1f))
                 {
-                    SelectedPlayer = p.whoAmI;
-                    SelectedItem = -1;
+                    if (SelectedPlayer == p.whoAmI)
+                    {
+                        SelectedPlayer = -1;
+                    }
+                    else
+                    {
+                        SelectedPlayer = p.whoAmI;
+                        SelectedItem = -1;
+                    }
                 }
                 j += 1;
             }
@@ -280,7 +316,7 @@ namespace TerraZ.Client
         private KeyboardState NewKeyboard;
 
         private int Page;
-        private int SelectedPlayer;
+        private int SelectedPlayer = -1;
         private int SelectedItem = -1;
 
         private Texture2D Gradient;
