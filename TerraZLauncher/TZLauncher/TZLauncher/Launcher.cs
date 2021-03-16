@@ -19,7 +19,7 @@ namespace TZLauncher
 
         internal static void Main(string[] args)
         {
-            // HUY
+            // HUY 1231
 
             LauncherCore.ShowWindow(LauncherCore.GetConsoleWindow(), 0);
             try
