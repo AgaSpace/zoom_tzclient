@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using Terraria;
 using Terraria.Net;
 using TerraZ.ServerData;
@@ -14,22 +16,24 @@ namespace TerraZ.Client
 			foreach (ITool t in ClientTools) t.Initialize();
 			ClientPermissions = new Permissions();
 
-			Main.chatMonitor = new ChatMonitor();
-            Player.Hooks.OnEnterWorld += OnEnterWorld;
-
 			NetManager.Instance.Register<SyncNetModule>();
+
+			Main.chatMonitor = new ChatMonitor();
+			Player.Hooks.OnEnterWorld += OnEnterWorld;
 		}
 
         private static void OnEnterWorld(Player plr)
         {
-			if (plr.whoAmI == Main.myPlayer)
-				new PacketWriter()
-					.SetType(82)
-					.PackInt16(0)
-					.GetByteData()
-					
-					.SendData();
-        }
+			if (plr.whoAmI != Main.myPlayer)
+				return;
+
+			NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(""));
+
+			packet.Writer.Write((byte)1);
+			packet.Writer.Write("");
+
+			NetManager.Instance.SendToServer(packet);
+		}
 
         public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
