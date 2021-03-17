@@ -91,6 +91,7 @@ namespace TerraZ.Client
 		public void Clear()
 		{
 			this._messages.Clear();
+			ClientUtils.canAgainSendPackage = true;
 		}
 		public void Update()
 		{
