@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TerraZ.Client;
+﻿using TerraZ.Client;
 
 namespace TerraZ.ServerData
 {
-	public class InventoryData
+	public class InventoryRequest
     {
-        public InventoryData(byte index, short slot)
+        public InventoryRequest(byte index, short slot)
         {
             this.PlayerIndex = index;
             this.Slot = slot;
@@ -19,7 +13,7 @@ namespace TerraZ.ServerData
             this.Id = 0;
         }
 
-        public InventoryData(byte index, short slot, short stack, byte prefix, short id)
+        public InventoryRequest(byte index, short slot, short stack, byte prefix, short id)
         {
             this.PlayerIndex = index;
             this.Slot = slot;
@@ -37,8 +31,8 @@ namespace TerraZ.ServerData
         public void Send()
         {
             ClientUtils.SendData(new PacketWriter()
-                .SetType(15)
-                .PackInt16(2)
+                .SetType(82)
+                .PackInt16(2) // Second RequestID
                 .PackString(this.ToJson())
                 .GetByteData());
         }

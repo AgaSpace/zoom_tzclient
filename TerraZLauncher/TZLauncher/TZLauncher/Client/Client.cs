@@ -1,9 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using System.Runtime.CompilerServices;
-using System.Reflection;
+using Terraria.Net;
+using TerraZ.ServerData;
 
 namespace TerraZ.Client
 {
@@ -18,13 +16,15 @@ namespace TerraZ.Client
 
 			Main.chatMonitor = new ChatMonitor();
             Player.Hooks.OnEnterWorld += OnEnterWorld;
+
+			NetManager.Instance.Register<SyncNetModule>();
 		}
 
         private static void OnEnterWorld(Player plr)
         {
 			if (plr.whoAmI == Main.myPlayer)
 				new PacketWriter()
-					.SetType(15)
+					.SetType(82)
 					.PackInt16(0)
 					.GetByteData()
 					

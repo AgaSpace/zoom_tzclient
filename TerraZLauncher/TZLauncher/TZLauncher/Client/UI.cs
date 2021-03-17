@@ -161,7 +161,7 @@ namespace TerraZ.Client
                 TextLight("Slot ID: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
                 if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f))
-                    new ServerData.InventoryData((byte)p.whoAmI, (short)SelectedItem).Send();
+                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
 
@@ -314,6 +314,10 @@ namespace TerraZ.Client
 
         private KeyboardState OldKeyboard;
         private KeyboardState NewKeyboard;
+
+        public bool WindowAnimation;
+        public float WindowAnimationSpeed;
+        public float WindowOpacity;
 
         private int Page;
         private int SelectedPlayer = -1;

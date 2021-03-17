@@ -12,7 +12,7 @@ namespace TerraZ.Client
 	{
 		public ChatMonitor()
 		{
-			this._showCount = Settings.ChatLength;
+			this._showCount = 25;
 			this._startChatLine = 0;
 			this._messages = new List<ChatMessageContainer>();
 		}
@@ -91,7 +91,6 @@ namespace TerraZ.Client
 		public void Clear()
 		{
 			this._messages.Clear();
-			//AddNewMessage("Нажмите на кнопку [c/afff47:Y], для получения списка биндов.", Color.YellowGreen, -1);
 		}
 		public void Update()
 		{

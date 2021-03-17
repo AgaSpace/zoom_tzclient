@@ -13,9 +13,9 @@ namespace TerraZ.ServerData
             return Newtonsoft.Json.JsonConvert.SerializeObject(dic);
         }
 
-        public static Dictionary<string, object> ToLine(this string jsonFormat)
+        public static T GetData<T>(this string jsonFormat)
         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonFormat);
+            return (T)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonFormat);
         }
     }
 }
