@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using Terraria;
 using Terraria.Net;
@@ -9,7 +10,7 @@ namespace TerraZ.Client
 {
 	public static class Client
 	{
-		public static unsafe void Initialize()
+		public static void Initialize()
 		{
 			ClientTools = new List<ITool>();
 			ClientTools.Add(new TerraZTool());
@@ -20,10 +21,15 @@ namespace TerraZ.Client
 
 			Main.chatMonitor = new ChatMonitor();
 
-			*((int*)typeof(NetMessage).GetMethod("TrySendData").MethodHandle.Value.ToPointer() + 2) = *((int*)typeof(ClientUtils).GetMethod("TrySendData").MethodHandle.Value.ToPointer() + 2);
+			ReplaceMethod(typeof(NetMessage).GetMethod("CheckBytes", Flags), typeof(ClientUtils).GetMethod("CheckBytes", Flags));
+		}
+		public static BindingFlags Flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+		public static unsafe void ReplaceMethod(MethodInfo _from, MethodInfo _to) // ReplaceMethod(typeof(Type1).GetMethod("Method"), typeof(Type2).GetMethod("Method2"));
+		{
+			*((int*)_from.MethodHandle.Value.ToPointer() + 2) = *((int*)_to.MethodHandle.Value.ToPointer() + 2);
 		}
 
-        public   static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
+		public   static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
 		public   static List<ITool> ClientTools { get; private set; }
 	}

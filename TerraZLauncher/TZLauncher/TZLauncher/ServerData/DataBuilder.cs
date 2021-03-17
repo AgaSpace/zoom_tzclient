@@ -21,14 +21,31 @@ namespace TerraZ.ServerData
 
         public static void SendData(byte index, object obj)
         {
-            string js = obj.ToJson();
+            SendData(index, obj.ToJson());
+        }
 
-            NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(js));
 
-            packet.Writer.Write(index);
-            packet.Writer.Write(js);
 
-            NetManager.Instance.SendToServer(packet);
+        public static void SendData(PacketID index, string jsonFormat)
+        {
+            SendData((byte)index, jsonFormat);
+        }
+
+        public static void SendData(PacketID index, object obj)
+        {
+            SendData((byte)index, obj.ToJson());
+        }
+
+
+
+        public static void SendData(byte index)
+        {
+            SendData(index, "{}");
+        }
+
+        public static void SendData(PacketID index)
+        {
+            SendData((byte)index, "{}");
         }
     }
 }

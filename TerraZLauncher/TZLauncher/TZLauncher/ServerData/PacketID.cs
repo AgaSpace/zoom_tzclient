@@ -8,6 +8,6 @@ namespace TerraZ.ServerData
 {
     public enum PacketID : byte // Packet = received data
     {
-        PermissionsData
+        PermissionsData = 1
     }
 }
