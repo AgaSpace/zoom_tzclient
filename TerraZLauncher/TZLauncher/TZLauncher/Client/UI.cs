@@ -86,7 +86,7 @@ namespace TerraZ.Client
 
                 if (SelectedPlayer != -1)
                 {
-                    DrawMenu(Color.SkyBlue, Color.Aqua, new Rectangle(375, 75, 650, 450), "Manage");
+                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 650, 450), "Manage");
                     DrawInventory();
                 }
 
@@ -248,11 +248,15 @@ namespace TerraZ.Client
 
         public void DrawMenu(Color gradient1, Color gradient2, Rectangle rect, string text)
         {
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, rect, Color.DarkGray);
             Main.spriteBatch.Draw(Gradient, rect, Color.Black);
             Main.spriteBatch.Draw(Gradient, rect, Color.Black);
 
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(rect.X, rect.Y, rect.Width, 5), gradient1);
-            Main.spriteBatch.Draw(Gradient2, new Rectangle(rect.X, rect.Y, rect.Width, 5), gradient2);
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(rect.X, rect.Y, rect.Width, 15), gradient1);
+            Main.spriteBatch.Draw(Gradient2, new Rectangle(rect.X, rect.Y, rect.Width, 15), gradient2);
+
+            Main.spriteBatch.Draw(Gradient, new Rectangle(rect.X, rect.Y, rect.Width, 15), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(Gradient, new Rectangle(rect.X, rect.Y, rect.Width, 15), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
 
             TextLightDeathFont(text, (float)rect.X + 5f, (float)rect.Y + 15f, Color.White * 0.45f, Color.White, 0.5f);
         }
@@ -277,10 +281,12 @@ namespace TerraZ.Client
 
         public static void TextLight(string text, float x, float y, Color color, Color maincolor, float size)
         {
+            /*
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x + 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x - 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x, y + 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x, y - 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
+            */
 
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x + 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x - 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
@@ -291,10 +297,12 @@ namespace TerraZ.Client
         }
         public static void TextLightDeathFont(string text, float x, float y, Color color, Color maincolor, float size)
         {
+            /*
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x + 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x - 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x, y + 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x, y - 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
+            */
 
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x + 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.DeathText.Value, text, new Vector2(x - 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
