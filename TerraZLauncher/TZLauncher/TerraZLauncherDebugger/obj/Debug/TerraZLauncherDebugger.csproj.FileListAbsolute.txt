@@ -5,3 +5,10 @@ C:\Users\bat627\source\repos\TerraZLauncherDebugger\TerraZLauncherDebugger\obj\D
 C:\Users\bat627\source\repos\TerraZLauncherDebugger\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.csproj.CoreCompileInputs.cache
 C:\Users\bat627\source\repos\TerraZLauncherDebugger\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.exe
 C:\Users\bat627\source\repos\TerraZLauncherDebugger\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.pdb
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\TerraZLauncherDebugger.exe.config
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\TerraZLauncherDebugger.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\TerraZLauncherDebugger.pdb
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.csprojAssemblyReference.cache
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.csproj.CoreCompileInputs.cache
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.pdb

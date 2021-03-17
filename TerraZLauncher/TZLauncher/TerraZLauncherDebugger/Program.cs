@@ -12,6 +12,10 @@ namespace TerraZLauncherDebugger
     {
         static void Main(string[] args)
         {
+            LauncherCore.WriteInfoBG("/pause >>> LAUNCHER::PAUSE");
+            LauncherCore.WriteInfoBG("/resume >>> LAUNCHER::RESUME");
+            LauncherCore.WriteInfoBG("/stop >>> LAUNCHER::STOP");
+            LauncherCore.WriteInfoBG("/push >>> LAUNCHER::PUSH");
             Thread t = new Thread(() =>
             {
                 Assembly asm = Assembly.LoadFrom("TZLauncher.exe");
