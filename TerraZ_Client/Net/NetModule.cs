@@ -12,7 +12,7 @@ namespace TerraZ_Client.Net
     {
         public override bool Deserialize(BinaryReader reader, int userId)
         {
-            return Controller.Deserialise(TShockAPI.TShock.Players[userId], (IndexTypes)reader.ReadInt16(), reader.ReadString());
+            return Controller.Deserialise(TShockAPI.TShock.Players[userId], (IndexTypes)reader.ReadByte(), reader.ReadString());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿public enum IndexTypes : byte
 {
-    Authorization = 1,
-    //PlayerShifting = 2,
+    Authorization = 0,
+    Permissions = 1,
     PlayerInventoryModify = 2
 }

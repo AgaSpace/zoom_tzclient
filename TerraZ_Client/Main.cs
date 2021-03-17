@@ -34,44 +34,7 @@ namespace TerraZ_Client
                 players[i] = Levels.None;
             }
 
-            Hooks.Net.ReceiveData = new Hooks.Net.ReceiveDataHandler(OnReceiveData);
-
             ServerApi.Hooks.GamePostInitialize.Register(this, PostInit);
-        }
-
-        private static HookResult OnReceiveData(MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length)
-        {
-            if (packetId != 15)
-                if (!Enum.IsDefined(typeof(PacketTypes), (int)packetId))
-                {
-                    return HookResult.Cancel;
-                }
-
-            //if (NetHooks._hookManager.InvokeNetGetData(ref packetId, buffer, ref readOffset, ref length))
-
-            object[] parametr = new object[] { packetId, buffer, readOffset, length };
-
-            Type[] types = new[] { typeof(byte).MakeByRefType(), typeof(MessageBuffer), typeof(int).MakeByRefType(), typeof(int).MakeByRefType() };
-
-            bool value = (bool)ServerApi.Hooks.GetType().GetMethod("InvokeNetGetData", 
-
-                BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic,
-                null,
-                CallingConventions.Any,
-                types,
-                null)
-                
-            .Invoke(ServerApi.Hooks, parametr);
-
-            packetId = (byte)parametr[0];
-            readOffset = (int)parametr[2];
-            length = (int)parametr[3];
-
-            if (value)
-            {
-                return HookResult.Cancel;
-            }
-            return HookResult.Continue;
         }
 
         public void PostInit(EventArgs eventArgs)
@@ -92,7 +55,10 @@ namespace TerraZ_Client
                     args.Player.GetPlayerInfo().Permissions = permissions;
 
                     Net.Controller.SendToClient(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
-                        { "IsAuthorized", true } ,
+                        { "IsAuthorized", true }
+                        });
+
+                    Net.Controller.SendToClient(args.Player, IndexTypes.Permissions, new Dictionary<string, object> {
                         { "Permission", permissions }
                         });
                 }
@@ -105,7 +71,10 @@ namespace TerraZ_Client
                     args.Player.GetPlayerInfo().Permissions = "";
 
                     Net.Controller.SendToClient(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
-                        { "IsAuthorized", false } ,
+                        { "IsAuthorized", false }
+                    });
+
+                    Net.Controller.SendToClient(args.Player, IndexTypes.Permissions, new Dictionary<string, object> {
                         { "Permission", "" }
                     });
                 }

@@ -28,6 +28,9 @@ namespace TerraZ_Client.Net
             }
             catch { }
 
+            if (Enum.IsDefined(typeof(IndexTypes), dataType))
+                handled = true;
+
             switch (dataType)
             {
                 case IndexTypes.Authorization:
@@ -35,8 +38,6 @@ namespace TerraZ_Client.Net
                         MyPlugin.players[player.Index] = Levels.ClientUser;
 
                         Console.WriteLine("Player {0} connected on server with TerraZ client.", player.Name);
-
-                        handled = true;
                     }
                     break;
                 case IndexTypes.PlayerInventoryModify:
@@ -61,7 +62,6 @@ namespace TerraZ_Client.Net
                                 TSPlayer.All.SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
                             }
                         }
-                        handled = true;
                     }
                     break;
 
@@ -83,6 +83,7 @@ namespace TerraZ_Client.Net
             return packet;
         }
 
+        #region Типа расширения
         public static NetPacket SendToClient(int player, byte index, Dictionary<string, object> obj)
         {
             return SendToClient(player, index, JsonConvert.SerializeObject(obj));
@@ -117,5 +118,6 @@ namespace TerraZ_Client.Net
         {
             return SendToClient(player.Index, (byte)index, obj);
         }
+        #endregion
     }
 }
