@@ -28,12 +28,12 @@ namespace TerraZ.Client
 				return;
 
 			TZLauncher.LauncherCore.WriteInfoBG("OnEnterWorld hook::" + plr.name);
-			NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(""));
-
-			packet.Writer.Write(byte.Parse(1.ToString()));
-			packet.Writer.Write("");
-
-			NetManager.Instance.SendToServer(packet);
+			ClientUtils.SendData(new PacketWriter()
+				.SetType(82)
+				.PackUInt16(12)
+				.PackByte(byte.Parse(1.ToString())) // First RequestID
+				.PackString("")
+				.GetByteData());
 		}
 
         public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);

@@ -15,7 +15,8 @@ namespace TerraZ.ServerData
         {
             ClientUtils.SendData(new PacketWriter()
                 .SetType(82)
-                .PackInt16(byte.Parse(3.ToString())) // First RequestID
+                .PackUInt16(11)
+                .PackInt16(byte.Parse(3.ToString())) // Third RequestID
                 .GetByteData());
         }
     }
