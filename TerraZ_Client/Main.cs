@@ -13,6 +13,7 @@ using System.IO.Streams;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using OTAPI;
+using Terraria.Net;
 
 namespace TerraZ_Client
 {
@@ -22,8 +23,6 @@ namespace TerraZ_Client
         public override string Name => "Client";
 
         public static Levels[] players = new Levels[255];
-
-        public GetDataHandlers GetDataHandlers;
         public static DataBase db;
 
         public MyPlugin(Main main) : base(main) { }
@@ -77,8 +76,8 @@ namespace TerraZ_Client
 
         public void PostInit(EventArgs eventArgs)
         {
-            GetDataHandlers = new GetDataHandlers();
-            ServerApi.Hooks.NetGetData.Register(this, GetData, 1);
+            NetManager.Instance.Register<Net.ClientModule>();
+
             ServerApi.Hooks.ServerLeave.Register(this, (args) =>
             {
                 players[args.Who] = Levels.None;
@@ -92,19 +91,20 @@ namespace TerraZ_Client
 
                     args.Player.GetPlayerInfo().Permissions = permissions;
 
-                    NetData.SendData(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
+                    Net.Controller.SendToClient(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
                         { "IsAuthorized", true } ,
                         { "Permission", permissions }
                         });
                 }
             };
+
             TShockAPI.Hooks.PlayerHooks.PlayerLogout += (args) =>
             {
                 if (players[args.Player.Index] != Levels.None)
                 {
                     args.Player.GetPlayerInfo().Permissions = "";
 
-                    NetData.SendData(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
+                    Net.Controller.SendToClient(args.Player, IndexTypes.Authorization, new Dictionary<string, object> {
                         { "IsAuthorized", false } ,
                         { "Permission", "" }
                     });
@@ -123,38 +123,6 @@ namespace TerraZ_Client
             IDbConnection DB = new SqliteConnection(string.Format("uri=file://{0},Version=3", Path.Combine(TShock.SavePath, "TZClient.sqlite")));
 
             db = new DataBase(DB);
-        }
-
-        private void GetData(GetDataEventArgs args)
-        {
-            var type = args.MsgID;
-
-            var player = TShock.Players[args.Msg.whoAmI];
-
-            if (player == null)
-            {
-                args.Handled = true;
-                return;
-            }
-
-            if (!player.ConnectionAlive)
-            {
-                args.Handled = true;
-                return;
-            }
-            
-            using (var data = new MemoryStream(args.Msg.readBuffer, args.Index, args.Length))
-            {
-                try
-                {
-                    if (GetDataHandlers.HandlerGetData(type, player, data))
-                       args.Handled = true;
-                }
-                catch (Exception ex)
-                {
-                    TShock.Log.ConsoleError(ex.ToString());
-                }
-            }
         }
     }
 }

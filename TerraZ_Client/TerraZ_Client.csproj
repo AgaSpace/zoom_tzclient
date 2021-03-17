@@ -67,7 +67,8 @@
     <Compile Include="Extens.cs" />
     <Compile Include="IndexTypes.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="DataHandlers.cs" />
+    <Compile Include="Net\Controller.cs" />
+    <Compile Include="Net\NetModule.cs" />
     <Compile Include="PacketFactory.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Player Permissions.cs" />

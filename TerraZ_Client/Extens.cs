@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TShockAPI;
+using System.Reflection;
+using Terraria;
 
 namespace TerraZ_Client
 {
@@ -19,22 +21,22 @@ namespace TerraZ_Client
 
         public static int ToInt32(this object line)
         {
-            return (int)line;
+            return int.Parse(line.ToString());
         }
 
         public static long ToInt64(this object line)
         {
-            return (long)line;
+            return long.Parse(line.ToString());
         }
 
         public static short ToInt16(this object line)
         {
-            return (short)line;
+            return short.Parse(line.ToString());
         }
 
         public static byte ToInt8(this object line)
         {
-            return (byte)line;
+            return byte.Parse(line.ToString());
         }
     }
 }
