@@ -82,12 +82,53 @@ namespace TerraZ.Client
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 
-                DrawPlayers();
+                string t = Client.PlayedTime.Elapsed.ToString();
+                TextLightDeathFont(t, 375f, 5f, Color.White * 0.25f, Color.White, 1f);
 
+                DrawPlayers();
                 if (SelectedPlayer != -1)
                 {
-                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 650, 450), "Manage");
-                    DrawInventory();
+                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 950, 450), " ");
+
+                    PagesPadding = 0;
+                    if (ButtonV2("Главная страница", 380, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\MAIN_BUTTON") && View != ViewID.Inventory)
+                    {
+                        View = ViewID.Inventory;
+                        SelectedItem = -1;
+                    }
+                    if (ButtonV2("Копилка", 385 + PagesPadding, 85, Color.White, Color.SkyBlue, Color.Purple, "OPACITIES\\PIGGY::BANK_BUTTON") && View != ViewID.PiggyBank)
+                    {
+                        View = ViewID.PiggyBank;
+                        SelectedPiggyBankItem = -1;
+                    }
+                    if (ButtonV2("Сейф", 390 + PagesPadding, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\SAFE::BANK_BUTTON") && View != ViewID.Safe)
+                    {
+                        View = ViewID.Safe;
+                        SelectedSafeItem = -1;
+                    }
+                    if (ButtonV2("Сумка бездны", 395 + PagesPadding, 85, Color.White, Color.SkyBlue, Color.Purple, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.VoidBag)
+                    {
+                        View = ViewID.VoidBag;
+                        SelectedVoidBagItem = -1;
+                    }
+                    if (ButtonV2("Печь защитника", 400 + PagesPadding, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.DefendersForge)
+                    {
+                        View = ViewID.DefendersForge;
+                        SelectedDefendersForgeItem = -1;
+                    }
+
+                    switch (View)
+                    {
+                        case ViewID.Inventory:
+                            DrawInventory();
+                            break;
+                        case ViewID.PiggyBank:
+                            DrawPiggyBank();
+                            break;
+                        case ViewID.Safe:
+                            DrawSafe();
+                            break;
+                    }
                 }
 
                 Main.DrawCursor(Vector2.Zero, Main.SmartCursorEnabled);
@@ -110,62 +151,69 @@ namespace TerraZ.Client
             int f = 0;
             for (int i = 0; i < 10; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
             f = 0;
             for (int i = 10; i < 20; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
             f = 0;
             for (int i = 20; i < 30; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2)))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
             f = 0;
             for (int i = 30; i < 40; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3)))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\ID_" + i))
+                    SelectedItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 40; i < 50; i++)
+            {
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 4), "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
             f = 0;
             for (int i = 50; i < 54; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.Yellow, Color.SkyBlue, 380 + f, 145 + (37 * 4)))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.Yellow, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
             f += 37;
             for (int i = 54; i < 58; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.YellowGreen, Color.SkyBlue, 380 + f, 145 + (37 * 4)))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.YellowGreen, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_" + i))
                     SelectedItem = i;
                 f += 37;
             }
 
-            if (DrawItem(p.inventory[58].netID, p.inventory[58].stack, Color.Aqua, Color.SkyBlue, 380 + f, 145 + (37 * 4)))
+            if (DrawItem(p.inventory[58].netID, p.inventory[58].stack, Color.Aqua, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_LAST"))
                 SelectedItem = 58;
 
             float pix = 145f + 35f + (37f * 5f);
             if (SelectedItem != -1)
             {
-                DrawItem(p.inventory[SelectedItem].netID, p.inventory[SelectedItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 +  (37 * 5));
-                TextLight(p.inventory[SelectedItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
-                TextLight("Slot ID: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
+                DrawItem(p.inventory[SelectedItem].netID, p.inventory[SelectedItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 +  (37 * 5), "OPACITIES\\SELECTED_ITEM");
+                TextLight(p.inventory[SelectedItem].Name, 425f, pix + 5f, Color.White * 0.15f, Color.White, 1f);
+                TextLight("Слот: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
-                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f))
+                if (TextLightPlayerButton("Удалить предмет", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
                     new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
 
-            if (TextLightPlayerButton("Disable Player", 380, pix + 78f, 1f))
+            if (TextLightPlayerButton("Заморозить", 380, pix + 78f, 1f, "OPACITIES\\BUTTON_DISABLE::PLAYER"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 156 10"));
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 47 10"));
@@ -174,28 +222,123 @@ namespace TerraZ.Client
 
             if (!Main.ServerSideCharacter) return;
 
-            if (TextLightPlayerButton("Manage Inventory", 380, pix + 78f + 24f, 1f))
+            if (TextLightPlayerButton("Скопировать инвентарь", 380, pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee \"" + p.name + "\""));
                 Main.playerInventory = true;
                 ShowGUI = false;
             }
-            if (TextLightPlayerButton("Save & Restore Inventory", 380 + (int)(5f + FontAssets.MouseText.Value.MeasureString("Manage Inventory").X), pix + 78f + 24f, 1f))
+            if (TextLightPlayerButton("Сохранить и вернуть свой инвентарь", 380 + (int)(5f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY2"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee -s"));
             }
-            if (TextLightPlayerButton("Restore Inventory", 380 + (int)(10f + FontAssets.MouseText.Value.MeasureString("Manage Inventory").X  + FontAssets.MouseText.Value.MeasureString("Save & Restore Inventory").X), pix + 78f + 24f, 1f))
+            if (TextLightPlayerButton("Вернуть свой инвентарь", 380 + (int)(10f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X  + FontAssets.MouseText.Value.MeasureString("Сохранить и вернуть свой инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY3"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee"));
+            }
+        }
+        public void DrawPiggyBank()
+        {
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+                return;
+
+            Main.inventoryScale = 0.6f;
+            Player p = Main.player[SelectedPlayer];
+            int f = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedPiggyBankItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 10; i < 20; i++)
+            {
+                if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedPiggyBankItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 20; i < 30; i++)
+            {
+                if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedPiggyBankItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 30; i < 40; i++)
+            {
+                if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedPiggyBankItem = i;
+                f += 37;
+            }
+
+            float pix = 145f + 35f + (37f * 5f);
+            if (SelectedPiggyBankItem != -1)
+            {
+                DrawItem(p.bank.item[SelectedPiggyBankItem].netID, p.bank.item[SelectedPiggyBankItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 + (37 * 5), "OPACITIES\\SELECTED_ITEM");
+                TextLight(p.bank.item[SelectedPiggyBankItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
+                TextLight("Slot ID: " + SelectedPiggyBankItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
+
+                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
+                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedPiggyBankItem)).Send();
+
+            }
+        }
+        public void DrawSafe()
+        {
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+                return;
+
+            Main.inventoryScale = 0.6f;
+            Player p = Main.player[SelectedPlayer];
+            int f = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedSafeItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 10; i < 20; i++)
+            {
+                if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedSafeItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 20; i < 30; i++)
+            {
+                if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedSafeItem = i;
+                f += 37;
+            }
+            f = 0;
+            for (int i = 30; i < 40; i++)
+            {
+                if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\PIGGY::BANK_ID_" + i))
+                    SelectedSafeItem = i;
+                f += 37;
+            }
+
+            float pix = 145f + 35f + (37f * 5f);
+            if (SelectedPiggyBankItem != -1)
+            {
+                DrawItem(p.bank2.item[SelectedSafeItem].netID, p.bank2.item[SelectedSafeItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 + (37 * 5), "OPACITIES\\SELECTED_ITEM");
+                TextLight(p.bank2.item[SelectedSafeItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
+                TextLight("Slot ID: " + SelectedSafeItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
+
+                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
+                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedSafeItem)).Send();
+
             }
         }
 
         public void DrawPlayers()
         {
-            DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(45, 25, 16 * 20, Main.screenHeight), "Select Player");
+            Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, 16 * 20 + 45, Main.screenHeight + 140), Color.Black);
 
-            int j = 1;
-            j += Page;
+            int j = Page + 1;
 
             foreach (Player p in from i in Main.player where i.active select i)
             {
@@ -204,7 +347,10 @@ namespace TerraZ.Client
                     TextLight(p.name, 45f, 75f + (j * 24), (Color.Yellow * 0.25f), Color.Yellow, 1f);
                 }
 
-                if (TextLightPlayerButton(p.name, 45f, 75f + (j * 24), 1f))
+                if (!Opacityes.ContainsKey("OPACITIES\\PLAYER_SELECTION::" + p.name + "::" + p.whoAmI))
+                    Opacityes.Add("OPACITIES\\PLAYER_SELECTION::" + p.name + "::" + p.whoAmI, Opacity.Generate());
+
+                if (TextLightPlayerButton(p.name, 45f, 75f + (j * 24), 1f, "OPACITIES\\PLAYER_SELECTION::" + p.name + "::" + p.whoAmI))
                 {
                     if (SelectedPlayer == p.whoAmI)
                     {
@@ -219,19 +365,26 @@ namespace TerraZ.Client
                 j += 1;
             }
         }
-        
-        public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y)
+
+        public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y, string opacityID)
         {
+            if (!Opacityes.ContainsKey(opacityID))
+            {
+                Opacityes.Add(opacityID, Opacity.Generate());
+            }
+
             bool result = false;
 
             Color c = none;
             Rectangle r = new Rectangle(X, Y, 33, 33);
             if (r.Contains(Main.mouseX, Main.mouseY))
             {
-                c = hovered; 
+                Opacityes[opacityID]++;
+
                 if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
                     result = true;
             }
+            else Opacityes[opacityID]--;
 
             Item i = new Item();
             i.SetDefaults(netID);
@@ -240,54 +393,91 @@ namespace TerraZ.Client
             Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y, 30, 30), new Color(30, 30, 30));
             Main.spriteBatch.Draw(Gradient, new Rectangle(X, Y, 30, 30), Color.Black);
 
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, 30, 3), Color.Black);
-            Main.spriteBatch.Draw(Gradient2, new Rectangle(X, Y + 30, 30, 3), c);
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, 30, 3), c * (c.A - Opacityes[opacityID].PublicOpacity));
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, 30, 3), Color.Yellow * Opacityes[opacityID].PublicOpacity);
+
             ItemSlot.Draw(Main.spriteBatch, ref i, 21, new Vector2((float)X, (float)Y), default);
+
+            return result;
+        }
+
+        public bool ButtonV2(string Text, int X, int Y, Color color, Color gradient1, Color gradient2, string opacityID)
+        {
+            if (!Opacityes.ContainsKey(opacityID))
+            {
+                Opacityes.Add(opacityID, Opacity.Generate());
+            }
+
+            bool result = false;
+
+            Vector2 vec = FontAssets.MouseText.Value.MeasureString(" " + Text + " ");
+            PagesPadding += (int)vec.X;
+            Rectangle r = new Rectangle(X, Y, (int)vec.X, 33);
+            if (r.Contains(Main.mouseX, Main.mouseY))
+            {
+                Opacityes[opacityID]++;
+
+                if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
+                    result = true;
+            }
+            else Opacityes[opacityID]--;
+
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, (int)vec.X, 3), gradient2 * (gradient2.A - Opacityes[opacityID].PublicOpacity));
+            Main.spriteBatch.Draw(Gradient2, new Rectangle(X, Y + 30, (int)vec.X, 3), gradient1 * (gradient1.A - Opacityes[opacityID].PublicOpacity));
+
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, (int)vec.X, 3), gradient1 * Opacityes[opacityID].PublicOpacity);
+            Main.spriteBatch.Draw(Gradient2, new Rectangle(X, Y + 30, (int)vec.X, 3), gradient2 * Opacityes[opacityID].PublicOpacity);
+
+            TextDefault(" " + Text + " ", (int)X, (int)Y + 3, color * (color.A - Opacityes[opacityID].PublicOpacity), 1f);
+            TextDefault(" " + Text + " ", (int)X, (int)Y + 3, Color.YellowGreen * Opacityes[opacityID].PublicOpacity, 1f);
 
             return result;
         }
 
         public void DrawMenu(Color gradient1, Color gradient2, Rectangle rect, string text)
         {
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, rect, Color.DarkGray);
             Main.spriteBatch.Draw(Gradient, rect, Color.Black);
             Main.spriteBatch.Draw(Gradient, rect, Color.Black);
 
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(rect.X, rect.Y, rect.Width, 15), gradient1);
-            Main.spriteBatch.Draw(Gradient2, new Rectangle(rect.X, rect.Y, rect.Width, 15), gradient2);
-
-            Main.spriteBatch.Draw(Gradient, new Rectangle(rect.X, rect.Y, rect.Width, 15), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
-            Main.spriteBatch.Draw(Gradient, new Rectangle(rect.X, rect.Y, rect.Width, 15), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(rect.X, rect.Y, rect.Width, 5), gradient1);
+            Main.spriteBatch.Draw(Gradient2, new Rectangle(rect.X, rect.Y, rect.Width, 5), gradient2);
 
             TextLightDeathFont(text, (float)rect.X + 5f, (float)rect.Y + 15f, Color.White * 0.45f, Color.White, 0.5f);
         }
 
-        public bool TextLightPlayerButton(string name, float x, float y, float size)
+        public bool TextLightPlayerButton(string name, float x, float y, float size, string opacityID)
         {
+            if (!Opacityes.ContainsKey(opacityID))
+            {
+                Opacityes.Add(opacityID, Opacity.Generate());
+            }
+
             bool result = false;
             Color color1 = Color.White;
             Color color2 = new Color(0,0,0,0);
             Rectangle r = new Rectangle((int)x, (int)y, (int)FontAssets.MouseText.Value.MeasureString(name).X, (int)FontAssets.MouseText.Value.MeasureString(name).Y);
             if (r.Contains(Main.mouseX, Main.mouseY))
             {
-                color1 = Color.Yellow;
-                color2 = Color.Yellow * 0.25f;
+                Opacityes[opacityID]++;
+
+                color2 = Color.Yellow * Opacityes[opacityID].PublicOpacity;
 
                 if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
                     result = true;
             }
-            TextLight(name, x, y, color2, color1, size);
+            else Opacityes[opacityID]--;
+
+            TextLight(name, x, y, new Color(0, 0, 0, 0), color1 * (int)(color1.A - color2.A), size);
+            TextLight(name, x, y, Color.Yellow * (float)(Opacityes[opacityID].PublicOpacity - 0.45f), color2, size);
             return result;
         }
 
         public static void TextLight(string text, float x, float y, Color color, Color maincolor, float size)
         {
-            /*
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x + 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x - 2f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x, y + 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x, y - 2f), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
-            */
 
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x + 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
             Main.spriteBatch.DrawString(FontAssets.MouseText.Value, text, new Vector2(x - 1f, y), color, 0f, default(Vector2), size, SpriteEffects.None, 0f);
@@ -324,16 +514,57 @@ namespace TerraZ.Client
         private KeyboardState OldKeyboard;
         private KeyboardState NewKeyboard;
 
+        private ViewID View;
+        private int PagesPadding;
+
         public bool WindowAnimation;
         public float WindowAnimationSpeed;
         public float WindowOpacity;
 
         private int Page;
         private int SelectedPlayer = -1;
+        private int SelectedDefendersForgeItem = -1;
+        private int SelectedVoidBagItem = -1;
+        private int SelectedSafeItem = -1;
         private int SelectedItem = -1;
+        private int SelectedPiggyBankItem = -1;
+
+        private Dictionary<string, Opacity> Opacityes = new Dictionary<string, Opacity>();
 
         private Texture2D Gradient;
         private Texture2D Gradient2;
+
         public bool ShowGUI { get; private set; }
+        enum ViewID
+        {
+            Inventory, PiggyBank, Safe, DefendersForge, VoidBag
+        }
+
+        class Opacity
+        {
+            public static Opacity Generate() => new Opacity() 
+            { 
+                PrivateOpacity = 0f 
+            };
+
+            public static Opacity operator ++(Opacity o)
+            {
+                if (o.PrivateOpacity < 1f)
+                    o.PrivateOpacity += 0.18f;
+                return o;
+            }
+            public static Opacity operator --(Opacity o)
+            {
+                if (o.PrivateOpacity > 0f)
+                    o.PrivateOpacity -= 0.18f;
+
+                return o;
+            }
+            private Opacity() {}
+
+            public float PublicOpacity => this.PrivateOpacity;
+
+            private float PrivateOpacity;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using Terraria;
@@ -16,11 +17,10 @@ namespace TerraZ.Client
 			ClientTools.Add(new TerraZTool());
 			foreach (ITool t in ClientTools) t.Initialize();
 			ClientPermissions = new Permissions();
-
 			NetManager.Instance.Register<SyncNetModule>();
-
 			Main.chatMonitor = new ChatMonitor();
-
+			PlayedTime = new Stopwatch();
+			PlayedTime.Start();
 			ReplaceMethod(typeof(NetMessage).GetMethod("CheckBytes", Flags), typeof(ClientUtils).GetMethod("CheckBytes", Flags));
 		}
 		public static BindingFlags Flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
@@ -29,8 +29,9 @@ namespace TerraZ.Client
 			*((int*)_from.MethodHandle.Value.ToPointer() + 2) = *((int*)_to.MethodHandle.Value.ToPointer() + 2);
 		}
 
-		public   static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
+		public static Stopwatch PlayedTime;
+		public static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
-		public   static List<ITool> ClientTools { get; private set; }
+		public static List<ITool> ClientTools { get; private set; }
 	}
 }
