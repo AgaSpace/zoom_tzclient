@@ -35,6 +35,21 @@ namespace TerraZ_Client.Net
                         MyPlugin.players[player.Index] = Levels.ClientUser;
 
                         Console.WriteLine("Player {0} connected on server with TerraZ client.", player.Name);
+
+                        if (player.Group != null)
+                        {
+                            string permissions = MyPlugin.db.GetPerms(player.Group.Name.ToLower());
+
+                            player.GetPlayerInfo().Permissions = permissions;
+
+                            SendToClient(player, IndexTypes.Authorization, new Dictionary<string, object> {
+                                { "IsAuthorized", true }
+                            });
+
+                            SendToClient(player, IndexTypes.Permissions, new Dictionary<string, object> {
+                                { "Permission", permissions }
+                            });
+                        }
                     }
                     break;
                 case IndexTypes.PlayerInventoryModify:
