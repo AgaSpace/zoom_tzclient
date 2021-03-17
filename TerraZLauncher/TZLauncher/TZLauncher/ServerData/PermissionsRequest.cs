@@ -11,13 +11,6 @@ namespace TerraZ.ServerData
         {
         }
 
-        public void Send()
-        {
-            ClientUtils.SendData(new PacketWriter()
-                .SetType(82)
-                .PackUInt16(11)
-                .PackInt16(byte.Parse(3.ToString())) // Third RequestID
-                .GetByteData());
-        }
+        public void Send() => DataBuilder.SendData(1, this.ToJson());
     }
 }
