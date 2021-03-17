@@ -88,30 +88,30 @@ namespace TerraZ.Client
                 DrawPlayers();
                 if (SelectedPlayer != -1)
                 {
-                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 950, 450), " ");
+                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 850, 450), " ");
 
                     PagesPadding = 0;
-                    if (ButtonV2("Главная страница", 380, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\MAIN_BUTTON") && View != ViewID.Inventory)
+                    if (ButtonV2("Главная страница", 380, 85, Color.White, Color.LightSkyBlue, Color.DeepSkyBlue, "OPACITIES\\MAIN_BUTTON") && View != ViewID.Inventory)
                     {
                         View = ViewID.Inventory;
                         SelectedItem = -1;
                     }
-                    if (ButtonV2("Копилка", 385 + PagesPadding, 85, Color.White, Color.SkyBlue, Color.Purple, "OPACITIES\\PIGGY::BANK_BUTTON") && View != ViewID.PiggyBank)
+                    if (ButtonV2("Копилка", 385 + PagesPadding, 85, Color.White, Color.LightSkyBlue, Color.DeepSkyBlue, "OPACITIES\\PIGGY::BANK_BUTTON") && View != ViewID.PiggyBank)
                     {
                         View = ViewID.PiggyBank;
                         SelectedPiggyBankItem = -1;
                     }
-                    if (ButtonV2("Сейф", 390 + PagesPadding, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\SAFE::BANK_BUTTON") && View != ViewID.Safe)
+                    if (ButtonV2("Сейф", 390 + PagesPadding, 85, Color.White, Color.LightSkyBlue, Color.DeepSkyBlue, "OPACITIES\\SAFE::BANK_BUTTON") && View != ViewID.Safe)
                     {
                         View = ViewID.Safe;
                         SelectedSafeItem = -1;
                     }
-                    if (ButtonV2("Сумка бездны", 395 + PagesPadding, 85, Color.White, Color.SkyBlue, Color.Purple, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.VoidBag)
+                    if (ButtonV2("Сумка бездны", 395 + PagesPadding, 85, Color.White, Color.LightSkyBlue, Color.DeepSkyBlue, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.VoidBag)
                     {
                         View = ViewID.VoidBag;
                         SelectedVoidBagItem = -1;
                     }
-                    if (ButtonV2("Печь защитника", 400 + PagesPadding, 85, Color.White, Color.Purple, Color.SkyBlue, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.DefendersForge)
+                    if (ButtonV2("Печь защитника", 400 + PagesPadding, 85, Color.White, Color.LightSkyBlue, Color.DeepSkyBlue, "OPACITIES\\VOID::BAG::BANK_BUTTON") && View != ViewID.DefendersForge)
                     {
                         View = ViewID.DefendersForge;
                         SelectedDefendersForgeItem = -1;
