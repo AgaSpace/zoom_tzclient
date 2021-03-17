@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
@@ -26,6 +27,20 @@ namespace TerraZ.Client
 				}
 			return -1;
 		}
+		public static void ThreadPush(this Action t)
+        {
+			try
+			{
+				Thread thread = new Thread(() => t());
+				thread.Start();
+			}
+			catch (Exception ex) 
+			{
+				TZLauncher.LauncherCore.WriteError("            ===== THREAD EXCEPTION =====            ");
+				TZLauncher.LauncherCore.WriteErrorBG(ex.ToString());
+				Console.ReadLine();
+			}
+        }
 		public static void SendData(this byte[] data)
 		{
 			Netplay.Connection.Socket.AsyncSend(data, 0, data.Length, Netplay.Connection.ClientWriteCallBack, null);
