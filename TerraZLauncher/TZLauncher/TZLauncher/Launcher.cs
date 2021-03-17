@@ -16,34 +16,19 @@ namespace TZLauncher
 {
     internal class Launcher
     {
-
         internal static void Main(string[] args)
         {
             try
             {
-                foreach (string str in args)
-                    switch (str)
-                    {
-                        case "-debug": DebugMode = true; break;
-                    }
-
                 TerrariaThread = new Thread(() =>
                 {
-                    string[] terrazArgs = new string[]
-                    {
-                        // -join = авто-подключение к серверу.
-                        //"-join",
-                        //"s.terraz.ru",
-                        //"-port",
-                        //"8888"
-                    };
                     TerrariaAssembly = Assembly.LoadFrom("Terraria.exe");
 
                     LauncherCore.WriteSuccess("====== " + TerrariaAssembly.FullName + " ======");
                     LauncherCore.WriteSuccessBG("ImageRuntimeVersion::" + TerrariaAssembly.ImageRuntimeVersion);
                     LauncherCore.WriteSuccessBG("Location::" + TerrariaAssembly.Location);
 
-                    TerrariaAssembly.Launch(terrazArgs);
+                    TerrariaAssembly.Launch(new string[0] { });
                 });
                 TerrariaThread.Start();
 
@@ -66,8 +51,7 @@ namespace TZLauncher
                 Terraria.Main.OnEngineLoad += () => Client.Initialize();
                 while (true)
                 {
-                    if (!TerrariaThread.IsAlive)
-                        Environment.Exit(0);
+                    if (!TerrariaThread.IsAlive) Environment.Exit(0);
                 }
             } catch (Exception ex) { Console.WriteLine(ex.ToString()); Console.ReadLine();  }
         }
@@ -92,40 +76,40 @@ namespace TZLauncher
         public static void WriteError(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteErrorBG(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteSuccess(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteSuccessBG(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Green;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteInfo(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteInfoBG(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(msg);
+            Console.Write(msg + "\n");
             Console.ResetColor();
         }
         [DllImport("kernel32.dll")]

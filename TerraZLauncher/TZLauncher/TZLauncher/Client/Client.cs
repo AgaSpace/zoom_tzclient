@@ -17,9 +17,21 @@ namespace TerraZ.Client
 			ClientPermissions = new Permissions();
 
 			Main.chatMonitor = new ChatMonitor();
+            Player.Hooks.OnEnterWorld += OnEnterWorld;
 		}
 
-		public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
+        private static void OnEnterWorld(Player plr)
+        {
+			if (plr.whoAmI == Main.myPlayer)
+				new PacketWriter()
+					.SetType(15)
+					.PackInt16(0)
+					.GetByteData()
+					
+					.SendData();
+        }
+
+        public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
 		public  static List<ITool> ClientTools { get; private set; }
 	}

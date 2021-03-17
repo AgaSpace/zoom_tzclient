@@ -26,7 +26,7 @@ namespace TerraZ.Client
 				}
 			return -1;
 		}
-		public static void SendData(byte[] data)
+		public static void SendData(this byte[] data)
 		{
 			Netplay.Connection.Socket.AsyncSend(data, 0, data.Length, Netplay.Connection.ClientWriteCallBack, null);
 		}
