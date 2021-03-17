@@ -192,9 +192,10 @@ namespace TerraZ.Client
 
         public void DrawPlayers()
         {
-            TextLightDeathFont("Select Player", 45f, 25f, Color.White * 0.45f, Color.White, 1f);
+            DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(45, 25, 16 * 20, Main.screenHeight), "Select Player");
 
             int j = 1;
+            j += Page;
 
             foreach (Player p in from i in Main.player where i.active select i)
             {
