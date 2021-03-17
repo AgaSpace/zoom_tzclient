@@ -24,15 +24,11 @@ namespace TerraZ.Client
 
         private static void OnEnterWorld(Player plr)
         {
-			if (plr.whoAmI != Main.myPlayer)
-				return;
-
-			TZLauncher.LauncherCore.WriteInfoBG("OnEnterWorld hook::" + plr.name);
 			DataBuilder.SendData(0, "{ }");
 		}
 
-        public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
+        public   static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
-		public  static List<ITool> ClientTools { get; private set; }
+		public   static List<ITool> ClientTools { get; private set; }
 	}
 }
