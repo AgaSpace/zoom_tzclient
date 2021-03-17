@@ -13,8 +13,20 @@ namespace TerraZ.ServerData
         {
             NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(jsonFormat));
 
-            packet.Writer.Write(byte.Parse(2.ToString()));
             packet.Writer.Write(index);
+            packet.Writer.Write(jsonFormat);
+
+            NetManager.Instance.SendToServer(packet);
+        }
+
+        public static void SendData(byte index, object obj)
+        {
+            string js = obj.ToJson();
+
+            NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(js));
+
+            packet.Writer.Write(index);
+            packet.Writer.Write(js);
 
             NetManager.Instance.SendToServer(packet);
         }
