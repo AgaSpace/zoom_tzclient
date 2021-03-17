@@ -28,14 +28,6 @@ namespace TerraZ.ServerData
         public byte Prefix;
         public short Id;
 
-        public void Send()
-        {
-            ClientUtils.SendData(new PacketWriter()
-                .SetType(82)
-                .PackInt16(11)
-                .PackByte(byte.Parse(2.ToString())) // Second RequestID
-                .PackString(this.ToJson())
-                .GetByteData());
-        }
+        public void Send() => DataBuilder.SendData(2, this.ToJson());
     }
 }
