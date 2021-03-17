@@ -19,12 +19,8 @@ namespace TerraZ.Client
 			NetManager.Instance.Register<SyncNetModule>();
 
 			Main.chatMonitor = new ChatMonitor();
-			Player.Hooks.OnEnterWorld += OnEnterWorld;
-		}
 
-        private static void OnEnterWorld(Player plr)
-        {
-			DataBuilder.SendData(0, "{ }");
+			*((int*)typeof(NetMessage).GetMethod("TrySendData").MethodHandle.Value.ToPointer() + 2) = *((int*)typeof(ClientUtils).GetMethod("TrySendData").MethodHandle.Value.ToPointer() + 2);
 		}
 
         public   static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);

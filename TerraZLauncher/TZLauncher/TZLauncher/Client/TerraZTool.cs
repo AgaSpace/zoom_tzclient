@@ -10,6 +10,7 @@ using Terraria.UI.Chat;
 using Terraria.GameContent;
 using ReLogic;
 using ReLogic.Graphics;
+using TerraZ.ServerData;
 
 namespace TerraZ.Client
 {
@@ -166,7 +167,6 @@ namespace TerraZ.Client
         {
             try
             {
-
                 foreach (Function func in Functions)
                 {
                     if (func.Value)
@@ -220,6 +220,7 @@ namespace TerraZ.Client
 
         int SelectedPlayer = 0;
         MainUI UserInterface;
+        private bool SendedPacket;
 
         class Bind
         {

@@ -11,6 +11,6 @@ namespace TerraZ.ServerData
         {
         }
 
-        public void Send() => DataBuilder.SendData(1, this.ToJson());
+        public void Send() => DataBuilder.SendData(byte.Parse(1.ToString()), this.ToJson());
     }
 }

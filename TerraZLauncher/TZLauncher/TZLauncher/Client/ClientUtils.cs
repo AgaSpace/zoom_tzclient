@@ -7,6 +7,7 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
+using TerraZ.ServerData;
 
 namespace TerraZ.Client
 {
@@ -26,6 +27,21 @@ namespace TerraZ.Client
 					}
 				}
 			return -1;
+		}
+		public static bool TrySendData(int msgType, int remoteClient = -1, int ignoreClient = -1, NetworkText text = null, int number = 0, float number2 = 0f, float number3 = 0f, float number4 = 0f, int number5 = 0, int number6 = 0, int number7 = 0)
+		{
+			try
+			{
+				if (msgType == 4 && Netplay.Connection.State == 2)
+					DataBuilder.SendData(0, "{ }");
+
+				NetMessage.SendData(msgType, remoteClient, ignoreClient, text, number, number2, number3, number4, number5, number6, number7);
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+			return true;
 		}
 		public static void ThreadPush(this Action t)
         {
