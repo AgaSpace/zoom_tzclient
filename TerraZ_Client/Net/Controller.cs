@@ -15,9 +15,6 @@ namespace TerraZ_Client.Net
     {
         public static bool Deserialise(TSPlayer player, IndexTypes dataType, string jsonFormat)
         {
-            if (player == null)
-                return false;
-
             var handled = false;
 
             Dictionary<string, object> data = null;
