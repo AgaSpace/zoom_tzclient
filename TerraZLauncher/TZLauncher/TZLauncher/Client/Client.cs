@@ -28,7 +28,7 @@ namespace TerraZ.Client
 				return;
 
 			TZLauncher.LauncherCore.WriteInfoBG("OnEnterWorld hook::" + plr.name);
-			DataBuilder.SendData(0, "");
+			DataBuilder.SendData(0, "{ }");
 		}
 
         public  static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
