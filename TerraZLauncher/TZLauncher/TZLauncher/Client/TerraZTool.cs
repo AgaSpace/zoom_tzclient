@@ -219,7 +219,7 @@ namespace TerraZ.Client
         MouseState NewMouse;
 
         int SelectedPlayer = 0;
-        MainUI UserInterface;
+        public static MainUI UserInterface;
         private bool SendedPacket;
 
         class Bind

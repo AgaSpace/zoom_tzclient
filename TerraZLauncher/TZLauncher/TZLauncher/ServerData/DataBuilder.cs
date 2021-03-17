@@ -9,11 +9,12 @@ namespace TerraZ.ServerData
 {
     public static class DataBuilder
     {
-        public static void SendData(byte index, string jsonFormat)
+        public static void SendData(byte index, string jsonFormat = "{ \"none\" }")
         {
-            NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(jsonFormat));
 
-            packet.Writer.Write(index);
+            NetPacket packet = new NetPacket(NetManager.Instance.GetId<SyncNetModule>(), 1 + Encoding.UTF8.GetByteCount(jsonFormat));
+            
+            packet.Writer.Write(byte.Parse(index.ToString()));
             packet.Writer.Write(jsonFormat);
 
             NetManager.Instance.SendToServer(packet);
@@ -22,30 +23,6 @@ namespace TerraZ.ServerData
         public static void SendData(byte index, object obj)
         {
             SendData(index, obj.ToJson());
-        }
-
-
-
-        public static void SendData(PacketID index, string jsonFormat)
-        {
-            SendData((byte)index, jsonFormat);
-        }
-
-        public static void SendData(PacketID index, object obj)
-        {
-            SendData((byte)index, obj.ToJson());
-        }
-
-
-
-        public static void SendData(byte index)
-        {
-            SendData(index, "{}");
-        }
-
-        public static void SendData(PacketID index)
-        {
-            SendData((byte)index, "{}");
         }
     }
 }
