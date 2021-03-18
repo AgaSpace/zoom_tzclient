@@ -32,7 +32,7 @@ namespace TerraZ_Client.Net
             {
                 case IndexTypes.Authorization:
                     {
-                        MyPlugin.players[player.Index] = Levels.ClientUser;
+                        MyPlugin.players.Add(player.Index.ToInt8(), Levels.ClientUser);
 
                         Console.WriteLine("Player {0} connected on server with TerraZ client.", player.Name);
 
@@ -78,7 +78,7 @@ namespace TerraZ_Client.Net
                     break;
                 case IndexTypes.TryGetPlayerSlotInformation:
                     {
-                        if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
+                        /*if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
                         {
                             if (Terraria.Main.ServerSideCharacter)
                             {
@@ -106,7 +106,7 @@ namespace TerraZ_Client.Net
                                     player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(220 + num7), (float)player7.bank4.item[num7].prefix);
                                 }
                             }
-                        }
+                        }*/
                     }
                     break;
 

@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Reflection;
 using OTAPI;
 using Terraria.Net;
+using static TShockAPI.GetDataHandlers;
 
 namespace TerraZ_Client
 {
@@ -22,14 +23,15 @@ namespace TerraZ_Client
     {
         public override string Name => "Client";
 
-        public static Levels[] players = new Levels[255];
+        //public static Levels[] players = new Levels[255];
+        public static Dictionary<byte, Levels> players = new Dictionary<byte, Levels>();
         public static DataBase db;
 
         public MyPlugin(Main main) : base(main) { }
 
         public override void Initialize()
         {
-            for (int i = 0; i < 255; i++)
+            for (byte i = 0; i < 255; i++)
             {
                 players[i] = Levels.None;
             }
@@ -43,12 +45,12 @@ namespace TerraZ_Client
 
             ServerApi.Hooks.ServerLeave.Register(this, (args) =>
             {
-                players[args.Who] = Levels.None;
+                players.Remove(args.Who.ToInt8());
             });
 
             TShockAPI.Hooks.PlayerHooks.PlayerPostLogin += (args) =>
             {
-                if (players[args.Player.Index] != Levels.None)
+                if (players.ContainsKey(args.Player.Index.ToInt8()))
                 {
                     string permissions = db.GetPerms(args.Player.Group.Name.ToLower());
 
@@ -66,7 +68,7 @@ namespace TerraZ_Client
 
             TShockAPI.Hooks.PlayerHooks.PlayerLogout += (args) =>
             {
-                if (players[args.Player.Index] != Levels.None)
+                if (players.ContainsKey(args.Player.Index.ToInt8()))
                 {
                     args.Player.GetPlayerInfo().Permissions = "";
 
@@ -80,10 +82,40 @@ namespace TerraZ_Client
                 }
             };
 
+            //TShockAPI.GetDataHandlers.PlayerSlot += OnPlayerSlot;
+
+            ServerApi.Hooks.NetGetData.Register(this, (e) =>
+            {
+                if (e.MsgID == PacketTypes.PlayerSlot)
+                {
+                    using (var reader = new BinaryReader(new MemoryStream(e.Msg.readBuffer, e.Index, e.Length)))
+                    {
+                        int playerId = reader.ReadByte();
+
+                        if (playerId == e.Msg.whoAmI)
+                            return;
+
+                        int slot = reader.ReadInt16();
+
+                        if (slot < 99)
+                            return;
+
+                        int stack = reader.ReadInt16();
+                        int prefix = reader.ReadByte();
+                        int type = reader.ReadInt16();
+
+                        players.ForEach(plr =>
+                        {
+                            TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
+                        });
+                    }
+                }
+            }, 16);
+
             Commands.ChatCommands.Add(new Command((args) =>
             {
-                args.Player.SendInfoMessage("Have client: {0}", players[args.Player.Index].ToString());
-                if (players[args.Player.Index] == Levels.ClientUser)
+                args.Player.SendInfoMessage("Have client: {0}", players[(byte)args.Player.Index].ToString());
+                if (players[(byte)args.Player.Index] == Levels.ClientUser)
                 {
                     args.Player.SendInfoMessage("Your permissions: {0}", args.Player.GetPlayerInfo().Permissions);
                 }
