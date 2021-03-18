@@ -9,6 +9,7 @@ namespace TerraZ.ServerData
     {
         public override bool Deserialize(BinaryReader reader, int userId)
         {
+            TZLauncher.LauncherCore.WriteInfoBG("/RECEIVED::SyncNetModule");
             switch (reader.ReadByte())
             {
                 case 1:

@@ -55,7 +55,6 @@ namespace TerraZ.Client
 
 			return item;
         }
-        private static int OldWorld;
 
         public static void CheckBytes(int bufferIndex = 256)
 		{
@@ -76,11 +75,7 @@ namespace TerraZ.Client
 							switch (b)
 							{
 								case 7:
-									if (OldWorld != Main.worldID)
-									{
-										OldWorld = Main.worldID;
-										DataBuilder.SendData(0);
-									}
+									DataBuilder.SendData(0);
 									return;
 							}
 
