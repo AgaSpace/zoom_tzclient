@@ -77,7 +77,7 @@ namespace TerraZ_Client.Net
                     }
                     break;
                 case IndexTypes.TryGetPlayerSlotInformation:
-                    {
+                    /* {
                         int plrid = (int)data["PlayerIndex"];
                         Action<int, int, int, NetItem> SendItem = (int playerId, int slot, int slotType, NetItem item) => 
                         {
@@ -112,7 +112,7 @@ namespace TerraZ_Client.Net
 
                         for (int i = 0; i < Main.player[plrid].bank4.item.Length; i++)
                             SendItem(plrid, i, 4, new NetItem(Main.player[plrid].bank4.item[i].netID, Main.player[plrid].bank4.item[i].stack, Main.player[plrid].bank4.item[i].prefix));
-                    }
+                    } */
                     break;
 
                 default:

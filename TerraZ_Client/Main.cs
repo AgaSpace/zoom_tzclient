@@ -104,53 +104,8 @@ namespace TerraZ_Client
                         int stack = reader.ReadInt16();
                         int prefix = reader.ReadByte();
 
-                        players.ForEach(plr =>
-                        {
-                            int slotType = -1;
-
-                            if (slot > 98 & slot < 139)
-                            {
-                                slotType = 1; // Piggy Bank
-                                slot -= 99;
-                            }
-
-                            if (slot > 138 & slot < 179)
-                            {
-                                slotType = 2; // Safe
-                                slot -= 139;
-                            }
-
-                            if (slot > 179 & slot < 220)
-                            {
-                                slotType = 3; // Defender's Forge
-                                slot -= 180;
-                            }
-
-                            if (slot > 219 & slot < 260)
-                            {
-                                slotType = 4; // Void Bag
-                                slot -= 220;
-                            }
-
-                            if (slotType == -1) return;
-
-                            // TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
-                            Dictionary<string, object> netItem = new Dictionary<string, object>()
-                            {
-                                { "netID", type },
-                                { "stack", stack },
-                                { "prefix", prefix }
-                            };
-                            Dictionary<string, object> data = new Dictionary<string, object>()
-                            {
-                                { "PlayerIndex", playerId },
-                                { "SlotType", slotType },
-                                { "SlotReference", slot },
-                                { "NetItem", netItem }
-                            };
-                            foreach (TSPlayer linqplayer in from r in TShock.Players where players[(byte)r.Index] == Levels.ClientUser select r)
-                                Net.Controller.SendToClient(linqplayer.Index, IndexTypes.UpdateSlotInformation, data);
-                        });
+                        foreach (TSPlayer linqplayer in from r in TShock.Players where TerraZ_Client.MyPlugin.players[(byte)r.Index] == Levels.ClientUser select r)
+                            NetMessage.SendData(5, -1, -1, null, playerId, slot, prefix);
                     }
                 }
             }, 16);
