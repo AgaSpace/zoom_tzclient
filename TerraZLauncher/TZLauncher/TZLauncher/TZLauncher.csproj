@@ -65,6 +65,7 @@
     <Compile Include="ServerData\PermissionsData.cs" />
     <Compile Include="ServerData\PermissionsRequest.cs" />
     <Compile Include="ServerData\RequestID.cs" />
+    <Compile Include="ServerData\SlotData.cs" />
     <Compile Include="ServerData\SyncNetModule.cs" />
   </ItemGroup>
   <ItemGroup>

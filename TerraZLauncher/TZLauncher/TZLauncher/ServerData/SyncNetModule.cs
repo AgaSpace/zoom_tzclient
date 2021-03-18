@@ -29,6 +29,9 @@ namespace TerraZ.ServerData
                     for (int i = 0; i < data.VoidBag.Length; i++)
                         Main.player[data.PlayerIndex].bank4.item[i] = data.VoidBag[i].ToTerrariaItem();
                     break;
+                //case 8:
+                    //BanksData data = reader.ReadString().GetData<BanksData>();
+                    //break;
             }
             return true;
         }
