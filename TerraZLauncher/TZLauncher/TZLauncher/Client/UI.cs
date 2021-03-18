@@ -14,6 +14,9 @@ using Terraria.UI;
 using Terraria.Chat;
 using System.Diagnostics;
 using Terraria.Graphics.Capture;
+using System.Net;
+using Newtonsoft.Json;
+using System.Timers;
 
 namespace TerraZ.Client
 {
@@ -33,6 +36,22 @@ namespace TerraZ.Client
 
             Gradient2 = new Texture2D(Main.spriteBatch.GraphicsDevice, 100, 1);
             Gradient2.SetData<Color>(colors);
+
+            Action a = () =>
+            {
+                string str = "/clean";
+                using (WebClient web = new WebClient())
+                    str = web.DownloadString("http://s.terraz.ru:7878/status");
+
+                RestAPI = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
+                TZLauncher.LauncherCore.WriteInfoBG(str);
+            };
+            Timer restTimer = new Timer(5000)
+            {
+                AutoReset = true,
+                Enabled = true
+            };
+            restTimer.Elapsed += (x, y) => a.ThreadPush();
         }
 
         public void Draw()
@@ -98,6 +117,8 @@ namespace TerraZ.Client
                     ClickCounter = 0;
                 }
                 TextLightDeathFont(t, 375f, 5f, Color.White * 0.25f, Color.White, 1f);
+
+                TextDefault($"TerraZ: {RestAPI["playercount"]}/{RestAPI["maxplayers"]}", r.X + 250, 20, Color.White, 1f);
 
                 DrawPlayers();
                 if (SelectedPlayer != -1)
@@ -218,13 +239,13 @@ namespace TerraZ.Client
             float pix = 145f + 35f + (37f * 5f);
             if (SelectedItem != -1)
             {
-                DrawItem(p.inventory[SelectedItem].netID, p.inventory[SelectedItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 +  (37 * 5), "OPACITIES\\SELECTED_ITEM");
+                DrawItem(p.inventory[SelectedItem].netID, p.inventory[SelectedItem].stack, Color.DarkSlateGray, Color.SkyBlue, 380, 145 + 35 + (37 * 5), "OPACITIES\\SELECTED_ITEM");
                 TextLight(p.inventory[SelectedItem].Name, 425f, pix + 5f, Color.White * 0.15f, Color.White, 1f);
-                TextLight("Слот: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
+                TextLight("Слот: " + SelectedItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
 
                 if (p.inventory[SelectedItem].stack != 0)
                     if (TextLightPlayerButton("Удалить предмет", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
-                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
+                        new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
 
@@ -247,7 +268,7 @@ namespace TerraZ.Client
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee -s"));
             }
-            if (TextLightPlayerButton("Вернуть свой инвентарь", 380 + (int)(10f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X  + FontAssets.MouseText.Value.MeasureString("Сохранить и вернуть свой инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY3"))
+            if (TextLightPlayerButton("Вернуть свой инвентарь", 380 + (int)(10f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X + FontAssets.MouseText.Value.MeasureString("Сохранить и вернуть свой инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY3"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee"));
             }
@@ -296,8 +317,8 @@ namespace TerraZ.Client
                 TextLight("Slot ID: " + SelectedPiggyBankItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
 
                 if (p.bank.item[SelectedPiggyBankItem].stack != 0)
-                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
-                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedPiggyBankItem)).Send();
+                    if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
+                        new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedPiggyBankItem)).Send();
 
             }
         }
@@ -346,7 +367,7 @@ namespace TerraZ.Client
 
                 if (p.bank2.item[SelectedSafeItem].stack != 0)
                     if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
-                    new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedSafeItem)).Send();
+                        new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedSafeItem)).Send();
 
             }
         }
@@ -473,7 +494,7 @@ namespace TerraZ.Client
 
             bool result = false;
             Color color1 = Color.White;
-            Color color2 = new Color(0,0,0,0);
+            Color color2 = new Color(0, 0, 0, 0);
             Rectangle r = new Rectangle((int)x, (int)y, (int)FontAssets.MouseText.Value.MeasureString(name).X, (int)FontAssets.MouseText.Value.MeasureString(name).Y);
             if (r.Contains(Main.mouseX, Main.mouseY))
             {
@@ -539,6 +560,42 @@ namespace TerraZ.Client
         private Color MouseColor1;
         private Color MouseColor2;
 
+        private Dictionary<string, object> RestAPI = new Dictionary<string, object>()
+        {
+            {
+                "status",
+                200
+            },
+            {
+                "port",
+                7777
+            },
+            {
+                "name",
+                "TerraZ.ru Server"
+            },
+            {
+                "world",
+                "TerraZ World"
+            },
+            {
+                "serverversion",
+                "1.4.1.2"
+            },
+            {
+                "playercount",
+                -1
+            },
+            {
+                "maxplayers",
+                15000
+            },
+            {
+                "serverpassword",
+                false
+            }
+        };
+
         public bool WindowAnimation;
         public float WindowAnimationSpeed;
         public float WindowOpacity;
@@ -591,5 +648,6 @@ namespace TerraZ.Client
 
             private float PrivateOpacity;
         }
+
     }
 }

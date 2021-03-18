@@ -101,14 +101,14 @@ namespace TZLauncher
         }
         public static void WriteInfo(string msg)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(msg + "\n");
             Console.ResetColor();
         }
         public static void WriteInfoBG(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.BackgroundColor = ConsoleColor.Yellow;
             Console.Write(msg + "\n");
             Console.ResetColor();
         }
