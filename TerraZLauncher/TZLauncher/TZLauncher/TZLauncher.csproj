@@ -56,9 +56,11 @@
     <Compile Include="Client\Permissions.cs" />
     <Compile Include="Client\UI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerData\BanksData.cs" />
+    <Compile Include="ServerData\BanksRequest.cs" />
     <Compile Include="ServerData\DataBuilder.cs" />
-    <Compile Include="ServerData\Extensions.cs" />
     <Compile Include="ServerData\InventoryRequest.cs" />
+    <Compile Include="ServerData\NetItem.cs" />
     <Compile Include="ServerData\PacketID.cs" />
     <Compile Include="ServerData\PermissionsData.cs" />
     <Compile Include="ServerData\PermissionsRequest.cs" />

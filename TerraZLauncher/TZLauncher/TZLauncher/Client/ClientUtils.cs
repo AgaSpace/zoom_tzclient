@@ -32,8 +32,25 @@ namespace TerraZ.Client
 				}
 			return -1;
 		}
+		public static string ToJson(this object dic)
+		{
+			return Newtonsoft.Json.JsonConvert.SerializeObject(dic);
+		}
 
-		public static bool canAgainSendPackage = true;
+		public static T GetData<T>(this string jsonFormat)
+		{
+			return (T)Newtonsoft.Json.JsonConvert.DeserializeObject(jsonFormat);
+		}
+		public static Item ToTerrariaItem(this NetItem i)
+        {
+			Item item = new Item();
+			item.SetDefaults(i.NetID);
+			item.prefix = i.Prefix;
+			item.stack = i.Stack;
+
+			return item;
+        }
+		internal static bool canAgainSendPackage = true;
 
 		public static void CheckBytes(int bufferIndex = 256)
 		{

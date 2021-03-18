@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.Net;
+using TerraZ.Client;
 
 namespace TerraZ.ServerData
 {
