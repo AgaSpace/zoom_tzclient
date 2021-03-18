@@ -106,6 +106,16 @@ namespace TerraZ_Client
 
                         players.ForEach(plr =>
                         {
+                            int slotType = -14;
+
+                            if (slot > 98 & slot < 139)  slotType = 1; // Piggy Bank
+
+                            if (slot > 138 & slot < 179) slotType = 2; // Safe
+
+                            if (slot > 179 & slot < 220) slotType = 3; // Defender's Forge
+
+                            if (slot > 220 & slot < 260) slotType = 4; // Void Bag
+
                             // TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
                             Dictionary<string, object> netItem = new Dictionary<string, object>()
                             {
@@ -116,6 +126,7 @@ namespace TerraZ_Client
                             Dictionary<string, object> data = new Dictionary<string, object>()
                             {
                                 { "PlayerIndex", playerId },
+                                { "SlotType", slotType },
                                 { "NetItem", netItem }
                             };
                             foreach (TSPlayer linqplayer in from r in TShock.Players where players[(byte)r.Index] == Levels.ClientUser select r)
