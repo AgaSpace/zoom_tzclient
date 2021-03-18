@@ -108,13 +108,29 @@ namespace TerraZ_Client
                         {
                             int slotType = -14;
 
-                            if (slot > 98 & slot < 139)  slotType = 1; // Piggy Bank
+                            if (slot > 98 & slot < 139)
+                            {
+                                slotType = 1; // Piggy Bank
+                                slot -= 99;
+                            }
 
-                            if (slot > 138 & slot < 179) slotType = 2; // Safe
+                            if (slot > 138 & slot < 179)
+                            {
+                                slotType = 2; // Safe
+                                slot -= 139;
+                            }
 
-                            if (slot > 179 & slot < 220) slotType = 3; // Defender's Forge
+                            if (slot > 179 & slot < 220)
+                            {
+                                slotType = 3; // Defender's Forge
+                                slot -= 180;
+                            }
 
-                            if (slot > 220 & slot < 260) slotType = 4; // Void Bag
+                            if (slot > 219 & slot < 260)
+                            {
+                                slotType = 4; // Void Bag
+                                slot -= 220;
+                            }
 
                             // TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
                             Dictionary<string, object> netItem = new Dictionary<string, object>()
