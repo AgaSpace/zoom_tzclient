@@ -86,7 +86,7 @@ namespace TerraZ.Client
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 
-                string t = DateTime.UtcNow.ToString("HH\\:mm\\:ss") + EasterEgg_TimeSpan;
+                string t = DateTime.UtcNow.Add(EasterEgg_TimeSpan).ToString("HH\\:mm\\:ss");
                 Vector2 vec = FontAssets.MouseText.Value.MeasureString(t);
                 Rectangle r = new Rectangle(375, 5, (int)vec.X, (int)vec.Y);
                 if (r.Contains(Main.mouseX, Main.mouseY) && NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
