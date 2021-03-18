@@ -86,7 +86,7 @@ namespace TerraZ.Client
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
 
-                string t = DateTime.UtcNow.Add(EasterEgg_TimeSpan).ToString("HH\\:mm\\:ss");
+                string t = DateTime.Now.AddHours(EasterEgg_Hours).ToString("HH\\:mm\\:ss");
                 Vector2 vec = FontAssets.MouseText.Value.MeasureString(t);
                 Rectangle r = new Rectangle(375, 5, (int)vec.X, (int)vec.Y);
                 if (r.Contains(Main.mouseX, Main.mouseY) && NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
@@ -94,7 +94,7 @@ namespace TerraZ.Client
 
                 if (ClickCounter >= 15)
                 {
-                    EasterEgg_TimeSpan += new TimeSpan(0, 30, 0);
+                    EasterEgg_Hours += 1;
                     ClickCounter = 0;
                 }
                 TextLightDeathFont(t, 375f, 5f, Color.White * 0.25f, Color.White, 1f);
@@ -543,8 +543,6 @@ namespace TerraZ.Client
         public float WindowAnimationSpeed;
         public float WindowOpacity;
 
-        public TimeSpan EasterEgg_TimeSpan = new TimeSpan(0, 0, 0);
-
         private int Page;
         private int SelectedPlayer = -1;
         private int SelectedDefendersForgeItem = -1;
@@ -558,6 +556,8 @@ namespace TerraZ.Client
         private Texture2D Gradient;
         private Texture2D Gradient2;
         private int ClickCounter;
+
+        private double EasterEgg_Hours;
 
         public bool ShowGUI { get; private set; }
         enum ViewID
