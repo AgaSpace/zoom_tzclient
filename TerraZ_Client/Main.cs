@@ -106,7 +106,7 @@ namespace TerraZ_Client
 
                         players.ForEach(plr =>
                         {
-                            int slotType = -14;
+                            int slotType = -1;
 
                             if (slot > 98 & slot < 139)
                             {
@@ -131,6 +131,8 @@ namespace TerraZ_Client
                                 slotType = 4; // Void Bag
                                 slot -= 220;
                             }
+
+                            if (slotType == -1) return;
 
                             // TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
                             Dictionary<string, object> netItem = new Dictionary<string, object>()

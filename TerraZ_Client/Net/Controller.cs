@@ -78,35 +78,40 @@ namespace TerraZ_Client.Net
                     break;
                 case IndexTypes.TryGetPlayerSlotInformation:
                     {
-                        /*if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
+                        int plrid = (int)data["PlayerIndex"];
+                        Action<int, int, int, NetItem> SendItem = (int playerId, int slot, int slotType, NetItem item) => 
                         {
-                            if (Terraria.Main.ServerSideCharacter)
+                            int type = item.NetId;
+                            int stack = item.Stack;
+                            int prefix = item.PrefixId;
+
+                            Dictionary<string, object> netItem = new Dictionary<string, object>()
                             {
-                                byte playerId = data["PlayerIndex"].ToInt8();
+                                { "netID", type },
+                                { "stack", stack },
+                                { "prefix", prefix }
+                            };
+                            Dictionary<string, object> dat = new Dictionary<string, object>()
+                            {
+                                { "PlayerIndex", playerId },
+                                { "SlotType", slotType },
+                                { "SlotReference", slot },
+                                { "NetItem", netItem }
+                            };
+                            foreach (TSPlayer linqplayer in from r in TShock.Players where TerraZ_Client.MyPlugin.players[(byte)r.Index] == Levels.ClientUser select r)
+                                Net.Controller.SendToClient(linqplayer.Index, IndexTypes.UpdateSlotInformation, data);
+                        };
+                        for (int i = 0; i < Main.player[plrid].bank.item.Length; i++)
+                            SendItem(plrid, i, 1, new NetItem(Main.player[plrid].bank.item[i].netID, Main.player[plrid].bank.item[i].stack, Main.player[plrid].bank.item[i].prefix));
 
-                                Player player7 = Main.player[playerId];
+                        for (int i = 0; i < Main.player[plrid].bank2.item.Length; i++)
+                            SendItem(plrid, i, 2, new NetItem(Main.player[plrid].bank2.item[i].netID, Main.player[plrid].bank2.item[i].stack, Main.player[plrid].bank2.item[i].prefix));
 
-                                if (player7 == null && player7.active == false)
-                                    break;
+                        for (int i = 0; i < Main.player[plrid].bank3.item.Length; i++)
+                            SendItem(plrid, i, 3, new NetItem(Main.player[plrid].bank3.item[i].netID, Main.player[plrid].bank3.item[i].stack, Main.player[plrid].bank3.item[i].prefix));
 
-                                for (int num4 = 0; num4 < player7.bank.item.Length; num4++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(99 + num4), (float)player7.bank.item[num4].prefix);
-                                }
-                                for (int num5 = 0; num5 < player7.bank2.item.Length; num5++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(139 + num5), (float)player7.bank2.item[num5].prefix);
-                                }
-                                for (int num6 = 0; num6 < player7.bank3.item.Length; num6++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(180 + num6), (float)player7.bank3.item[num6].prefix);
-                                }
-                                for (int num7 = 0; num7 < player7.bank4.item.Length; num7++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(220 + num7), (float)player7.bank4.item[num7].prefix);
-                                }
-                            }
-                        }*/
+                        for (int i = 0; i < Main.player[plrid].bank4.item.Length; i++)
+                            SendItem(plrid, i, 4, new NetItem(Main.player[plrid].bank4.item[i].netID, Main.player[plrid].bank4.item[i].stack, Main.player[plrid].bank4.item[i].prefix));
                     }
                     break;
 
