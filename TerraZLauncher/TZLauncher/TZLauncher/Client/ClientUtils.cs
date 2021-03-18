@@ -36,6 +36,11 @@ namespace TerraZ.Client
 		{
 			return Newtonsoft.Json.JsonConvert.SerializeObject(dic);
 		}
+		public static void JSONPrint(this object dic)
+		{
+			TZLauncher.LauncherCore.WriteInfo("============ JSON Print ============");
+			TZLauncher.LauncherCore.WriteInfoBG(Newtonsoft.Json.JsonConvert.SerializeObject(dic, Newtonsoft.Json.Formatting.Indented) + "\n");
+		}
 
 		public static T GetData<T>(this string jsonFormat)
 		{
