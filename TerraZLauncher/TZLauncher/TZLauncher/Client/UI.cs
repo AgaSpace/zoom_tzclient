@@ -17,6 +17,7 @@ using Terraria.Graphics.Capture;
 using System.Net;
 using Newtonsoft.Json;
 using System.Timers;
+using TerraZ.ServerData;
 
 namespace TerraZ.Client
 {
@@ -45,8 +46,15 @@ namespace TerraZ.Client
 
                 RestAPI = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
                 TZLauncher.LauncherCore.WriteInfoBG(str);
+
+                if (SelectedPlayer == -1)
+                    return;
+
+                Dictionary<string, object> obj = new Dictionary<string, object>();
+                obj.Add("PlayerIndex", (byte)SelectedPlayer);
+                DataBuilder.SendData(4, obj);
             };
-            Timer restTimer = new Timer(5000)
+            Timer restTimer = new Timer(1000)
             {
                 AutoReset = true,
                 Enabled = true
@@ -759,9 +767,13 @@ namespace TerraZ.Client
         private int SelectedDyeItem;
 
         public bool ShowGUI { get; private set; }
-        enum ViewID
+        enum ViewID : byte
         {
-            Inventory, PiggyBank, Safe, DefendersForge, VoidBag
+            Inventory = 0, 
+            PiggyBank = 1, 
+            Safe = 2, 
+            DefendersForge = 3, 
+            VoidBag = 4
         }
 
         class Opacity

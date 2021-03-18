@@ -15,8 +15,8 @@ namespace TerraZ.ServerData
 
         private NetItem() { }
 
-        public short NetID { get; private set; }
-        public short Stack { get; private set; }
-        public byte Prefix { get; private set; }
+        public short NetID;
+        public short Stack;
+        public byte Prefix;
     }
 }

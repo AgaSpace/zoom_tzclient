@@ -15,7 +15,7 @@ namespace TerraZ.ServerData
                     PermissionsData dat = reader.ReadString().GetData<PermissionsData>();
                     Client.Client.ClientPermissions.SetPermissions(dat.Permissions);
                     break;
-                case 2:
+                case 4:
                     BanksData data = reader.ReadString().GetData<BanksData>();
                     for (int i = 0; i < data.PiggyBank.Length; i++)
                         Main.player[data.PlayerIndex].bank.item[i] = data.PiggyBank[i].ToTerrariaItem();
