@@ -70,6 +70,10 @@ namespace TerraZ.Client
                     ShowGUI = false;
                     SelectedPlayer = -1;
                     SelectedItem = -1;
+                    SelectedDefendersForgeItem = -1;
+                    SelectedPiggyBankItem = -1;
+                    SelectedSafeItem = -1;
+                    SelectedVoidBagItem = -1;
                 }
 
                 Main.LocalPlayer.mouseInterface = true;
@@ -152,54 +156,54 @@ namespace TerraZ.Client
             for (int i = 0; i < 10; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 10; i < 20; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 20; i < 30; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 30; i < 40; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 40; i < 50; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 4), "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 50; i < 54; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.Yellow, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
             f += 37;
             for (int i = 54; i < 58; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.YellowGreen, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_" + i))
-                    SelectedItem = i;
+                    SelectedItem = (SelectedItem == i ? -1 : i);
                 f += 37;
             }
 
             if (DrawItem(p.inventory[58].netID, p.inventory[58].stack, Color.Aqua, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_LAST"))
-                SelectedItem = 58;
+                SelectedItem = (SelectedItem == 58 ? -1 : 58);
 
             float pix = 145f + 35f + (37f * 5f);
             if (SelectedItem != -1)
@@ -208,7 +212,8 @@ namespace TerraZ.Client
                 TextLight(p.inventory[SelectedItem].Name, 425f, pix + 5f, Color.White * 0.15f, Color.White, 1f);
                 TextLight("Слот: " + SelectedItem, 425f, pix + 30f, new Color(0,0,0,0), Color.White, 1f);
 
-                if (TextLightPlayerButton("Удалить предмет", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
+                if (p.inventory[SelectedItem].stack != 0)
+                    if (TextLightPlayerButton("Удалить предмет", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
                     new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
@@ -225,8 +230,8 @@ namespace TerraZ.Client
             if (TextLightPlayerButton("Скопировать инвентарь", 380, pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee \"" + p.name + "\""));
-                Main.playerInventory = true;
                 ShowGUI = false;
+                Main.playerInventory = true;
             }
             if (TextLightPlayerButton("Сохранить и вернуть свой инвентарь", 380 + (int)(5f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY2"))
             {
@@ -248,28 +253,28 @@ namespace TerraZ.Client
             for (int i = 0; i < 10; i++)
             {
                 if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedPiggyBankItem = i;
+                    SelectedPiggyBankItem = (SelectedPiggyBankItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 10; i < 20; i++)
             {
                 if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedPiggyBankItem = i;
+                    SelectedPiggyBankItem = (SelectedPiggyBankItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 20; i < 30; i++)
             {
                 if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedPiggyBankItem = i;
+                    SelectedPiggyBankItem = (SelectedPiggyBankItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 30; i < 40; i++)
             {
                 if (DrawItem(p.bank.item[i].netID, p.bank.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedPiggyBankItem = i;
+                    SelectedPiggyBankItem = (SelectedPiggyBankItem == i ? -1 : i);
                 f += 37;
             }
 
@@ -280,6 +285,7 @@ namespace TerraZ.Client
                 TextLight(p.bank.item[SelectedPiggyBankItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
                 TextLight("Slot ID: " + SelectedPiggyBankItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
 
+                if (p.bank.item[SelectedPiggyBankItem].stack != 0)
                 if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
                     new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedPiggyBankItem)).Send();
 
@@ -296,28 +302,28 @@ namespace TerraZ.Client
             for (int i = 0; i < 10; i++)
             {
                 if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145, "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedSafeItem = i;
+                    SelectedSafeItem = (SelectedSafeItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 10; i < 20; i++)
             {
                 if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + 37, "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedSafeItem = i;
+                    SelectedSafeItem = (SelectedSafeItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 20; i < 30; i++)
             {
                 if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 2), "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedSafeItem = i;
+                    SelectedSafeItem = (SelectedSafeItem == i ? -1 : i);
                 f += 37;
             }
             f = 0;
             for (int i = 30; i < 40; i++)
             {
                 if (DrawItem(p.bank2.item[i].netID, p.bank2.item[i].stack, Color.DarkSlateGray, Color.SkyBlue, 380 + f, 145 + (37 * 3), "OPACITIES\\PIGGY::BANK_ID_" + i))
-                    SelectedSafeItem = i;
+                    SelectedSafeItem = (SelectedSafeItem == i ? -1 : i);
                 f += 37;
             }
 
@@ -328,7 +334,8 @@ namespace TerraZ.Client
                 TextLight(p.bank2.item[SelectedSafeItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
                 TextLight("Slot ID: " + SelectedSafeItem, 425f, pix + 30f, new Color(0, 0, 0, 0), Color.White, 1f);
 
-                if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
+                if (p.bank2.item[SelectedSafeItem].stack != 0)
+                    if (TextLightPlayerButton("Remove Item", 425, pix + 55f, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM"))
                     new ServerData.InventoryRequest((byte)p.whoAmI, (short)(99 + SelectedSafeItem)).Send();
 
             }
@@ -337,6 +344,8 @@ namespace TerraZ.Client
         public void DrawPlayers()
         {
             Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, 16 * 20 + 45, Main.screenHeight + 140), Color.Black);
+
+            TextLightDeathFont("Select Player", 45f, 25f, Color.White * 0.45f, Color.White, 1f);
 
             int j = Page + 1;
 
