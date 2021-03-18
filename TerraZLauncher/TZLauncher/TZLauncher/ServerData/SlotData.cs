@@ -8,5 +8,9 @@ namespace TerraZ.ServerData
 {
     public class SlotData
     {
+        public int PlayerIndex;
+        public int SlotType;
+        public int SlotReference;
+        public NetItem NetItem;
     }
 }

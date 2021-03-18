@@ -29,9 +29,28 @@ namespace TerraZ.ServerData
                     for (int i = 0; i < data.VoidBag.Length; i++)
                         Main.player[data.PlayerIndex].bank4.item[i] = data.VoidBag[i].ToTerrariaItem();
                     break;
-                //case 8:
-                    //BanksData data = reader.ReadString().GetData<BanksData>();
-                    //break;
+                case 8:
+                    SlotData data2 = reader.ReadString().GetData<SlotData>();
+                    switch (data2.SlotType)
+                    {
+                        case 1: // Piggy bank
+                            Main.player[data2.PlayerIndex].bank.item[data2.SlotReference] = data2.NetItem.ToTerrariaItem();
+                            // ...
+                            break;
+                        case 2: // Safe
+                            Main.player[data2.PlayerIndex].bank2.item[data2.SlotReference] = data2.NetItem.ToTerrariaItem();
+                            // ...
+                            break;
+                        case 3: // Defender's Forge
+                            Main.player[data2.PlayerIndex].bank3.item[data2.SlotReference] = data2.NetItem.ToTerrariaItem();
+                            // ...
+                            break;
+                        case 4: // Void Bag
+                            Main.player[data2.PlayerIndex].bank4.item[data2.SlotReference] = data2.NetItem.ToTerrariaItem();
+                            // ...
+                            break;
+                    }
+                    break;
             }
             return true;
         }
