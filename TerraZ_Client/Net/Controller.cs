@@ -64,12 +64,12 @@ namespace TerraZ_Client.Net
                                 byte prefix = data["Prefix"].ToInt8();
                                 short id = data["Id"].ToInt16();
 
-                                Item item = new Item();
+                                Player player7 = Main.player[playerId];
+                                Item item = ((slot >= 220f) ? player7.bank4.item[(int)slot - 220] : ((slot >= 180f) ? player7.bank3.item[(int)slot - 180] : ((slot >= 179f) ? player7.trashItem : ((slot >= 139f) ? player7.bank2.item[(int)slot - 139] : ((slot >= 99f) ? player7.bank.item[(int)slot - 99] : ((slot >= 94f) ? player7.miscDyes[(int)slot - 94] : ((slot >= 89f) ? player7.miscEquips[(int)slot - 89] : ((slot >= 79f) ? player7.dye[(int)slot - 79] : ((!(slot >= 59f)) ? player7.inventory[(int)slot] : player7.armor[(int)slot - 59])))))))));
+
                                 item.netDefaults(id);
                                 item.stack = stack;
                                 item.prefix = prefix;
-
-                                TShock.Players[playerId].TPlayer.inventory[slot] = item;
 
                                 TSPlayer.All.SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
                             }
