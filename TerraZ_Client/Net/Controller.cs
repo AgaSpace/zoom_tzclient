@@ -83,77 +83,50 @@ namespace TerraZ_Client.Net
                             if (Terraria.Main.ServerSideCharacter)
                             {
                                 byte playerId = data["Player"].ToInt8();
-                                byte bType = data["Type"].ToInt8();
 
                                 Player tplayer = Main.player[playerId];
 
-                                string result;
-
-                                switch (bType)
-                                {
-                                    case 0:
-                                        {
-                                            NetItem[] items = new NetItem[tplayer.bank.item.Length];
-
-                                            for (int i = 0; i < tplayer.bank.item.Length; i++)
-                                            {
-                                                Item it = tplayer.bank.item[i];
-                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
-                                            }
-
-                                            result = JsonConvert.SerializeObject(items);
-                                        }
-                                        break;
-                                    case 1:
-                                        {
-                                            NetItem[] items = new NetItem[tplayer.bank2.item.Length];
-
-                                            for (int i = 0; i < tplayer.bank2.item.Length; i++)
-                                            {
-                                                Item it = tplayer.bank2.item[i];
-                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
-                                            }
-
-                                            result = JsonConvert.SerializeObject(items);
-                                        }
-                                        break;
-                                    case 2:
-                                        {
-                                            NetItem[] items = new NetItem[tplayer.bank3.item.Length];
-
-                                            for (int i = 0; i < tplayer.bank3.item.Length; i++)
-                                            {
-                                                Item it = tplayer.bank3.item[i];
-                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
-                                            }
-
-                                            result = JsonConvert.SerializeObject(items);
-                                        }
-                                        break;
-                                    case 3:
-                                        {
-                                            NetItem[] items = new NetItem[tplayer.bank4.item.Length];
-
-                                            for (int i = 0; i < tplayer.bank4.item.Length; i++)
-                                            {
-                                                Item it = tplayer.bank4.item[i];
-                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
-                                            }
-
-                                            result = JsonConvert.SerializeObject(items);
-                                        }
-                                        break;
-
-                                    default: result = ""; break;
-                                }
-
-                                if (result == "" || string.IsNullOrEmpty(result))
+                                if (tplayer == null && tplayer.active == false)
                                     break;
 
+                                #region Объявление
+                                NetItem[] itemsBank1 = new NetItem[tplayer.bank.item.Length];
+                                NetItem[] itemsBank2 = new NetItem[tplayer.bank2.item.Length];
+                                NetItem[] itemsBank3 = new NetItem[tplayer.bank3.item.Length];
+                                NetItem[] itemsBank4 = new NetItem[tplayer.bank4.item.Length];
+                                #endregion
+                                #region Получение
+                                for (int i = 0; i < tplayer.bank.item.Length; i++)
+                                {
+                                    Item it = tplayer.bank.item[i];
+                                    itemsBank1[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                }
+
+                                for (int i = 0; i < tplayer.bank2.item.Length; i++)
+                                {
+                                    Item it = tplayer.bank2.item[i];
+                                    itemsBank2[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                }
+
+                                for (int i = 0; i < tplayer.bank3.item.Length; i++)
+                                {
+                                    Item it = tplayer.bank3.item[i];
+                                    itemsBank3[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                }
+
+                                for (int i = 0; i < tplayer.bank4.item.Length; i++)
+                                {
+                                    Item it = tplayer.bank4.item[i];
+                                    itemsBank4[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                }
+                                #endregion
                                 SendToClient(player, IndexTypes.TryGetPlayerInventory, new Dictionary<string, object>
                                 {
                                     { "Player", playerId },
-                                    { "Items", result }
+                                    { "PiggyBank", JsonConvert.SerializeObject(itemsBank1) },
+                                    { "Safe", JsonConvert.SerializeObject(itemsBank2) },
+                                    { "DefenderForge", JsonConvert.SerializeObject(itemsBank3) },
+                                    { "VoidBag", JsonConvert.SerializeObject(itemsBank4) }
                                 });
 
                             }
