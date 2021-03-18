@@ -143,6 +143,7 @@ namespace TerraZ_Client
                             {
                                 { "PlayerIndex", playerId },
                                 { "SlotType", slotType },
+                                { "SlotReference", slot },
                                 { "NetItem", netItem }
                             };
                             foreach (TSPlayer linqplayer in from r in TShock.Players where players[(byte)r.Index] == Levels.ClientUser select r)
