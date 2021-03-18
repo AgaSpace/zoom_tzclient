@@ -61,7 +61,7 @@ namespace TerraZ.Client
                     TZLauncher.LauncherCore.WriteErrorBG(ex.ToString());
                 }
             };
-            Timer restTimer = new Timer(1000)
+            Timer restTimer = new Timer(5000)
             {
                 AutoReset = true,
                 Enabled = true
