@@ -19,8 +19,6 @@ namespace TerraZ.Client
 			ClientPermissions = new Permissions();
 			NetManager.Instance.Register<SyncNetModule>();
 			Main.chatMonitor = new ChatMonitor();
-			PlayedTime = new Stopwatch();
-			PlayedTime.Start();
 			ReplaceMethod(typeof(NetMessage).GetMethod("CheckBytes", Flags), typeof(ClientUtils).GetMethod("CheckBytes", Flags));
 		}
 		public static BindingFlags Flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
@@ -29,7 +27,6 @@ namespace TerraZ.Client
 			*((int*)_from.MethodHandle.Value.ToPointer() + 2) = *((int*)_to.MethodHandle.Value.ToPointer() + 2);
 		}
 
-		public static Stopwatch PlayedTime;
 		public static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
 		public static List<ITool> ClientTools { get; private set; }
