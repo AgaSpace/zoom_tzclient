@@ -3,20 +3,25 @@ using Newtonsoft.Json;
 
 namespace TerraZ.ServerData
 {
-    public class NetItem
+    public struct NetItem
     {
         public static NetItem NewItem(short NetID, short Stack, byte Prefix) =>
             new NetItem()
             {
-                NetID = NetID,
-                Stack = Stack,
-                Prefix = Prefix
+                _netId = NetID,
+                _stack = Stack,
+                _prefixId = Prefix
             };
 
-        private NetItem() { }
+        public NetItem(bool t = true) { _netId = 0; _stack = 0; _prefixId = 0; }
 
-        public short NetID;
-        public short Stack;
-        public byte Prefix;
+        public NetItem(int id, int stack, byte prefix) { _netId = id; _stack = stack; _prefixId = prefix; }
+
+        [JsonProperty("netID")]
+        public int _netId;
+        [JsonProperty("stack")]
+        public int _stack;
+        [JsonProperty("prefix")]
+        public byte _prefixId;
     }
 }

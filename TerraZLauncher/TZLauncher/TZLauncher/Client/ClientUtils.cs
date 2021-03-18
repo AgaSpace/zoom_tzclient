@@ -44,9 +44,9 @@ namespace TerraZ.Client
 		public static Item ToTerrariaItem(this NetItem i)
         {
 			Item item = new Item();
-			item.SetDefaults(i.NetID);
-			item.prefix = i.Prefix;
-			item.stack = i.Stack;
+			item.SetDefaults(i._netId);
+			item.prefix = i._prefixId;
+			item.stack = i._stack;
 
 			return item;
         }
