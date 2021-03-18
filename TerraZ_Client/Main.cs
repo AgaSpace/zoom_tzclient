@@ -100,13 +100,26 @@ namespace TerraZ_Client
                         if (slot < 99)
                             return;
 
+                        int type = reader.ReadInt16();
                         int stack = reader.ReadInt16();
                         int prefix = reader.ReadByte();
-                        int type = reader.ReadInt16();
 
                         players.ForEach(plr =>
                         {
-                            TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
+                            // TShock.Players[plr.Key].SendData(PacketTypes.PlayerSlot, "", playerId, slot, prefix);
+                            Dictionary<string, object> netItem = new Dictionary<string, object>()
+                            {
+                                { "netID", type },
+                                { "stack", stack },
+                                { "prefix", prefix }
+                            };
+                            Dictionary<string, object> data = new Dictionary<string, object>()
+                            {
+                                { "PlayerIndex", playerId },
+                                { "NetItem", netItem }
+                            };
+                            foreach (TSPlayer linqplayer in from r in TShock.Players where players[(byte)r.Index] == Levels.ClientUser select r)
+                                Net.Controller.SendToClient(linqplayer.Index, IndexTypes.UpdateSlotInformation, data);
                         });
                     }
                 }
