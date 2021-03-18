@@ -76,59 +76,35 @@ namespace TerraZ_Client.Net
                         }
                     }
                     break;
-                case IndexTypes.TryGetPlayerInventory:
+                case IndexTypes.TryGetPlayerSlotInformation:
                     {
                         if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
                         {
                             if (Terraria.Main.ServerSideCharacter)
                             {
-                                byte playerId = data["Player"].ToInt8();
+                                byte playerId = data["PlayerIndex"].ToInt8();
 
-                                Player tplayer = Main.player[playerId];
+                                Player player7 = Main.player[playerId];
 
-                                if (tplayer == null && tplayer.active == false)
+                                if (player7 == null && player7.active == false)
                                     break;
 
-                                #region Объявление
-                                NetItem[] itemsBank1 = new NetItem[tplayer.bank.item.Length];
-                                NetItem[] itemsBank2 = new NetItem[tplayer.bank2.item.Length];
-                                NetItem[] itemsBank3 = new NetItem[tplayer.bank3.item.Length];
-                                NetItem[] itemsBank4 = new NetItem[tplayer.bank4.item.Length];
-                                #endregion
-                                #region Получение
-                                for (int i = 0; i < tplayer.bank.item.Length; i++)
+                                for (int num4 = 0; num4 < player7.bank.item.Length; num4++)
                                 {
-                                    Item it = tplayer.bank.item[i];
-                                    itemsBank1[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(99 + num4), (float)player7.bank.item[num4].prefix);
                                 }
-
-                                for (int i = 0; i < tplayer.bank2.item.Length; i++)
+                                for (int num5 = 0; num5 < player7.bank2.item.Length; num5++)
                                 {
-                                    Item it = tplayer.bank2.item[i];
-                                    itemsBank2[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(139 + num5), (float)player7.bank2.item[num5].prefix);
                                 }
-
-                                for (int i = 0; i < tplayer.bank3.item.Length; i++)
+                                for (int num6 = 0; num6 < player7.bank3.item.Length; num6++)
                                 {
-                                    Item it = tplayer.bank3.item[i];
-                                    itemsBank3[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(180 + num6), (float)player7.bank3.item[num6].prefix);
                                 }
-
-                                for (int i = 0; i < tplayer.bank4.item.Length; i++)
+                                for (int num7 = 0; num7 < player7.bank4.item.Length; num7++)
                                 {
-                                    Item it = tplayer.bank4.item[i];
-                                    itemsBank4[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(220 + num7), (float)player7.bank4.item[num7].prefix);
                                 }
-                                #endregion
-                                SendToClient(player, IndexTypes.TryGetPlayerInventory, new Dictionary<string, object>
-                                {
-                                    { "Player", playerId },
-                                    { "PiggyBank", JsonConvert.SerializeObject(itemsBank1) },
-                                    { "Safe", JsonConvert.SerializeObject(itemsBank2) },
-                                    { "DefenderForge", JsonConvert.SerializeObject(itemsBank3) },
-                                    { "VoidBag", JsonConvert.SerializeObject(itemsBank4) }
-                                });
-
                             }
                         }
                     }
