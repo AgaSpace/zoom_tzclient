@@ -40,19 +40,26 @@ namespace TerraZ.Client
 
             Action a = () =>
             {
-                string str = "/clean";
-                using (WebClient web = new WebClient())
-                    str = web.DownloadString("http://s.terraz.ru:7878/status");
+                try
+                {
+                    string str = "/clean";
+                    using (WebClient web = new WebClient())
+                        str = web.DownloadString("http://s.terraz.ru:7878/status");
 
-                RestAPI = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
-                TZLauncher.LauncherCore.WriteInfoBG(str);
+                    RestAPI = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
+                    TZLauncher.LauncherCore.WriteInfoBG(str);
 
-                if (SelectedPlayer == -1)
-                    return;
+                    if (SelectedPlayer == -1)
+                        return;
 
-                Dictionary<string, object> obj = new Dictionary<string, object>();
-                obj.Add("PlayerIndex", (byte)SelectedPlayer);
-                DataBuilder.SendData(4, obj);
+                    Dictionary<string, object> obj = new Dictionary<string, object>();
+                    obj.Add("PlayerIndex", (byte)SelectedPlayer);
+                    DataBuilder.SendData(4, obj);
+                } catch (Exception ex)
+                {
+                    TZLauncher.LauncherCore.WriteError("=======  TerraZ.Connections =======");
+                    TZLauncher.LauncherCore.WriteErrorBG(ex.ToString());
+                }
             };
             Timer restTimer = new Timer(1000)
             {
