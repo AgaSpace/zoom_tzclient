@@ -50,9 +50,9 @@ namespace TerraZ.Client
 
 			return item;
         }
-		internal static bool canAgainSendPackage = true;
+        private static int OldWorld;
 
-		public static void CheckBytes(int bufferIndex = 256)
+        public static void CheckBytes(int bufferIndex = 256)
 		{
 			lock (NetMessage.buffer[bufferIndex])
 			{
@@ -68,13 +68,15 @@ namespace TerraZ.Client
 							long position = NetMessage.buffer[bufferIndex].reader.BaseStream.Position;
 							byte b = NetMessage.buffer[bufferIndex].readBuffer[num + 2];
 
-							if (b == 7)
-                            {
-								if (canAgainSendPackage == true)
-                                {
-									canAgainSendPackage = false;
-									DataBuilder.SendData(0);
-								}
+							switch (b)
+							{
+								case 7:
+									if (OldWorld != Main.worldID)
+									{
+										OldWorld = Main.worldID;
+										DataBuilder.SendData(0);
+									}
+									return;
 							}
 
 							NetMessage.buffer[bufferIndex].GetData(num + 2, num3 - 2, out var _);

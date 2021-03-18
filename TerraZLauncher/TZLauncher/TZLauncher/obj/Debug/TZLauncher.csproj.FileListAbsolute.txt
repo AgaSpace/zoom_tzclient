@@ -22,3 +22,4 @@ C:\Users\AgaSp\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLaunch
 C:\Users\AgaSp\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.exe
 C:\Users\AgaSp\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\obj\Debug\TZLauncher.pdb
 C:\Users\AgaSp\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\Terraria.exe
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TZLauncher\bin\Debug\SteelSeriesEngineWrapper.dll
