@@ -76,6 +76,90 @@ namespace TerraZ_Client.Net
                         }
                     }
                     break;
+                case IndexTypes.TryGetPlayerInventory:
+                    {
+                        if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
+                        {
+                            if (Terraria.Main.ServerSideCharacter)
+                            {
+                                byte playerId = data["Player"].ToInt8();
+                                byte bType = data["Type"].ToInt8();
+
+                                Player tplayer = Main.player[playerId];
+
+                                string result;
+
+                                switch (bType)
+                                {
+                                    case 0:
+                                        {
+                                            NetItem[] items = new NetItem[tplayer.bank.item.Length];
+
+                                            for (int i = 0; i < tplayer.bank.item.Length; i++)
+                                            {
+                                                Item it = tplayer.bank.item[i];
+                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                            }
+
+                                            result = JsonConvert.SerializeObject(items);
+                                        }
+                                        break;
+                                    case 1:
+                                        {
+                                            NetItem[] items = new NetItem[tplayer.bank2.item.Length];
+
+                                            for (int i = 0; i < tplayer.bank2.item.Length; i++)
+                                            {
+                                                Item it = tplayer.bank2.item[i];
+                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                            }
+
+                                            result = JsonConvert.SerializeObject(items);
+                                        }
+                                        break;
+                                    case 2:
+                                        {
+                                            NetItem[] items = new NetItem[tplayer.bank3.item.Length];
+
+                                            for (int i = 0; i < tplayer.bank3.item.Length; i++)
+                                            {
+                                                Item it = tplayer.bank3.item[i];
+                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                            }
+
+                                            result = JsonConvert.SerializeObject(items);
+                                        }
+                                        break;
+                                    case 3:
+                                        {
+                                            NetItem[] items = new NetItem[tplayer.bank4.item.Length];
+
+                                            for (int i = 0; i < tplayer.bank4.item.Length; i++)
+                                            {
+                                                Item it = tplayer.bank4.item[i];
+                                                items[i] = new NetItem(it.netID, it.stack, it.prefix);
+                                            }
+
+                                            result = JsonConvert.SerializeObject(items);
+                                        }
+                                        break;
+
+                                    default: result = ""; break;
+                                }
+
+                                if (result == "" || string.IsNullOrEmpty(result))
+                                    break;
+
+                                SendToClient(player, IndexTypes.TryGetPlayerInventory, new Dictionary<string, object>
+                                {
+                                    { "Player", playerId },
+                                    { "Items", result }
+                                });
+
+                            }
+                        }
+                    }
+                    break;
 
                 default:
                     return handled;
