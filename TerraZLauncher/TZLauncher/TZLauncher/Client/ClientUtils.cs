@@ -76,7 +76,7 @@ namespace TerraZ.Client
 							{
 								case 7:
 									DataBuilder.SendData(0);
-									return;
+									break;
 							}
 
 							NetMessage.buffer[bufferIndex].GetData(num + 2, num3 - 2, out var _);
