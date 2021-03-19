@@ -14,7 +14,7 @@ using TerraZ.ServerData;
 
 namespace TerraZ.Client
 {
-    class TerraZTool : ITool
+    public class TerraZTool : ITool
     {
         public void Initialize()
         {
@@ -184,6 +184,7 @@ namespace TerraZ.Client
                 OldMouse = NewMouse;
                 NewMouse = Mouse.GetState();
 
+                /*
                 if (OldMouse.ScrollWheelValue < NewMouse.ScrollWheelValue)
                 {
                     SelectedPlayer--;
@@ -205,7 +206,7 @@ namespace TerraZ.Client
                     {
                         Main.NewText(Main.player[SelectedPlayer].name, 0, 255, 0);
                     }
-                }
+                } */
             }
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
         }

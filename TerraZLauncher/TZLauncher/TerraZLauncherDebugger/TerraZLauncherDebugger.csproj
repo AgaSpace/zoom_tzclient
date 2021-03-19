@@ -55,8 +55,9 @@
     <Reference Include="Terraria">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Terraria\Terraria.exe</HintPath>
     </Reference>
-    <Reference Include="TerraZ.Client">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Terraria\TerraZ.Client.dll</HintPath>
+    <Reference Include="TZLauncher, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\TZLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

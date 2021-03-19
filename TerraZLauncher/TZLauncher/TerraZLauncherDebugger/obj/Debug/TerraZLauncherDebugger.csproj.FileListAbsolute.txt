@@ -16,8 +16,7 @@ C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZL
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\ImGuiXNA.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\Microsoft.Xna.Framework.Game.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\Terraria.exe
-C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\TerraZ.Client.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\ReLogic.dll
-C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\Newtonsoft.Json.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\bin\Debug\SteelSeriesEngineWrapper.dll
 C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.csproj.CopyComplete
+C:\Users\bat627\Documents\GitHub\TerraZ_Client\TerraZLauncher\TZLauncher\TerraZLauncherDebugger\obj\Debug\TerraZLauncherDebugger.exe.config

@@ -186,7 +186,7 @@ namespace TerraZ.Client
                     }
                 }
 
-                Main.DrawCursor(Vector2.Zero, Main.SmartCursorEnabled);
+                Main.DrawCursor(Main.DrawThickCursor(false), false);
 
                 Main.spriteBatch.End();
             }

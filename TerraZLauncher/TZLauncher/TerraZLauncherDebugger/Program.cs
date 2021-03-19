@@ -57,10 +57,15 @@ namespace TerraZLauncherDebugger
         {
             try
             {
+                if (Netplay.Disconnect) return;
+
                 XNA.NewFrame(obj);
 
                 if (ImGui.Checkbox("godmode", ref Godmode))
                     Terraria.Main.LocalPlayer.creativeGodMode = false;
+
+                if (ImGui.Button("add tool")) Client.ClientTools.Add(new TerraZTool());
+
                 XNA.Render();
             }
             catch (Exception ex) 
