@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using Terraria;
+using TerraZ.Client;
+using ImGuiNET;
+using ImGuiXNA;
+using System.IO;
 
 namespace TerraZLauncherDebugger
 {
@@ -18,7 +21,57 @@ namespace TerraZLauncherDebugger
                 asm.Launch(new string[0] { });
             });
             t.Start();
+
+            Terraria.Main.OnEngineLoad += () =>
+            {
+                XNA = new ImGuiXNAState(Terraria.Main.instance);
+                if (!File.Exists(Environment.CurrentDirectory + "\\imgui.ini"))
+                    File.Create(Environment.CurrentDirectory + "\\imgui.ini");
+                XNA.BuildTextureAtlas();
+
+                Terraria.Main.OnPostDraw += DrawGui;
+                Terraria.Main.OnTickForInternalCodeOnly += OnUpdate;
+            };
         }
+
+        private static void OnUpdate()
+        {
+            try
+            {
+                if (Godmode)
+                {
+                    Terraria.Main.LocalPlayer.noFallDmg = true;
+                    Terraria.Main.LocalPlayer.wingAccRunSpeed = 15f;
+                    Terraria.Main.LocalPlayer.wingTime = Terraria.Main.LocalPlayer.wingTimeMax;
+                    Terraria.Main.LocalPlayer.statLife = Terraria.Main.LocalPlayer.statLifeMax;
+                    Terraria.Main.LocalPlayer.statMana = Terraria.Main.LocalPlayer.statManaMax;
+                    Terraria.Main.LocalPlayer.dashDelay = 0;
+                    Terraria.Main.LocalPlayer.immune = true;
+                    Terraria.Main.LocalPlayer.immuneTime = 60;
+                    Terraria.Main.LocalPlayer.creativeGodMode = true;
+                }
+            } catch { }
+        }
+
+        private static void DrawGui(Microsoft.Xna.Framework.GameTime obj)
+        {
+            try
+            {
+                XNA.NewFrame(obj);
+
+                if (ImGui.Checkbox("godmode", ref Godmode))
+                    Terraria.Main.LocalPlayer.creativeGodMode = false;
+                XNA.Render();
+            }
+            catch (Exception ex) 
+            {
+                LauncherCore.WriteError(ex.ToString());
+            }
+        }
+
+        static ImGuiXNAState XNA;
+
+        static bool Godmode;
     }
     public static class LauncherCore
     {
