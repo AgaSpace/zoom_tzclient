@@ -24,13 +24,19 @@ namespace TerraZLauncherDebugger
 
             Terraria.Main.OnEngineLoad += () =>
             {
-                XNA = new ImGuiXNAState(Terraria.Main.instance);
-                if (!File.Exists(Environment.CurrentDirectory + "\\imgui.ini"))
-                    File.Create(Environment.CurrentDirectory + "\\imgui.ini");
-                XNA.BuildTextureAtlas();
+                try
+                {
+                    XNA = new ImGuiXNAState(Terraria.Main.instance);
+                    XNA.BuildTextureAtlas();
 
-                Terraria.Main.OnPostDraw += DrawGui;
-                Terraria.Main.OnTickForInternalCodeOnly += OnUpdate;
+                    Terraria.Main.OnPostDraw += DrawGui;
+                    Terraria.Main.OnTickForInternalCodeOnly += OnUpdate;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    Console.ReadLine();
+                }
             };
         }
 
@@ -57,15 +63,26 @@ namespace TerraZLauncherDebugger
         {
             try
             {
-                if (Netplay.Disconnect) return;
-
                 XNA.NewFrame(obj);
+                ImGui.Begin("developer", ImGuiWindowFlags.Default);
 
                 if (ImGui.Checkbox("godmode", ref Godmode))
                     Terraria.Main.LocalPlayer.creativeGodMode = false;
 
-                if (ImGui.Button("add tool")) Client.ClientTools.Add(new TerraZTool());
+                ImGui.BeginChildFrame(0, new ImVec2(250f, 350f), ImGuiWindowFlags.Default);
+                foreach (Player p in Terraria.Main.player)
+                {
+                    if (p.active)
+                    {
+                        ImGui.Text(p.name);
+                        ImGui.SameLine(0, 3);
+                        if (ImGui.Button("tp<" + p.name + ">"))
+                            Terraria.Main.LocalPlayer.Teleport(p.position, 0, 0);
+                    }
+                }
+                ImGui.EndChildFrame();
 
+                ImGui.End();
                 XNA.Render();
             }
             catch (Exception ex) 

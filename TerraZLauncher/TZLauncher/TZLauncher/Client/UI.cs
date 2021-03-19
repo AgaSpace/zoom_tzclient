@@ -115,7 +115,7 @@ namespace TerraZ.Client
                 if (OldMouse.ScrollWheelValue < NewMouse.ScrollWheelValue) Page++;
                 else if (OldMouse.ScrollWheelValue > NewMouse.ScrollWheelValue) Page--;
 
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.SamplerStateForCursor, null, null, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
@@ -182,6 +182,12 @@ namespace TerraZ.Client
                             break;
                         case ViewID.Safe:
                             DrawSafe();
+                            break;
+                        case ViewID.VoidBag:
+                            DrawVoidBag();
+                            break;
+                        case ViewID.DefendersForge:
+                            DrawDefendersForge();
                             break;
                     }
                 }
@@ -419,7 +425,7 @@ namespace TerraZ.Client
             }
 
             float pix = 145f + 35f + (37f * 5f);
-            if (SelectedPiggyBankItem != -1)
+            if (SelectedSafeItem != -1)
             {
                 DrawItem(p.bank2.item[SelectedSafeItem].netID, p.bank2.item[SelectedSafeItem].stack, Color.DarkSlateGray, Color.DarkSlateGray, 380, 145 + 35 + (37 * 5), "OPACITIES\\SAFE::SELECTED_ITEM");
                 TextLight(p.bank2.item[SelectedSafeItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
@@ -468,7 +474,7 @@ namespace TerraZ.Client
             }
 
             float pix = 145f + 35f + (37f * 5f);
-            if (SelectedPiggyBankItem != -1)
+            if (SelectedVoidBagItem != -1)
             {
                 DrawItem(p.bank4.item[SelectedVoidBagItem].netID, p.bank4.item[SelectedVoidBagItem].stack, Color.DarkSlateGray, Color.DarkSlateGray, 380, 145 + 35 + (37 * 5), "OPACITIES\\VB::SELECTED_ITEM");
                 TextLight(p.bank4.item[SelectedVoidBagItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
@@ -517,7 +523,7 @@ namespace TerraZ.Client
             }
 
             float pix = 145f + 35f + (37f * 5f);
-            if (SelectedPiggyBankItem != -1)
+            if (SelectedDefendersForgeItem != -1)
             {
                 DrawItem(p.bank3.item[SelectedDefendersForgeItem].netID, p.bank3.item[SelectedDefendersForgeItem].stack, Color.DarkSlateGray, Color.DarkSlateGray, 380, 145 + 35 + (37 * 5), "OPACITIES\\DF::SELECTED_ITEM");
                 TextLight(p.bank3.item[SelectedDefendersForgeItem].Name, 425f, pix, Color.White * 0.15f, Color.White, 1f);
