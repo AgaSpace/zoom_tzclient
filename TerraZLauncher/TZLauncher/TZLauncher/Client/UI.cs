@@ -47,14 +47,14 @@ namespace TerraZ.Client
                         str = web.DownloadString("http://s.terraz.ru:7878/status");
 
                     RestAPI = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
-                    TZLauncher.LauncherCore.WriteInfoBG(str);
-
+                    /*
                     if (SelectedPlayer == -1)
                         return;
 
                     Dictionary<string, object> obj = new Dictionary<string, object>();
                     obj.Add("PlayerIndex", (byte)SelectedPlayer);
                     DataBuilder.SendData(4, obj);
+                */
                 } catch (Exception ex)
                 {
                     TZLauncher.LauncherCore.WriteError("=======  TerraZ.Connections =======");
