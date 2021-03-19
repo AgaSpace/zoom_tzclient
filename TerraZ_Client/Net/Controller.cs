@@ -32,7 +32,10 @@ namespace TerraZ_Client.Net
             {
                 case IndexTypes.Authorization:
                     {
-                        MyPlugin.players.Add(player.Index.ToInt8(), Levels.ClientUser);
+                        if (MyPlugin.players.Contains(player.Index))
+                            break;
+
+                        MyPlugin.players.Add(player.Index);
 
                         Console.WriteLine("Player {0} connected on server with TerraZ client.", player.Name);
 
