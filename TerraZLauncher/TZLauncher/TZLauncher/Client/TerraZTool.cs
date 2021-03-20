@@ -41,6 +41,65 @@ namespace TerraZ.Client
             WorldEditPoints = Point.First;
             RegionDefPoints = Point.First;
 
+            Binds.Add(Bind.CreateBind(Keys.Z, () =>
+            {
+                int player = ClientUtils.GetPlayerOverMouse();
+
+                if (player != -1 && Main.player[player] != null && Main.player[player].active != false)
+                {
+                    UserInterface.ResetItems();
+                    UserInterface.SelectedPlayer = player;
+                    
+                    UserInterface.ShowGUI = true;
+                }
+            }, "Выбор игрока на мышке и открытие гуи с этим персонажем"));
+
+            Binds.Add(Bind.CreateBind(Keys.X, () =>
+            {
+                if (Main.mapFullscreen)
+                {
+                    int num = Main.maxTilesX * 16;
+                    int num2 = Main.maxTilesY * 16;
+                    Vector2 vector = new Vector2(Main.mouseX, Main.mouseY);
+                    vector.X -= Main.screenWidth / 2;
+                    vector.Y -= Main.screenHeight / 2;
+                    Vector2 mapFullscreenPos = Main.mapFullscreenPos;
+                    Vector2 vector2 = mapFullscreenPos;
+                    vector /= 16f;
+                    vector *= 16f / Main.mapFullscreenScale;
+                    vector2 += vector;
+                    vector2 *= 16f;
+                    Player player = Main.player[Main.myPlayer];
+                    vector2.Y -= player.height;
+                    if (vector2.X < 0f)
+                    {
+                        vector2.X = 0f;
+                    }
+                    else if (vector2.X + player.width > num)
+                    {
+                        vector2.X = num - player.width;
+                    }
+                    if (vector2.Y < 0f)
+                    {
+                        vector2.Y = 0f;
+                    }
+                    else if (vector2.Y + player.height > num2)
+                    {
+                        vector2.Y = num2 - player.height;
+                    }
+                    player.position = vector2;
+                    player.velocity = Vector2.Zero;
+                    player.fallStart = (int)(player.position.Y / 16f);
+                    NetMessage.SendData(13, -1, -1, null, Main.myPlayer);
+                }
+                else
+                {
+                    Main.LocalPlayer.Teleport(new Vector2(Main.mouseX + Main.screenPosition.X, Main.mouseY + Main.screenPosition.Y), 0, 0);
+                    NetMessage.SendData(13, -1, -1, null, Main.myPlayer);
+                }
+
+            }, "Телепортация к курсору (На карте тоже работает)."));
+
             /*Binds.Add(Bind.CreateBind(Keys.B, () =>
             {
                 if (!Client.HasPermission("terraz.worldedit"))

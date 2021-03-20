@@ -768,13 +768,13 @@ namespace TerraZ.Client
         public float WindowOpacity;
 
         private int Page;
-        private int SelectedPlayer = -1;
-        private int SelectedDefendersForgeItem = -1;
-        private int SelectedVoidBagItem = -1;
-        private int SelectedSafeItem = -1;
-        private int SelectedItem = -1;
-        private int SelectedArmorItem = -1;
-        private int SelectedPiggyBankItem = -1;
+        public int SelectedPlayer = -1;
+        public int SelectedDefendersForgeItem = -1;
+        public int SelectedVoidBagItem = -1;
+        public int SelectedSafeItem = -1;
+        public int SelectedItem = -1;
+        public int SelectedArmorItem = -1;
+        public int SelectedPiggyBankItem = -1;
 
         private Dictionary<string, Opacity> Opacityes = new Dictionary<string, Opacity>();
 
@@ -785,7 +785,7 @@ namespace TerraZ.Client
         private double EasterEgg_Hours;
         private int SelectedDyeItem;
 
-        public bool ShowGUI { get; private set; }
+        public bool ShowGUI { get; internal set; }
         enum ViewID : byte
         {
             Inventory = 0, 
