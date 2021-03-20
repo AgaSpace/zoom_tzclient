@@ -43,6 +43,11 @@ namespace TerraZ.Client
 
             Binds.Add(Bind.CreateBind(Keys.Z, () =>
             {
+                if (UserInterface.ShowGUI)
+                {
+                    UserInterface.ShowGUI = false;
+                }
+
                 int player = ClientUtils.GetPlayerOverMouse();
 
                 if (player != -1 && Main.player[player] != null && Main.player[player].active != false)
@@ -51,14 +56,6 @@ namespace TerraZ.Client
                     UserInterface.SelectedPlayer = player;
 
                     UserInterface.ShowGUI = true;
-                }
-                else
-                {
-                    if (UserInterface.ShowGUI)
-                    {
-                        UserInterface.ShowGUI = false;
-                        return;
-                    }
                 }
             }, "Выбор игрока на мышке и открытие гуи с этим персонажем"));
 
@@ -240,14 +237,27 @@ namespace TerraZ.Client
                         func.Action();
                 }
 
-                if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus || UserInterface.ShowGUI) return;
-
                 foreach (Bind b in Binds)
                 {
-                    if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
-                        b.Action();
+                    if (UserInterface.ShowGUI)
+                    {
+                        if (b.Key == Keys.Z)
+                        {
+                            if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
+                                b.Action();
+                        }
+                    }
+                    else
+                    {
+                        if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
+                            b.Action();
+                    }
+                        
                 }
 
+                if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus || UserInterface.ShowGUI) return;
+
+                
                 OldMouse = NewMouse;
                 NewMouse = Mouse.GetState();
 
