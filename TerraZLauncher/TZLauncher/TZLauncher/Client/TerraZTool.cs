@@ -49,8 +49,16 @@ namespace TerraZ.Client
                 {
                     UserInterface.ResetItems();
                     UserInterface.SelectedPlayer = player;
-                    
+
                     UserInterface.ShowGUI = true;
+                }
+                else
+                {
+                    if (UserInterface.ShowGUI)
+                    {
+                        UserInterface.ShowGUI = false;
+                        return;
+                    }
                 }
             }, "Выбор игрока на мышке и открытие гуи с этим персонажем"));
 

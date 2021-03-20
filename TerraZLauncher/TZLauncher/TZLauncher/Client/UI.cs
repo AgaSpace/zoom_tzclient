@@ -80,6 +80,12 @@ namespace TerraZ.Client
             SelectedArmorItem = -1;
         }
 
+        public void Reset()
+        {
+            SelectedPlayer = -1;
+            ResetItems();
+        }
+
         public void Draw()
         {
             try
@@ -210,11 +216,15 @@ namespace TerraZ.Client
 
         public void DrawInventory()
         {
-            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null || Main.player[SelectedPlayer].active == false)
+            {
+                Reset();
                 return;
+            }
 
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
+
             int f = 0;
             int a = 0;
             for (int i = 0; i < 10; i++)
@@ -347,8 +357,11 @@ namespace TerraZ.Client
         }
         public void DrawPiggyBank()
         {
-            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null || Main.player[SelectedPlayer].active == false)
+            {
+                Reset();
                 return;
+            }
 
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
@@ -396,8 +409,11 @@ namespace TerraZ.Client
         }
         public void DrawSafe()
         {
-            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null || Main.player[SelectedPlayer].active == false)
+            {
+                Reset();
                 return;
+            }
 
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
@@ -445,8 +461,11 @@ namespace TerraZ.Client
         }
         public void DrawVoidBag()
         {
-            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null || Main.player[SelectedPlayer].active == false)
+            {
+                Reset();
                 return;
+            }
 
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
@@ -494,8 +513,11 @@ namespace TerraZ.Client
         }
         public void DrawDefendersForge()
         {
-            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null)
+            if (SelectedPlayer < 0 || SelectedPlayer > 255 || Main.player[SelectedPlayer] == null || Main.player[SelectedPlayer].active == false)
+            {
+                Reset();
                 return;
+            }
 
             Main.inventoryScale = 0.6f;
             Player p = Main.player[SelectedPlayer];
