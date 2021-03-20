@@ -71,7 +71,6 @@ namespace TerraZ.Client
 
         public void ResetItems()
         {
-            SelectedPlayer = -1;
             SelectedItem = -1;
             SelectedDefendersForgeItem = -1;
             SelectedPiggyBankItem = -1;
