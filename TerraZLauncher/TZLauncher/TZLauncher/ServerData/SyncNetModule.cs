@@ -32,6 +32,9 @@ namespace TerraZ.ServerData
                     for (int i = 0; i < data1.VoidBag.Length; i++)
                         Main.player[data1.PlayerIndex].bank4.item[i] = data1.VoidBag[i].ToTerrariaItem();
                     break;
+                case 5:
+                    Main.NotifyOfEvent(Terraria.GameContent.GameNotificationType.All);
+                    break;
                 case 8:
                     SlotData data2 = reader.ReadString().GetData<SlotData>();
                     data2.JSONPrint();
