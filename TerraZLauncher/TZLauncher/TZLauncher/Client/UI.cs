@@ -69,6 +69,18 @@ namespace TerraZ.Client
             restTimer.Elapsed += (x, y) => a.ThreadPush();
         }
 
+        public void ResetItems()
+        {
+            SelectedPlayer = -1;
+            SelectedItem = -1;
+            SelectedDefendersForgeItem = -1;
+            SelectedPiggyBankItem = -1;
+            SelectedSafeItem = -1;
+            SelectedVoidBagItem = -1;
+            SelectedDyeItem = -1;
+            SelectedArmorItem = -1;
+        }
+
         public void Draw()
         {
             try
@@ -78,6 +90,12 @@ namespace TerraZ.Client
 
                 OldKeyboard = NewKeyboard;
                 NewKeyboard = Keyboard.GetState();
+
+                if (Main.gameMenu || Main.player == null)
+                {
+                    ShowGUI = false;
+                    ResetItems();
+                }
 
                 if (OldKeyboard.IsKeyUp(Keys.F2) && NewKeyboard.IsKeyDown(Keys.F2))
                 {
@@ -98,17 +116,6 @@ namespace TerraZ.Client
 
                 if (CaptureManager.Instance.Active)
                     CaptureManager.Instance.Active = false;
-
-                if (Main.gameMenu || Main.player == null)
-                {
-                    ShowGUI = false;
-                    SelectedPlayer = -1;
-                    SelectedItem = -1;
-                    SelectedDefendersForgeItem = -1;
-                    SelectedPiggyBankItem = -1;
-                    SelectedSafeItem = -1;
-                    SelectedVoidBagItem = -1;
-                }
 
                 Main.LocalPlayer.mouseInterface = true;
 
@@ -322,14 +329,14 @@ namespace TerraZ.Client
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 149 10"));
             }
 
+            if (TextLightPlayerButton("Телепортироваться", 380, pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT"))
+            {
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/tp {p.whoAmI}"));
+            }
+
             if (!Main.ServerSideCharacter) return;
 
-            if (TextLightPlayerButton("Скопировать инвентарь", 380, pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY"))
-            {
-                ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee \"" + p.name + "\""));
-                ShowGUI = false;
-                Main.playerInventory = true;
-            }
+            
             if (TextLightPlayerButton("Сохранить и вернуть свой инвентарь", 380 + (int)(5f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY2"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee -s"));
@@ -563,7 +570,7 @@ namespace TerraZ.Client
                     else
                     {
                         SelectedPlayer = p.whoAmI;
-                        SelectedItem = -1;
+                        ResetItems();
                     }
                 }
                 j += 1;
