@@ -69,7 +69,7 @@ namespace TerraZLauncherDebugger
                 if (ImGui.Checkbox("godmode", ref Godmode))
                     Terraria.Main.LocalPlayer.creativeGodMode = false;
 
-                ImGui.BeginChildFrame(0, new ImVec2(250f, 350f), ImGuiWindowFlags.Default);
+                ImGui.BeginChildFrame(0, new ImVec2(250f, 250f), ImGuiWindowFlags.Default);
                 foreach (Player p in Terraria.Main.player)
                 {
                     if (p.active)
@@ -81,7 +81,10 @@ namespace TerraZLauncherDebugger
                     }
                 }
                 ImGui.EndChildFrame();
-
+                ImGui.DragInt("usetime", ref Terraria.Main.LocalPlayer.HeldItem.useTime, 0.5f, -1, 100, "ut: " + Terraria.Main.LocalPlayer.HeldItem.useTime);
+                ImGui.DragInt("useAnimation", ref Terraria.Main.LocalPlayer.HeldItem.useAnimation, 0.5f, -1, 100, "ua: " + Terraria.Main.LocalPlayer.HeldItem.useAnimation);
+                ImGui.DragInt("damage", ref Terraria.Main.LocalPlayer.HeldItem.damage, 0.5f, -1, 32767, "damage: " + Terraria.Main.LocalPlayer.HeldItem.damage);
+                ImGui.DragInt("stack", ref Terraria.Main.LocalPlayer.HeldItem.stack, 0.5f, -1, 32767, "stack: " + Terraria.Main.LocalPlayer.HeldItem.stack);
                 ImGui.End();
                 XNA.Render();
             }
