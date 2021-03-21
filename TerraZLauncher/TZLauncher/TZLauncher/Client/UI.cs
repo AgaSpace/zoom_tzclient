@@ -127,7 +127,7 @@ namespace TerraZ.Client
                 if (OldMouse.ScrollWheelValue < NewMouse.ScrollWheelValue) Page++;
                 else if (OldMouse.ScrollWheelValue > NewMouse.ScrollWheelValue) Page--;
 
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.SamplerStateForCursor, null, null, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
                 Main.spriteBatch.Draw(Gradient, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.Black);
