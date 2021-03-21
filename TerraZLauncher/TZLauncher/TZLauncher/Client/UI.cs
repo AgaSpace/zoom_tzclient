@@ -227,6 +227,7 @@ namespace TerraZ.Client
 
             int f = 0;
             int a = 0;
+            #region InventoryDraw
             for (int i = 0; i < 10; i++)
             {
                 if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.SkyBlue, Color.Blue, 380 + f, 145, "OPACITIES\\ID_" + i))
@@ -278,7 +279,8 @@ namespace TerraZ.Client
 
             if (DrawItem(p.inventory[58].netID, p.inventory[58].stack, Color.Aqua, Color.SkyBlue, 380 + f, 145 + (37 * 5), "OPACITIES\\ID_LAST"))
                 SelectedItem = (SelectedItem == 58 ? -1 : 58);
-
+            #endregion
+            #region Armor and Dye
             for (int i = 0; i < 10; i++)
             {
                 if (DrawItem(p.armor[i].netID, p.armor[i].stack, Color.SkyBlue, Color.Blue, 680 + (37 * 10), 145 + a, "OPACITIES\\ARMOR::ID_" + i))
@@ -299,7 +301,8 @@ namespace TerraZ.Client
                     SelectedDyeItem = (SelectedDyeItem == i ? -1 : i);
                 a += 37;
             }
-
+            #endregion
+            #region Item Delete
             if (SelectedArmorItem != -1)
             {
                 DrawItem(p.armor[SelectedArmorItem].netID, p.armor[SelectedArmorItem].stack, Color.DarkSlateGray, Color.SkyBlue, 680 + (37 * 10) - 107, 145, "OPACITIES\\SELECTED_ITEM//ARMOR");
@@ -316,8 +319,6 @@ namespace TerraZ.Client
                     if (TextLightPlayerButton("Удалить предмет", 560 + (37 * 10) - 177, 145 + 37 + 5, 1f, "OPACITIES\\BUTTON_REMOVE::ITEM//DYE"))
                         new ServerData.InventoryRequest((byte)p.whoAmI, (short)(SelectedDyeItem + 79)).Send();
             }
-
-
             float pix = 145f + 35f + (37f * 5f);
             if (SelectedItem != -1)
             {
@@ -330,7 +331,7 @@ namespace TerraZ.Client
                         new ServerData.InventoryRequest((byte)p.whoAmI, (short)SelectedItem).Send();
 
             }
-
+            #endregion
             if (TextLightPlayerButton("Заморозить", 380, pix + 78f, 1f, "OPACITIES\\BUTTON_DISABLE::PLAYER"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 156 10"));
@@ -338,14 +339,24 @@ namespace TerraZ.Client
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/gbuff {p.whoAmI} 149 10"));
             }
 
-            if (TextLightPlayerButton("Телепортироваться", 380, pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT"))
+            if (TextLightPlayerButton("Телепортироваться", 380, pix + 78f + 28f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage($"/tp {p.whoAmI}"));
             }
 
+            if (TextLightPlayerButton("Телепортировать к себе", 380, pix + 78f + (28f * 2f), 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT2"))
+            {
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/tphere {p.whoAmI}"));
+            }
+
             if (!Main.ServerSideCharacter) return;
 
-            
+            if (TextLightPlayerButton("Телепортироваться", 380, pix + 78f + 28f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT"))
+            {
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/tp {p.whoAmI}"));
+            }
+
+            /*
             if (TextLightPlayerButton("Сохранить и вернуть свой инвентарь", 380 + (int)(5f + FontAssets.MouseText.Value.MeasureString("Скопировать инвентарь").X), pix + 78f + 24f, 1f, "OPACITIES\\BUTTON_MANAGE::INVENTORY2"))
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee -s"));
@@ -354,6 +365,7 @@ namespace TerraZ.Client
             {
                 ChatHelper.SendChatMessageFromClient(new ChatMessage("/invsee"));
             }
+            */
         }
         public void DrawPiggyBank()
         {
@@ -649,8 +661,11 @@ namespace TerraZ.Client
             {
                 Opacityes[opacityID]++;
 
-                if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
-                    result = true;
+                if (Main.hasFocus)
+                {
+                    if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
+                        result = true;
+                }
             }
             else Opacityes[opacityID]--;
 
@@ -694,8 +709,11 @@ namespace TerraZ.Client
 
                 color2 = Color.Yellow * Opacityes[opacityID].PublicOpacity;
 
-                if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
-                    result = true;
+                if (Main.hasFocus)
+                {
+                    if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
+                        result = true;
+                }
             }
             else Opacityes[opacityID]--;
 

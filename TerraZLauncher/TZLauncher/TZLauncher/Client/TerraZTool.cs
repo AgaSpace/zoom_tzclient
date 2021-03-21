@@ -58,7 +58,6 @@ namespace TerraZ.Client
                     UserInterface.ShowGUI = true;
                 }
             }, "Выбор игрока на мышке и открытие гуи с этим персонажем"));
-
             Binds.Add(Bind.CreateBind(Keys.X, () =>
             {
                 if (Main.mapFullscreen)
@@ -104,7 +103,7 @@ namespace TerraZ.Client
                 }
 
             }, "Телепортация к курсору (На карте тоже работает)."));
-
+            #region IDK old Binds
             /*Binds.Add(Bind.CreateBind(Keys.B, () =>
             {
                 if (!Client.HasPermission("terraz.worldedit"))
@@ -207,6 +206,7 @@ namespace TerraZ.Client
                 Main.NewText(Main.player[SelectedPlayer].name, 0, 255, 0);
             } 
             */
+            #endregion
 
 
             Functions.Add(Function.CreateFunction(false, () =>
@@ -247,17 +247,16 @@ namespace TerraZ.Client
                                 b.Action();
                         }
                     }
-                    else
-                    {
-                        if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
-                            b.Action();
-                    }
-                        
                 }
 
                 if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus || UserInterface.ShowGUI) return;
 
-                
+                foreach (Bind b in Binds)
+                {
+                    if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
+                        b.Action();
+                }
+               
                 OldMouse = NewMouse;
                 NewMouse = Mouse.GetState();
 
