@@ -351,9 +351,9 @@ namespace TerraZ.Client
 
             if (!Main.ServerSideCharacter) return;
 
-            if (TextLightPlayerButton("Телепортироваться", 380, pix + 78f + 28f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT"))
+            if (TextLightPlayerButton("К спавну", 380 + (int)(12f + FontAssets.MouseText.Value.MeasureString("Телепортировать к себе").X), pix + 78f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT3"))
             {
-                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/tp {p.whoAmI}"));
+                DataBuilder.SendData(6, new Dictionary<string, object> { { "PlayerIndex", (byte)SelectedPlayer } });
             }
 
             /*

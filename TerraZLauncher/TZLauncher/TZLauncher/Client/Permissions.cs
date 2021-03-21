@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TZLauncher;
 
 namespace TerraZ.Client
@@ -7,17 +9,12 @@ namespace TerraZ.Client
 	{
 		public bool HasPermission(string Permission)
 		{
-			string[] array = this._permissions.Split(new char[]
-			{
-				','
-			});
-			for (int i = 0; i < array.Length; i++)
-			{
-				if (Permission == array[i])
-				{
-					return true;
-				}
-			}
+			if (Perms.Contains("*") || Perms.Contains("superadmin"))
+				return true;
+
+			if (Perms.Contains(Permission))
+				return true;
+
 			return false;
 		}
 
@@ -27,6 +24,15 @@ namespace TerraZ.Client
 		}
 
 		public string ListPermissions => this._permissions;
+
+		public List<string> Perms
+        {
+			get
+            {
+				return this._permissions.Split(',').ToList();
+			}
+        }
+
 		private string _permissions = ",";
 	}
 }
