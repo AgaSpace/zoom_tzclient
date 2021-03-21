@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using TShockAPI;
 using System.Reflection;
 using Terraria;
-using System.IO;
-using TShockAPI.Net;
 
 namespace TerraZ_Client
 {
