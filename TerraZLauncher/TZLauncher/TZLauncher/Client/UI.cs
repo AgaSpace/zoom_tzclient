@@ -155,7 +155,7 @@ namespace TerraZ.Client
 
                 if (SelectedPlayer != -1)
                 {
-                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 850, 450), " ");
+                    DrawMenu(Color.LightSkyBlue, Color.DeepSkyBlue, new Rectangle(375, 75, 850, 650), " ");
 
                     PagesPadding = 0;
                     if (ButtonV2("Главная страница", 380, 85, Color.LightSkyBlue, Color.DeepSkyBlue, Color.DeepSkyBlue, "OPACITIES\\MAIN_BUTTON") && View != ViewID.Inventory)
@@ -354,6 +354,11 @@ namespace TerraZ.Client
             if (TextLightPlayerButton("К спавну", 380 + (int)(12f + FontAssets.MouseText.Value.MeasureString("Телепортировать к себе").X), pix + 78f, 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT3"))
             {
                 DataBuilder.SendData(6, new Dictionary<string, object> { { "PlayerIndex", (byte)SelectedPlayer } });
+            }
+
+            if (TextLightPlayerButton("Телепортироваться к дому", 380, pix + 78f + (28f * 3f), 1f, "OPACITIES\\BUTTON_MANAGE::TELEPORT::2::HOUSE"))
+            {
+                ChatHelper.SendChatMessageFromClient(new ChatMessage($"/region tp \"*House_{p.name}:1\""));
             }
 
             /*
@@ -816,7 +821,7 @@ namespace TerraZ.Client
         public int SelectedArmorItem = -1;
         public int SelectedPiggyBankItem = -1;
 
-        private Dictionary<string, Opacity> Opacityes = new Dictionary<string, Opacity>();
+        public Dictionary<string, Opacity> Opacityes = new Dictionary<string, Opacity>();
 
         private Texture2D Gradient;
         private Texture2D Gradient2;
@@ -835,7 +840,7 @@ namespace TerraZ.Client
             VoidBag = 4
         }
 
-        class Opacity
+        public class Opacity
         {
             public static Opacity Generate() => new Opacity() 
             { 

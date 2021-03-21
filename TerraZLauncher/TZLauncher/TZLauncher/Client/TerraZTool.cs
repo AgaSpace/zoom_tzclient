@@ -21,8 +21,7 @@ namespace TerraZ.Client
             Main.OnTickForThirdPartySoftwareOnly += Update;
             Main.OnPostDraw += OnDraw;
 
-            UserInterface = new MainUI();
-            UserInterface.Initialize();
+            Client.UserInterface.Initialize();
 
             LauncherCore.WriteSuccess("<=- ===-  TerraZ  -=== -=>");
             LauncherCore.WriteInfo("Initialized TerraZ.Client.TerraZTool");
@@ -43,19 +42,19 @@ namespace TerraZ.Client
 
             Binds.Add(Bind.CreateBind(Keys.Z, () =>
             {
-                if (UserInterface.ShowGUI)
+                if (Client.UserInterface.ShowGUI)
                 {
-                    UserInterface.ShowGUI = false;
+                    Client.UserInterface.ShowGUI = false;
                 }
 
                 int player = ClientUtils.GetPlayerOverMouse();
 
                 if (player != -1 && Main.player[player] != null && Main.player[player].active != false)
                 {
-                    UserInterface.ResetItems();
-                    UserInterface.SelectedPlayer = player;
+                    Client.UserInterface.ResetItems();
+                    Client.UserInterface.SelectedPlayer = player;
 
-                    UserInterface.ShowGUI = true;
+                    Client.UserInterface.ShowGUI = true;
                 }
             }, "Выбор игрока на мышке и открытие гуи с этим персонажем"));
             Binds.Add(Bind.CreateBind(Keys.X, () =>
@@ -224,7 +223,7 @@ namespace TerraZ.Client
 
         private void OnDraw(GameTime obj)
         {
-            UserInterface.Draw();
+            Client.UserInterface.Draw();
         }
 
         private void Update()
@@ -239,7 +238,7 @@ namespace TerraZ.Client
 
                 foreach (Bind b in Binds)
                 {
-                    if (UserInterface.ShowGUI)
+                    if (Client.UserInterface.ShowGUI)
                     {
                         if (b.Key == Keys.Z)
                         {
@@ -249,40 +248,13 @@ namespace TerraZ.Client
                     }
                 }
 
-                if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus || UserInterface.ShowGUI) return;
+                if (Main.editChest || Main.editSign || Main.drawingPlayerChat || !Main.hasFocus || Client.UserInterface.ShowGUI) return;
 
                 foreach (Bind b in Binds)
                 {
                     if (Main.keyState.IsKeyDown(b.Key) && Main.oldKeyState.IsKeyUp(b.Key))
                         b.Action();
                 }
-               
-                OldMouse = NewMouse;
-                NewMouse = Mouse.GetState();
-
-                /*
-                if (OldMouse.ScrollWheelValue < NewMouse.ScrollWheelValue)
-                {
-                    SelectedPlayer--;
-                    if (SelectedPlayer < 0 || SelectedPlayer > 255 || (Main.keyState.IsKeyDown(Keys.Left) && Main.oldKeyState.IsKeyUp(Keys.Left)))
-                        SelectedPlayer = 0;
-
-                    if (Main.player != null && Main.player[SelectedPlayer] != null && Main.player[SelectedPlayer].active)
-                    {
-                        Main.NewText(Main.player[SelectedPlayer].name, 0, 255, 0);
-                    }
-                }
-                else if (OldMouse.ScrollWheelValue > NewMouse.ScrollWheelValue || (Main.keyState.IsKeyDown(Keys.Right) && Main.oldKeyState.IsKeyUp(Keys.Right)))
-                {
-                    SelectedPlayer++;
-                    if (SelectedPlayer < 0 || SelectedPlayer > 255)
-                        SelectedPlayer = 0;
-
-                    if (Main.player != null && Main.player[SelectedPlayer] != null && Main.player[SelectedPlayer].active)
-                    {
-                        Main.NewText(Main.player[SelectedPlayer].name, 0, 255, 0);
-                    }
-                } */
             }
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
         }
@@ -291,13 +263,6 @@ namespace TerraZ.Client
         List<Function> Functions = new List<Function>();
         Point WorldEditPoints;
         Point RegionDefPoints;
-
-        MouseState OldMouse;
-        MouseState NewMouse;
-
-        int SelectedPlayer = 0;
-        public static MainUI UserInterface;
-        private bool SendedPacket;
 
         class Bind
         {

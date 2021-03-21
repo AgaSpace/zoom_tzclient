@@ -27,6 +27,7 @@ namespace TerraZ.Client
 			*((int*)_from.MethodHandle.Value.ToPointer() + 2) = *((int*)_to.MethodHandle.Value.ToPointer() + 2);
 		}
 
+		public static readonly MainUI UserInterface = new MainUI();
 		public static bool HasPermission(string Permission) => ClientPermissions.HasPermission(Permission);
 		internal static Permissions ClientPermissions { get; private set; }
 		public static List<ITool> ClientTools { get; private set; }
