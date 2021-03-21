@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using TerraZ_Client;
 using Terraria;
 using Terraria.Net;
+using Microsoft.Xna.Framework;
 
 namespace TerraZ_Client.Net
 {
@@ -79,37 +80,12 @@ namespace TerraZ_Client.Net
                         }
                     }
                     break;
-                case IndexTypes.TryGetPlayerSlotInformation:
+                case IndexTypes.TeleportToPlayerHome:
                     {
-                        /*if (player.GetPlayerInfo().HavePermission(Permissions.GetBanks))
-                        {
-                            if (Terraria.Main.ServerSideCharacter)
-                            {
-                                byte playerId = data["PlayerIndex"].ToInt8();
+                        var player2 = TShock.Players[data["PlayerIndex"].ToInt8()];
+                        player.Teleport(player2.sX * 16, player.sY * 16);
 
-                                Player player7 = Main.player[playerId];
-
-                                if (player7 == null && player7.active == false)
-                                    break;
-
-                                for (int num4 = 0; num4 < player7.bank.item.Length; num4++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(99 + num4), (float)player7.bank.item[num4].prefix);
-                                }
-                                for (int num5 = 0; num5 < player7.bank2.item.Length; num5++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(139 + num5), (float)player7.bank2.item[num5].prefix);
-                                }
-                                for (int num6 = 0; num6 < player7.bank3.item.Length; num6++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(180 + num6), (float)player7.bank3.item[num6].prefix);
-                                }
-                                for (int num7 = 0; num7 < player7.bank4.item.Length; num7++)
-                                {
-                                    player.SendData(PacketTypes.PlayerSlot, "", playerId, (float)(220 + num7), (float)player7.bank4.item[num7].prefix);
-                                }
-                            }
-                        }*/
+                        //TShock.Players[playerId].SpawnAnotherPlayer(player);
                     }
                     break;
 
