@@ -233,15 +233,8 @@ namespace TerraZ.Client
             #region InventoryDraw
             for (int i = 0; i < 10; i++)
             {
-                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.SkyBlue, Color.Blue, 380 + f, 145, "OPACITIES\\ID_" + i, out bool hitbox))
+                if (DrawItem(p.inventory[i].netID, p.inventory[i].stack, Color.SkyBlue, Color.Blue, 380 + f, 145, "OPACITIES\\ID_" + i))
                     SelectedItem = (SelectedItem == i ? -1 : i);
-                
-                if (hitbox)
-                {
-                    Main.instance.MouseText(p.inventory[i].AffixName(), p.inventory[i].rare, 0, Main.mouseX + 6, Main.mouseY + 6, -1, -1, 0);
-                    //Main.spriteBatch.DrawString(FontAssets.MouseText.Value, p.inventory[i].AffixName(), new Vector2(Main.mouseX, Main.mouseY), Color.White);
-                }
-
                 f += 37;
             }
             f = 0;
@@ -626,43 +619,6 @@ namespace TerraZ.Client
             }
         }
 
-        public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y, string opacityID, out bool mouseHitbox)
-        {
-            if (!Opacityes.ContainsKey(opacityID))
-            {
-                Opacityes.Add(opacityID, Opacity.Generate());
-            }
-
-            bool result = false;
-            mouseHitbox = false;
-
-            Color c = none;
-            Rectangle r = new Rectangle(X, Y, 33, 33);
-            if (r.Contains(Main.mouseX, Main.mouseY))
-            {
-                Opacityes[opacityID]++;
-
-                mouseHitbox = true;
-
-                if (NewMouse.LeftButton == ButtonState.Pressed && OldMouse.LeftButton == ButtonState.Released)
-                    result = true;
-            }
-            else Opacityes[opacityID]--;
-
-            Item i = new Item();
-            i.SetDefaults(netID);
-            i.stack = count;
-
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y, 30, 30), new Color(30, 30, 30));
-            Main.spriteBatch.Draw(Gradient, new Rectangle(X, Y, 30, 30), Color.Black);
-
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, 30, 3), c * (c.A - Opacityes[opacityID].PublicOpacity));
-            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(X, Y + 30, 30, 3), Color.Yellow * Opacityes[opacityID].PublicOpacity);
-
-            ItemSlot.Draw(Main.spriteBatch, ref i, 21, new Vector2((float)X, (float)Y), default);
-
-            return result;
-        }
         public bool DrawItem(int netID, int count, Color none, Color hovered, int X, int Y, string opacityID)
         {
             if (!Opacityes.ContainsKey(opacityID))
@@ -671,7 +627,6 @@ namespace TerraZ.Client
             }
 
             bool result = false;
-
             Color c = none;
             Rectangle r = new Rectangle(X, Y, 33, 33);
             if (r.Contains(Main.mouseX, Main.mouseY))
